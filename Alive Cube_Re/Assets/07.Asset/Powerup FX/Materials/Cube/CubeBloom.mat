@@ -77,11 +77,11 @@ Material:
     - _FlipbookMode: 0
     - _Glossiness: 0.5
     - _LightingEnabled: 1
-    - _Metallic: 1
+    - _Metallic: 0
     - _Mode: 2
     - _QueueOffset: 0
     - _Shininess: 1
-    - _Smoothness: 0.5
+    - _Smoothness: 0
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0

@@ -20,6 +20,10 @@ public class IntroAnimation : MonoBehaviour
         Debug.Log("Left_pos" + preTr_left.position + "Left_rot" + preTr_left.rotation);
 
         StartCoroutine(MakeMapLeftRight());
+        StartCoroutine(MakeMapTop());
+        StartCoroutine(MakeMapLeftWall(tr));
+        StartCoroutine(MakeMapRightWall(tr));
+
 
     }
 
@@ -35,6 +39,52 @@ public class IntroAnimation : MonoBehaviour
 
     }
 
+    IEnumerator MakeMapTop()
+    {
+        GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
+        Vector3 left_Rot = new Vector3(0, 180.0f, 0);
+        Vector3 right_dir = Vector3.zero;
+        Vector3 left_dir = Vector3.zero;
+        Vector3 left_Rot_Var = new Vector3(0, 180.0f, 270.0f);
+        Vector3 temp_dir = new Vector3(0, 10.0f, 0.0f);
+        //Vector3 right_dir_Var = new Vector3(0.5f, 0, 0.5f);
+        GameObject temp_Obj = new GameObject();
+        yield return new WaitForSeconds(1.5f);
+        for (int i = 0; i < 12; i++)
+        {
+            GameObject nowObj = Instantiate(nextObj);
+            //nowObjs.Add(nowObj);
+            if (i % 2 == 0)
+            {
+
+                nowObj.transform.position = preTr_right.position + right_dir + temp_dir;
+                
+                //nowObj.transform.Rotate(Vector3.forward * -90.0f);
+                nowObj.transform.DORotate(Vector3.forward * -90.0f, 0.5f);
+
+                right_dir = right_dir + Vector3.right;
+                StartCoroutine(MakeMapForwardBack(nowObj.transform));
+
+                
+
+            }
+            else if (i % 2 == 1)
+            {
+                nowObj.transform.position = tr.position + temp_dir;
+                nowObj.transform.rotation = Quaternion.Euler(left_Rot);
+                nowObj.transform.position = nowObj.transform.position + Vector3.left + left_dir;
+
+                nowObj.transform.DORotate(left_Rot_Var, 0.5f);
+                //nowObj.transform.DORotate(Vector3.forward * 90.0f, 0.5f);
+                left_dir = left_dir + Vector3.left;
+                StartCoroutine(MakeMapForwardBack(nowObj.transform));
+             
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+
 
 
     IEnumerator MakeMapLeftRight()
@@ -44,11 +94,11 @@ public class IntroAnimation : MonoBehaviour
         Vector3 right_dir = Vector3.zero;
         Vector3 left_dir = Vector3.zero;
         Vector3 left_Rot_Var = new Vector3(0, 180.0f, 270.0f);
-
+        Vector3 temp_dir = new Vector3(0, 10.0f, 0.0f);
         //Vector3 right_dir_Var = new Vector3(0.5f, 0, 0.5f);
+        GameObject temp_Obj = new GameObject();
 
-
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 12; i++)
         {
             GameObject nowObj = Instantiate(nextObj);
             //nowObjs.Add(nowObj);
@@ -56,10 +106,15 @@ public class IntroAnimation : MonoBehaviour
             {
 
                 nowObj.transform.position = preTr_right.position + right_dir;
+                temp_Obj.transform.position = preTr_right.position + right_dir + temp_dir;
                 //nowObj.transform.Rotate(Vector3.forward * -90.0f);
                 nowObj.transform.DORotate(Vector3.forward * -90.0f, 0.5f);
+                
                 right_dir = right_dir + Vector3.right;
                 StartCoroutine(MakeMapForwardBack(nowObj.transform));
+                
+                StartCoroutine(MakeMapUp(nowObj.transform,11));
+                StartCoroutine(MakeMapUp(nowObj.transform, 0));
 
             }
             else if (i % 2 == 1)
@@ -72,14 +127,11 @@ public class IntroAnimation : MonoBehaviour
                 //nowObj.transform.DORotate(Vector3.forward * 90.0f, 0.5f);
                 left_dir = left_dir + Vector3.left;
                 StartCoroutine(MakeMapForwardBack(nowObj.transform));
-
+                StartCoroutine(MakeMapUp(nowObj.transform,11));
+                StartCoroutine(MakeMapUp(nowObj.transform,0));
             }
-            //nowObj.transform.position = preTr_left.position + left_dir;
             yield return new WaitForSeconds(0.1f);
-
         }
-
-
     }
 
     IEnumerator MakeMapForwardBack(Transform _tr)
@@ -92,7 +144,7 @@ public class IntroAnimation : MonoBehaviour
         Vector3 forward_dir = Vector3.zero;
 
 
-        for (int i = 0; i < 11; i++)
+        for (int i = 0; i < 12; i++)
         {
             GameObject nowObj = Instantiate(nextObj);
 
@@ -105,8 +157,98 @@ public class IntroAnimation : MonoBehaviour
 
 
             yield return new WaitForSeconds(0.1f);
+
+        }
+
+    }
+
+    IEnumerator MakeMapUp(Transform _tr, int _dirnum)
+    {
+        GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
+        Vector3 up_Rot = new Vector3(0.0f, 0.0f, 180.0f);
+        Vector3 up_dir_Var = new Vector3(1.0f, 1.0f, 0.0f);
+        Vector3 up_Rot_Var = new Vector3(0.0f, 0.0f, 270.0f);
+        Vector3 up_dir = Vector3.zero;
+
+        yield return new WaitForSeconds(1.0f);
+
+        for (int i = 0; i < 11; i++)
+        {
+            GameObject nowObj = Instantiate(nextObj);
+
+            nowObj.transform.position = _tr.position + Vector3.forward * _dirnum + Vector3.left * 2;
+            nowObj.transform.rotation = Quaternion.Euler(up_Rot);
+            nowObj.transform.position = nowObj.transform.position + up_dir_Var + up_dir;
+            nowObj.transform.DORotate(up_Rot_Var, 0.5f);
+
+            up_dir = up_dir + Vector3.up;
+
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
+    IEnumerator MakeMapLeftWall(Transform _tr)
+    {
+        GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
+        Vector3 LeftWall_Rot = new Vector3(0.0f, 0.0f, 90.0f);
+        Vector3 LeftWall_dir_Var = new Vector3(0.0f, -1.0f, 0.0f);
+        Vector3 LeftWall_Rot_Var = new Vector3(0.0f, 0.0f, 0.0f);
+        Vector3 LeftWall_dir = Vector3.zero;
+        //GameObject tempObj = new GameObject();
+        yield return new WaitForSeconds(1.0f);
+
+        for (int i = 0; i < 12; i++)
+        {
+            GameObject nowObj = Instantiate(nextObj);
+            //tempObj.transform.position = nowObj.transform.position;
+            nowObj.transform.position = _tr.position + Vector3.right * 5;
+            nowObj.transform.rotation = Quaternion.Euler(LeftWall_Rot);
+            nowObj.transform.position = nowObj.transform.position + LeftWall_dir_Var + LeftWall_dir;
+            nowObj.transform.DORotate(LeftWall_Rot_Var, 0.5f);
+            //tempObj.transform.position = nowObj.transform.position + Vector3.left * 10;
+
+            StartCoroutine(MakeMapForwardBack(nowObj.transform));
+
+
+            //StartCoroutine(MakeMapForwardBack(tempObj.transform));
+
+            LeftWall_dir = LeftWall_dir + Vector3.up;
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+    }
+    IEnumerator MakeMapRightWall(Transform _tr)
+    {
+        GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
+        Vector3 RightWall_Rot = new Vector3(0.0f, 0.0f, 90.0f);
+        Vector3 RightWall_dir_Var = new Vector3(0.0f, -1.0f, 0.0f);
+        Vector3 RightWall_Rot_Var = new Vector3(0.0f, 0.0f, 0.0f);
+        Vector3 RightWall_dir = Vector3.zero;
+        //GameObject tempObj = new GameObject();
+        yield return new WaitForSeconds(1.0f);
+
+        for (int i = 0; i < 12; i++)
+        {
+            GameObject nowObj = Instantiate(nextObj);
+            //tempObj.transform.position = nowObj.transform.position;
+            nowObj.transform.position = _tr.position + Vector3.left * 6;
+            nowObj.transform.rotation = Quaternion.Euler(RightWall_Rot);
+            nowObj.transform.position = nowObj.transform.position + RightWall_dir_Var + RightWall_dir;
+            nowObj.transform.DORotate(RightWall_Rot_Var, 0.5f);
+            //tempObj.transform.position = nowObj.transform.position + Vector3.left * 10;
+
+            StartCoroutine(MakeMapForwardBack(nowObj.transform));
+
+
+            //StartCoroutine(MakeMapForwardBack(tempObj.transform));
+
+            RightWall_dir = RightWall_dir + Vector3.up;
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+    }
 }
+
 

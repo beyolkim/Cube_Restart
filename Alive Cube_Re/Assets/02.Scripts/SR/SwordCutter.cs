@@ -1,0 +1,85 @@
+﻿using UnityEngine;
+using System.Collections;
+using Valve.VR;
+
+[RequireComponent (typeof(Rigidbody))]
+public class SwordCutter : MonoBehaviour {
+
+    public SteamVR_Input_Sources hand = SteamVR_Input_Sources.Any;
+    public SteamVR_Input_Sources righHhand = SteamVR_Input_Sources.RightHand;
+    public SteamVR_Input_Sources leftHhand = SteamVR_Input_Sources.LeftHand;
+
+    public SteamVR_Action_Vibration haptic = SteamVR_Actions.default_Haptic;
+	public Material capMaterial;
+        
+    private Vector3 curPos;
+    private Vector3 prePos;
+    private Vector3 dist;
+    private float power;
+    
+    public Transform hitPos;    
+    public GameObject hit;
+
+   
+
+    private void Start()
+    {
+        //hit = Resources.Load<GameObject>("SwordSlash");
+    }
+
+    private void Update()
+    {
+        SwordPower();
+        
+    }
+
+    private void OnCollisionEnter(Collision coll)
+    {
+        GameObject victim = coll.collider.gameObject;
+        
+        if (coll.gameObject.transform.CompareTag("CUBE") && power >= 0.8f)
+        {
+            ContactPoint contact = coll.contacts[0];
+            Vector3 _normal = contact.normal;
+            
+            GameObject _hit = Instantiate(hit, hitPos.position, hitPos.rotation);
+            haptic.Execute(0f, 0.1f, 80, 1f, hand);
+            Destroy(_hit, 1.5f);
+
+            GameObject[] pieces = BLINDED_AM_ME.MeshCut.Cut(victim, transform.position, transform.right, capMaterial);
+            Debug.Log(power);
+
+            //큐브 되돌아가기
+            //victim.GetComponentInParent<AttackCube>().check_attack = true;
+            //AttackController.scoreCount++;
+            //GameObject fragment = Instantiate(Resources.Load("CubeFragment") as GameObject);
+            //fragment.transform.position = victim.transform.position;
+
+            if (!pieces[1].GetComponent<Rigidbody>())
+            {
+                pieces[1].AddComponent<Rigidbody>();
+                MeshCollider temp = pieces[1].AddComponent<MeshCollider>();
+                temp.convex = true;
+            }
+            //Destroy(pieces[1], 4);
+            
+        }
+               
+    }
+    void SwordPower()
+    {
+        curPos = transform.position;
+        dist = (curPos - prePos) / Time.deltaTime;
+        prePos = curPos;
+
+        power = dist.magnitude;
+    }
+
+    //IEnumerator LaserOff()
+    //{
+    //    yield return new WaitForSeconds(0.5f);
+    //    laserOff = true;
+    //    Debug.Log(laserOff);
+    //}
+
+}

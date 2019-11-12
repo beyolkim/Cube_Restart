@@ -88,9 +88,11 @@ public class GunCtrl : MonoBehaviour
         line.startWidth = 0.005f;
         line.endWidth = 0.005f;
         line.material = lineMat;
+        _audio.Play();
     }
     void GunRay()
     {
+
         ray = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(ray, out hit, range))
         {

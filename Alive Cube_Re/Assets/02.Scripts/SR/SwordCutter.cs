@@ -20,11 +20,15 @@ public class SwordCutter : MonoBehaviour {
     public Transform hitPos;    
     public GameObject hit;
 
+    private AudioSource _audio;
+    public AudioClip[] swordHit;
+
    
 
     private void Start()
     {
         //hit = Resources.Load<GameObject>("SwordSlash");
+        _audio = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -41,7 +45,8 @@ public class SwordCutter : MonoBehaviour {
         {
             ContactPoint contact = coll.contacts[0];
             Vector3 _normal = contact.normal;
-            
+
+            _audio.PlayOneShot(swordHit[Random.Range(0, swordHit.Length)]);
             GameObject _hit = Instantiate(hit, hitPos.position, hitPos.rotation);
             haptic.Execute(0f, 0.1f, 80, 1f, hand);
             Destroy(_hit, 1.5f);
@@ -50,10 +55,10 @@ public class SwordCutter : MonoBehaviour {
             Debug.Log(power);
 
             //큐브 되돌아가기
-            //victim.GetComponentInParent<AttackCube>().check_attack = true;
-            //AttackController.scoreCount++;
-            //GameObject fragment = Instantiate(Resources.Load("CubeFragment") as GameObject);
-            //fragment.transform.position = victim.transform.position;
+            victim.GetComponentInParent<AttackCube>().check_attack = true;
+            AttackController.scoreCount++;
+            GameObject fragment = Instantiate(Resources.Load("CubeFragment") as GameObject);
+            fragment.transform.position = victim.transform.position;
 
             if (!pieces[1].GetComponent<Rigidbody>())
             {

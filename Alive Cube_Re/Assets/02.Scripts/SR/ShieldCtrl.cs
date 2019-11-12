@@ -14,8 +14,9 @@ public class ShieldCtrl : MonoBehaviour
     public bool shieldOn = false;
     private bool shieldAudio = false;
 
-    public AudioClip open;
     private AudioSource _audio;
+    public AudioClip open;
+    public AudioClip[] shieldHit;
 
     void Start()
     {
@@ -34,5 +35,12 @@ public class ShieldCtrl : MonoBehaviour
             _audio.PlayOneShot(open);
         }
     }
-    
+
+    private void OnCollisionEnter(Collision coll)
+    {
+        if(coll.transform.CompareTag("CUBE"))
+        {
+            _audio.PlayOneShot(shieldHit[Random.Range(0, shieldHit.Length)]);
+        }
+    }
 }

@@ -29,6 +29,7 @@ public class LeftHandCtrl : MonoBehaviour
     private bool shieldOn = false;
 
     public AudioClip shieldSpawn;
+    public AudioClip swordSpawn;
     public AudioClip beamUp;
     private AudioSource _audio;
 
@@ -57,7 +58,7 @@ public class LeftHandCtrl : MonoBehaviour
 
     void Update()
     {
-        if (this.gameObject.scene.name == "Go_Sword")
+        if (this.gameObject.scene.name == "Yun_Test")
         {
             if (!swordOn && trigger.GetStateDown(lefthand)) //Scene이 Sword일 때 검 생성
             {
@@ -81,13 +82,14 @@ public class LeftHandCtrl : MonoBehaviour
     IEnumerator SwordSpawn()
     {
         yield return new WaitForSeconds(0.4f); //손이 돌아가고 Spawn 파티클 나오도록
+        _audio.PlayOneShot(beamUp);
         Quaternion rot = Quaternion.FromToRotation(Vector3.forward, sword_particle_pos.forward);
         GameObject _sword_particle = Instantiate(sword_particle, sword_particle_pos.position, rot);
         
         Destroy(_sword_particle, 1.5f);
 
         yield return new WaitForSeconds(0.4f); //Spawn 파티클 나오고 칼 생성되도록
-
+        _audio.PlayOneShot(swordSpawn);
         while(swordValue >= -0.9f)
         {
             swordValue -= 0.015f;

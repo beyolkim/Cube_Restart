@@ -6,6 +6,10 @@ public class AttackCube : MonoBehaviour
 {
 
     public List<Transform> BodyParts = new List<Transform>();
+    
+    //오디오 부분
+    //private AudioSource 
+
 
     public float cubeDir;
 
@@ -177,7 +181,8 @@ public class AttackCube : MonoBehaviour
             BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None);
            // BodyParts[0].DOSpiral(3, null, SpiralMode.ExpandThenContract, 0.1f, 5);
             check_Dotween = !check_Dotween;
-
+            
+            
         }
 
         for (int i = 1; i < BodyParts.Count; i++)

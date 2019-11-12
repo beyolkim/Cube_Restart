@@ -6,6 +6,10 @@ public class AttackCube : MonoBehaviour
 {
 
     public List<Transform> BodyParts = new List<Transform>();
+    
+    //오디오 부분
+    //private AudioSource 
+
 
     public float cubeDir;
 
@@ -170,14 +174,15 @@ public class AttackCube : MonoBehaviour
         
         float curspeed = speed;
 
-        //BodyParts[0]. DOSpiral(3, Vector3.forward, SpiralMode.ExpandThenContract, 1, 10);
         //BodyParts[0].DOJump(targetTr.position, 3.0f, 3, 3);
         if (check_Dotween == false)
         {
             BodyParts[0].DOMove(targetTr.position, 2.0f);
             BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None);
+           // BodyParts[0].DOSpiral(3, null, SpiralMode.ExpandThenContract, 0.1f, 5);
             check_Dotween = !check_Dotween;
-
+            
+            
         }
 
         for (int i = 1; i < BodyParts.Count; i++)

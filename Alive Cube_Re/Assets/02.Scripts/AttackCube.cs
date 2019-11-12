@@ -6,9 +6,9 @@ public class AttackCube : MonoBehaviour
 {
 
     public List<Transform> BodyParts = new List<Transform>();
-    
+
     //오디오 부분
-    //private AudioSource 
+    private AudioSource attackSound;
 
 
     public float cubeDir;
@@ -47,7 +47,7 @@ public class AttackCube : MonoBehaviour
 
         firstTr = this.gameObject.transform;
         disTarget = targetTr.position - firstTr.position;
- 
+        
     }
 
     void Update()
@@ -80,6 +80,8 @@ public class AttackCube : MonoBehaviour
         {
             BodyParts[0].DOMove(firstTr.position, 1.0f);
             BodyParts[0].DOLocalMoveZ(15.0f, 2.0f);
+            //오디오 뒤로 갈 경우 AudioSource 끄거나 오디오 사운드 바꾸기?
+            attackSound.enabled = false;
             check_Dotween = !check_Dotween;
         }
         for (int i = 1; i < BodyParts.Count; i++)
@@ -140,6 +142,7 @@ public class AttackCube : MonoBehaviour
         }
     }
 
+    //큐브 폭발(현재 안씀)
     public IEnumerator CubeEexplosion()
     {
         for (int i=0; i<BodyParts.Count; i++)
@@ -179,6 +182,11 @@ public class AttackCube : MonoBehaviour
         {
             BodyParts[0].DOMove(targetTr.position, 2.0f);
             BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None);
+
+            //첫번째 머리 오디오 추가
+            attackSound = BodyParts[0].gameObject.AddComponent<AudioSource>();
+            attackSound.loop = true;
+
            // BodyParts[0].DOSpiral(3, null, SpiralMode.ExpandThenContract, 0.1f, 5);
             check_Dotween = !check_Dotween;
             

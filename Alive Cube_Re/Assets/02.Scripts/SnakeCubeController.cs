@@ -100,9 +100,11 @@ public class SnakeCubeController : MonoBehaviour
                 }
 
                 warningCubeObj[random_Cube].SetActive(true);
+
+                
                 yield return new WaitForSeconds(2.0f);
 
-
+                
                 warningCubeObj[random_Cube].SetActive(false);
                 cubeWallsObj[random_Cube].SetActive(true);
                 switch (attackDir)

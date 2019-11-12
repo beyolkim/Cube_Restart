@@ -28,7 +28,7 @@ public class BoxCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.gameObject.scene.name == "Go_Sword")
+        if (this.gameObject.scene.name == "Yun_Test")
         {
             if (trigger.GetStateDown(hand))
             {

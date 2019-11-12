@@ -40,6 +40,7 @@ public class HandCtrl : MonoBehaviour
     private AudioSource _audio;
     public AudioClip beamUp;
     public AudioClip gunSpawn_audio;
+    public AudioClip swordSpawn;
 
     void Start()
     {        
@@ -67,7 +68,7 @@ public class HandCtrl : MonoBehaviour
     
     void Update()
     {
-        if (this.gameObject.scene.name == "Go_Sword") 
+        if (this.gameObject.scene.name == "Yun_Test") 
         {
             if (!swordOn && trigger.GetStateDown(rightHand)) //Scene이 Sword일 때 검 생성
             {
@@ -111,14 +112,15 @@ public class HandCtrl : MonoBehaviour
     IEnumerator SwordSpawn()
     {
         yield return new WaitForSeconds(0.4f); //손이 돌아가고 Spawn 파티클 나오도록
+        _audio.PlayOneShot(beamUp);
         Quaternion rot = Quaternion.FromToRotation(Vector3.forward, sword_particle_pos.forward);
         GameObject _sword_particle = Instantiate(sword_particle, sword_particle_pos.position, rot);
         
         Destroy(_sword_particle, 1.5f);
 
         yield return new WaitForSeconds(0.4f); //Spawn 파티클 나오고 칼 생성되도록
-
-        while(swordValue >= -0.9f)
+        _audio.PlayOneShot(swordSpawn);
+        while (swordValue >= -0.9f)
         {
             swordValue -= 0.015f;
             swordMat.SetFloat("_Dissolve", swordValue);
@@ -137,12 +139,12 @@ public class HandCtrl : MonoBehaviour
         Destroy(_gun_particle, 1.5f);
 
         yield return new WaitForSeconds(0.4f);
-        _audio.PlayOneShot(gunSpawn_audio);
+        _audio.PlayOneShot(gunSpawn_audio);        
         while(gunValue[0] >= -0.9f)
         {
             for (int i = 0; i < 4; i++)
             {
-                gunValue[i] -= 0.015f;            
+                gunValue[i] -= 0.017f;            
                 gunMat[i].SetFloat("_Dissolve", gunValue[i]);
             }
             

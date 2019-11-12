@@ -16,6 +16,7 @@ public class GunCtrl : MonoBehaviour
     public Light fireLight;
     public GameObject bullet;
     public Material lineMat;
+    public Transform rayPos;
 
     public float fireRate = 0.25f;
     private bool fireAllowed = true;
@@ -77,7 +78,7 @@ public class GunCtrl : MonoBehaviour
         line.useWorldSpace = false;
         line.receiveShadows = false;
         line.positionCount = 2;
-        line.SetPosition(0, Vector3.zero);
+        line.SetPosition(0, rayPos.localPosition);
         line.SetPosition(1, new Vector3(0, 0, range));
         line.startWidth = 0.005f;
         line.endWidth = 0.005f;

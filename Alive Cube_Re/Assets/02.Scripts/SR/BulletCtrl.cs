@@ -14,6 +14,10 @@ public class BulletCtrl : MonoBehaviour
     {
         GetComponent<Rigidbody>().AddForce(transform.forward * 3000f);
     }
+    private void Update()
+    {
+        Destroy(this.gameObject, 5f);
+    }
 
     private void OnCollisionEnter(Collision coll)
     {

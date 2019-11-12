@@ -113,7 +113,7 @@ Material:
     - __dirty: 1
     m_Colors:
     - Color_1326C6BA: {r: 0, g: 0.30588236, b: 2, a: 0}
-    - Color_420FAE12: {r: 0.47554138, g: 1.3565767, b: 2.7247236, a: 0}
+    - Color_420FAE12: {r: 0.5135604, g: 1.2898127, b: 2.7247233, a: 0}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

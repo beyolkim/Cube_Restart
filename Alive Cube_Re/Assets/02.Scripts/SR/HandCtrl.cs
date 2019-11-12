@@ -17,13 +17,14 @@ public class HandCtrl : MonoBehaviour
     public GameObject sword_particle;
 
     private float swordValue = 0.5f;
-    private float[] gunValue = new float[5]; //gun 파트의 각각의 gunValue 선언
+    private float[] gunValue = new float[4]; //gun 파트의 각각의 gunValue 선언
     private Material swordMat;
-    private Material[] gunMat = new Material[5]; //public이 아닌 private로 선언할 때는 new배열로 선언 필요
+    private Material[] gunMat = new Material[4]; //public이 아닌 private로 선언할 때는 new배열로 선언 필요
 
     private bool swordOn = false;
 
     public GameObject[] guns;
+    public GameObject gunPart;
     public Transform gun_particle_pos;
     public GameObject gun_particle; 
 
@@ -41,17 +42,14 @@ public class HandCtrl : MonoBehaviour
         swordMat = sword.GetComponent<MeshRenderer>().material;
 
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 4; i++)
         {
             gunValue[i] = 0.5f; //gun의 5개 파트의 gunValue값을 각각 초기화
-        }
-
-        for (int i = 0; i < 5; i++)
-        {
             gunMat[i] = guns[i].GetComponent<MeshRenderer>().material; //gun의 5개 파트의 gunMat값을 각각 초기화
         }
         //gunMat[0] = gun[0].GetComponent<MeshRenderer>().material;
-        
+              
+
         anim = GetComponent<Animator>();                
         swordGrab = Animator.StringToHash("sword");
         gunGrab = Animator.StringToHash("gun");
@@ -68,8 +66,7 @@ public class HandCtrl : MonoBehaviour
             if (!swordOn && trigger.GetStateDown(rightHand)) //Scene이 Sword일 때 검 생성
             {
                 swordOn = true;
-                anim.SetBool(swordGrab, true);
-                sword.GetComponent<MeshCollider>().enabled = true;
+                anim.SetBool(swordGrab, true);                
                 StartCoroutine(SwordSpawn());
             }
         }
@@ -120,7 +117,8 @@ public class HandCtrl : MonoBehaviour
             swordValue -= 0.015f;
             swordMat.SetFloat("_Dissolve", swordValue);
             yield return new WaitForSeconds(0.015f);
-        }                     
+        }
+        sword.GetComponent<MeshCollider>().enabled = true;
     }
 
     IEnumerator GunSpawn()
@@ -135,7 +133,7 @@ public class HandCtrl : MonoBehaviour
         
         while(gunValue[0] >= -0.9f)
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
                 gunValue[i] -= 0.015f;            
                 gunMat[i].SetFloat("_Dissolve", gunValue[i]);
@@ -143,6 +141,8 @@ public class HandCtrl : MonoBehaviour
             
             yield return new WaitForSeconds(0.01f);
         }
+        gunPart.gameObject.SetActive(true);
+
         gunOn = true; //총이 생성완료되었음을 true로 알림
     }
 

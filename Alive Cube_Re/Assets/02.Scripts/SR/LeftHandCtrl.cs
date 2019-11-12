@@ -28,6 +28,10 @@ public class LeftHandCtrl : MonoBehaviour
     private int shieldGrab;
     private bool shieldOn = false;
 
+    public AudioClip shieldSpawn;
+    public AudioClip beamUp;
+    private AudioSource _audio;
+
     void Start()
     {
         instance = this;
@@ -37,6 +41,7 @@ public class LeftHandCtrl : MonoBehaviour
         swordGrab = Animator.StringToHash("sword");
 
         swordMat = sword.GetComponent<MeshRenderer>().material;
+        _audio = GetComponent<AudioSource>();
         
 
         for(int i = 0; i<3; i++)
@@ -95,13 +100,14 @@ public class LeftHandCtrl : MonoBehaviour
     IEnumerator ShieldSpawn()
     {
         yield return new WaitForSeconds(0.4f);
+        _audio.PlayOneShot(beamUp);
         Quaternion rot = Quaternion.FromToRotation(Vector3.forward, shield_particle_pos.forward);
         GameObject _shield_particle = Instantiate(shield_particle, shield_particle_pos.position, rot);
 
         Destroy(_shield_particle, 1.5f);
 
         yield return new WaitForSeconds(0.4f);
-
+        _audio.PlayOneShot(shieldSpawn);
         while (shieldValue[0] >= -0.9f)
         {
             for(int i =0; i < 3; i++)

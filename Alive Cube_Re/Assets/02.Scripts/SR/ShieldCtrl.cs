@@ -12,19 +12,26 @@ public class ShieldCtrl : MonoBehaviour
     private int shieldOpen;
     private Animator anim;
     public bool shieldOn = false;
+    private bool shieldAudio = false;
+
+    public AudioClip open;
+    private AudioSource _audio;
 
     void Start()
     {
         instance = this;
         anim = GetComponent<Animator>();
         shieldOpen = Animator.StringToHash("shieldOpen");
+        _audio = GetComponent<AudioSource>();
         
     }
     void Update()
     {
-        if(shieldOn && trigger.GetStateDown(lefthand))
+        if(!shieldAudio && shieldOn && trigger.GetStateDown(lefthand))
         {
-            anim.SetBool(shieldOpen, true);            
+            shieldAudio = true;
+            anim.SetBool(shieldOpen, true);
+            _audio.PlayOneShot(open);
         }
     }
     

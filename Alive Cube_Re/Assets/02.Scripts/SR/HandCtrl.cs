@@ -37,6 +37,10 @@ public class HandCtrl : MonoBehaviour
     private int gunGrab;
     private int gunShot;
 
+    private AudioSource _audio;
+    public AudioClip beamUp;
+    public AudioClip gunSpawn_audio;
+
     void Start()
     {        
         swordMat = sword.GetComponent<MeshRenderer>().material;
@@ -54,6 +58,8 @@ public class HandCtrl : MonoBehaviour
         swordGrab = Animator.StringToHash("sword");
         gunGrab = Animator.StringToHash("gun");
         gunShot = Animator.StringToHash("gunShot");
+
+        _audio = GetComponent<AudioSource>();
 
         Debug.Log("씬 이름 : " + sword.scene.name + "!!!");
     }
@@ -124,13 +130,14 @@ public class HandCtrl : MonoBehaviour
     IEnumerator GunSpawn()
     {
         yield return new WaitForSeconds(0.4f);
+        _audio.PlayOneShot(beamUp);
         Quaternion rot = Quaternion.FromToRotation(Vector3.forward, gun_particle_pos.forward);
         GameObject _gun_particle = Instantiate(gun_particle, gun_particle_pos.position, rot);
 
         Destroy(_gun_particle, 1.5f);
 
         yield return new WaitForSeconds(0.4f);
-        
+        _audio.PlayOneShot(gunSpawn_audio);
         while(gunValue[0] >= -0.9f)
         {
             for (int i = 0; i < 4; i++)

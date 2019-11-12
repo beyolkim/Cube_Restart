@@ -26,10 +26,14 @@ public class GunCtrl : MonoBehaviour
     public float range = 30f;
     private LineRenderer line;
 
+    public AudioClip[] audioClip;
+    private AudioSource _audio;
+
     void Start()
     {
         instance = this;
         fireLight.GetComponent<Light>().enabled = false;
+        _audio = GetComponent<AudioSource>();
     }
 
 
@@ -54,6 +58,7 @@ public class GunCtrl : MonoBehaviour
         if (fireAllowed && fireParticle != null)
         {
             fireAllowed = false;
+            _audio.PlayOneShot(audioClip[Random.Range(0, audioClip.Length)]);            
             haptic.Execute(0f, 0.1f, 80, 1f, hand);
             GameObject _fireParticle = Instantiate(fireParticle, firePos.position, firePos.rotation);
             StartCoroutine(FireLight());

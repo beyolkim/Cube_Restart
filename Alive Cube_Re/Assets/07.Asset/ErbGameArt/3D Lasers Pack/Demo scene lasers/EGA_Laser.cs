@@ -24,6 +24,11 @@ public class EGA_Laser : MonoBehaviour
     private ParticleSystem[] Effects;
     private ParticleSystem[] Hit;
 
+
+    private void Awake()
+    {
+        //this.gameObject.GetComponent<RedMonCtrl>().enabled = true;
+    }
     void Start ()
     {
         //Get LineRender and ParticleSystem components from current prefab;  
@@ -65,7 +70,7 @@ public class EGA_Laser : MonoBehaviour
                 //Texture speed balancer {DISABLED AFTER UPDATE}
                 //LaserSpeed[0] = (LaserStartSpeed[0] * 4) / (Vector3.Distance(transform.position, hit.point));
                 //LaserSpeed[2] = (LaserStartSpeed[2] * 4) / (Vector3.Distance(transform.position, hit.point));
-                Debug.Log(hit.transform.gameObject.name);
+                //Debug.Log(hit.transform.gameObject.name);
             }
             else
             {
@@ -83,13 +88,13 @@ public class EGA_Laser : MonoBehaviour
                 //LaserSpeed[0] = (LaserStartSpeed[0] * 4) / (Vector3.Distance(transform.position, EndPos)); {DISABLED AFTER UPDATE}
                 //LaserSpeed[2] = (LaserStartSpeed[2] * 4) / (Vector3.Distance(transform.position, EndPos)); {DISABLED AFTER UPDATE}
             }
-            //Insurance against the appearance of a laser in the center of coordinates!
+            //insurance against the appearance of a laser in the center of coordinates!
             if (Laser.enabled == false && LaserSaver == false)
             {
                 LaserSaver = true;
                 Laser.enabled = true;
             }
-        }  
+        }
     }
 
     public void DisablePrepare()

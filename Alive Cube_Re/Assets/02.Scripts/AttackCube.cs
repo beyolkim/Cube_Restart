@@ -49,7 +49,7 @@ public class AttackCube : MonoBehaviour
         firstTr = this.gameObject.transform;
         disTarget = targetTr.position - firstTr.position;
 
-        cubeHead_Audio = Resources.Load<AudioClip>("Cube_Coming");
+        cubeHead_Audio = Resources.Load<AudioClip>("bonus_energy_004");
         
     }
 
@@ -198,6 +198,7 @@ public class AttackCube : MonoBehaviour
             attackSound = BodyParts[0].gameObject.AddComponent<AudioSource>();            
             attackSound.loop = true;
             attackSound.spatialize = true;
+            attackSound.priority = 10;
             attackSound.spatialBlend = 1;
             attackSound.dopplerLevel = 3;
             attackSound.maxDistance = 50;

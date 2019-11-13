@@ -38,6 +38,7 @@ public class AttackCube : MonoBehaviour
     private bool check_Dotween;
     
 
+
     void Start()
     {
         for (int i = 0; i < beginSize - 1; i++)
@@ -76,12 +77,15 @@ public class AttackCube : MonoBehaviour
     }
     public void ReverseMove()
     {
-       
+        Sequence mySequence = DOTween.Sequence();
+
         float curspeed = speed;
         if(check_Dotween == true)
         {
-            BodyParts[0].DOMove(firstTr.position, 1.0f);
-            BodyParts[0].DOLocalMoveZ(15.0f, 2.0f);
+            mySequence.Append(BodyParts[0].DOMove(firstTr.position, 1.0f))
+                      .Append(BodyParts[0].DOLocalMoveZ(15.0f, 2.0f));
+            //BodyParts[0].DOMove(firstTr.position, 1.0f);
+            //BodyParts[0].DOLocalMoveZ(15.0f, 2.0f);
             //오디오 뒤로 갈 경우 AudioSource 끄거나 오디오 사운드 바꾸기?
             attackSound.enabled = false;
             check_Dotween = !check_Dotween;
@@ -144,7 +148,7 @@ public class AttackCube : MonoBehaviour
         }
     }
 
-    //큐브 폭발(현재 안씀)
+    
     public IEnumerator CubeEexplosion()
     {
         for (int i=0; i<BodyParts.Count; i++)
@@ -154,7 +158,7 @@ public class AttackCube : MonoBehaviour
             CubeAlpha(i, 0.0f);
             if(i==0)
             {
-                GameObject fragment = Instantiate(Resources.Load("CubeFragment") as GameObject);
+                GameObject fragment = Instantiate(Resources.Load("PurplePiece") as GameObject);
                 fragment.transform.position = BodyParts[0].position;
             }
             yield return new WaitForSeconds(0.1f);
@@ -178,15 +182,17 @@ public class AttackCube : MonoBehaviour
     {
         
         float curspeed = speed;
+        Sequence mySequence = DOTween.Sequence();
 
-        //BodyParts[0].DOJump(targetTr.position, 3.0f, 3, 3);
+
         if (check_Dotween == false)
         {
             //BodyParts[0].DOSpiral(3, null, SpiralMode.ExpandThenContract, 0.5f, 5);
+            //mySequence.Append(BodyParts[0].DOMove(targetTr.position, 2.0f))
+            //          .Join(BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None));
             BodyParts[0].DOMove(targetTr.position, 2.0f);
-            BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None);
+            //BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None);
 
-            //BodyParts[0].DOSpiral(3, null, SpiralMode.ExpandThenContract, 0.1f, 5);
 
             //첫번째 머리 오디오 추가
             attackSound = BodyParts[0].gameObject.AddComponent<AudioSource>();            

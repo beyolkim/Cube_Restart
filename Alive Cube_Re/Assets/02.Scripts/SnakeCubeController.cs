@@ -5,11 +5,10 @@ using UnityEngine;
 public class SnakeCubeController : MonoBehaviour
 {
     public bool check_AllAttack;
-    public int attackCount;
     private bool double_Check;
     public enum CUBEDIR
     {
-        Front = -15
+        Front = -14
       , Left = -6
       , Right = -5
     }
@@ -92,7 +91,7 @@ public class SnakeCubeController : MonoBehaviour
         {
 
 
-            for (int i = 0; i < attackCount; i++)
+            for (int i = 0; i < 1; i++)
             {
                 int random_Cube = Random.Range(0, 99);
                 while (((random_Cube)%10 == 0 && attackDir == CUBEDIR.Left) || ((random_Cube) % 9 == 0 && attackDir == CUBEDIR.Right))

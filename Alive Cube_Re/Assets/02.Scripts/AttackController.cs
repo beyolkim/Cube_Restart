@@ -27,7 +27,7 @@ public class AttackController : MonoBehaviour
 
     IEnumerator AttackTurn()
     {
-        while (scoreCount != 10)
+        while (scoreCount != 100)
         {
             turnRandomNum01 = Random.Range(0, 3);
             turnRandomNum02 = Random.Range(0, 3);

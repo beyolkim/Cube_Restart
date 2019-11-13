@@ -43,4 +43,5 @@ public class ShieldCtrl : MonoBehaviour
             _audio.PlayOneShot(shieldHit[Random.Range(0, shieldHit.Length)]);
         }
     }
+    
 }

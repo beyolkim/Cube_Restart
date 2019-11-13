@@ -9,7 +9,7 @@ public class AttackCube : MonoBehaviour
 
     //오디오 부분
     private AudioSource attackSound;
-
+    private AudioClip cubeHead_Audio;
 
     public float cubeDir;
 
@@ -47,6 +47,8 @@ public class AttackCube : MonoBehaviour
 
         firstTr = this.gameObject.transform;
         disTarget = targetTr.position - firstTr.position;
+
+        cubeHead_Audio = Resources.Load<AudioClip>("Cube_Coming");
         
     }
 
@@ -184,10 +186,18 @@ public class AttackCube : MonoBehaviour
             BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None);
 
             //첫번째 머리 오디오 추가
-            attackSound = BodyParts[0].gameObject.AddComponent<AudioSource>();
+            attackSound = BodyParts[0].gameObject.AddComponent<AudioSource>();            
             attackSound.loop = true;
+            attackSound.spatialize = true;
+            attackSound.spatialBlend = 1;
+            attackSound.dopplerLevel = 3;
+            attackSound.maxDistance = 50;
+            attackSound.rolloffMode = AudioRolloffMode.Logarithmic;
+            attackSound.clip = cubeHead_Audio;
+            attackSound.Play();
 
-           // BodyParts[0].DOSpiral(3, null, SpiralMode.ExpandThenContract, 0.1f, 5);
+
+            // BodyParts[0].DOSpiral(3, null, SpiralMode.ExpandThenContract, 0.1f, 5);
             check_Dotween = !check_Dotween;
             
             

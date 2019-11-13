@@ -3,26 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+
 public class IntroAnimation : MonoBehaviour
 {
     public Transform tr;
+    public GameObject cubeCopy;
     private Transform preTr_right;
     private Transform preTr_left;
     private Transform nextTr;
     private List<GameObject> nowObjs = new List<GameObject>();
+    private bool mapMake = false;
+
+    private Animator anim;
+    private int cubeTouch;
+    private AudioSource _audio;
+    public AudioClip cube_default_audio;
+    public AudioClip mapStart_audio;
+    public AudioClip mapMaking_audio;
+    public AudioClip mapMakingEnd_audio;
+
     void Start()
     {
         preTr_right = tr;
         preTr_left = tr;
+        anim = GetComponent<Animator>();
+        cubeTouch = Animator.StringToHash("cubeTouch");
+        _audio = GetComponent<AudioSource>();
+        _audio.clip = cube_default_audio;
+        _audio.loop = true;
+        _audio.Play();
         //preTr_left.rotation = Quaternion.Euler(left_Rot);
         //preTr_left.position = preTr_left.position + Vector3.left;
         Debug.Log("Right_pos" + preTr_right.position + "Right_rot" + preTr_right.rotation);
         Debug.Log("Left_pos" + preTr_left.position + "Left_rot" + preTr_left.rotation);
 
-        StartCoroutine(MakeMapLeftRight());
-        StartCoroutine(MakeMapTop());
-        StartCoroutine(MakeMapLeftWall(tr));
-        StartCoroutine(MakeMapRightWall(tr));
+        //StartCoroutine(MakeMapLeftRight());
+        //StartCoroutine(MakeMapTop());
+        //StartCoroutine(MakeMapLeftWall(tr));
+        //StartCoroutine(MakeMapRightWall(tr));
 
 
     }
@@ -35,9 +53,10 @@ public class IntroAnimation : MonoBehaviour
             SceneManager.LoadScene("Intro");
 
         }
-
-
+        
     }
+
+    
 
     IEnumerator MakeMapTop()
     {
@@ -218,6 +237,8 @@ public class IntroAnimation : MonoBehaviour
         }
 
     }
+    
+
     IEnumerator MakeMapRightWall(Transform _tr)
     {
         GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
@@ -248,6 +269,41 @@ public class IntroAnimation : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
+    }
+
+    private void OnTriggerEnter(Collider coll)
+    {
+        if(!mapMake)
+        {
+            Debug.Log("걸려 들어쓰");
+            mapMake = true;
+            StartCoroutine(MapMaking());            
+        }        
+    }
+
+    IEnumerator MapMaking()
+    {
+        yield return new WaitForSeconds(0.4f);
+        _audio.Stop();
+        _audio.PlayOneShot(mapStart_audio);        
+        anim.SetBool(cubeTouch, true);
+
+        yield return new WaitForSeconds(0.9f);
+        _audio.PlayOneShot(mapMaking_audio);
+
+        gameObject.GetComponent<MeshRenderer>().enabled = true;
+        StartCoroutine(MakeMapLeftRight());
+        StartCoroutine(MakeMapTop());
+        StartCoroutine(MakeMapLeftWall(tr));
+        StartCoroutine(MakeMapRightWall(tr));
+        cubeCopy.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(4.3f);
+        PlayerController.instance.AudioCtrl();
+        _audio.PlayOneShot(mapMakingEnd_audio);
+
+        yield return new WaitForSeconds(4);
+        this.gameObject.SetActive(false);
     }
 }
 

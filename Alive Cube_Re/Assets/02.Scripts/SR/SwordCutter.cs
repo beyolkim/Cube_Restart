@@ -41,7 +41,7 @@ public class SwordCutter : MonoBehaviour {
     {
         GameObject victim = coll.collider.gameObject;
         
-        if (coll.gameObject.transform.CompareTag("CUBE") && power >= 0.8f)
+        if (coll.gameObject.transform.CompareTag("CUBE") && power >= 0.6f)
         {
             ContactPoint contact = coll.contacts[0];
             Vector3 _normal = contact.normal;

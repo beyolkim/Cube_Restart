@@ -294,12 +294,16 @@ public class IntroAnimation : MonoBehaviour
     {
         yield return new WaitForSeconds(0.4f);
         _audio.Stop();
-        _audio.PlayOneShot(mapStart_audio);        
+        _audio.PlayOneShot(mapStart_audio);
+
+        yield return new WaitForSeconds(0.5f);
         anim.SetBool(cubeTouch, true);
 
-        yield return new WaitForSeconds(0.9f);
+
+        yield return new WaitForSeconds(2.0f);
         
         tr.transform.position = tr.transform.position + Vector3.back*4; // 큐브 사라진 후 위치 재조정(사람 뒤에서 부터 생성)
+
         _audio.PlayOneShot(mapMaking_audio);
 
         gameObject.GetComponent<MeshRenderer>().enabled = true;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class SnakeCubeController : MonoBehaviour
 {
     public bool check_AllAttack;
+    public int attackCount;
     private bool double_Check;
     public enum CUBEDIR
     {
@@ -91,10 +92,10 @@ public class SnakeCubeController : MonoBehaviour
         {
 
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < attackCount; i++)
             {
                 int random_Cube = Random.Range(0, 99);
-                while (((random_Cube+1)%10 == 1 && attackDir == CUBEDIR.Left) || ((random_Cube+1) % 10 == 0 && attackDir == CUBEDIR.Right))
+                while (((random_Cube)%10 == 0 && attackDir == CUBEDIR.Left) || ((random_Cube) % 9 == 0 && attackDir == CUBEDIR.Right))
                 {
                     random_Cube = Random.Range(0, 99);
                 }
@@ -130,33 +131,5 @@ public class SnakeCubeController : MonoBehaviour
 
 
 
-    //void AttackCube()
-    //{
-    //    for (int i=0; i<1; i++)
-    //    {
-    //        int random_Cube = Random.Range(0, 1);
-
-    //        warningCubeObj[random_Cube].SetActive(true);
-            
-    //        warningCubeObj[random_Cube].SetActive(false);
-
-    //        cubeWallsObj[random_Cube].SetActive(true);
-    //        switch(attackDir)
-    //        {
-    //            case CUBEDIR.Front:
-    //                cubeWallsObj[random_Cube].GetComponent<AttackCube>().cubeDir = (float)CUBEDIR.Front;
-    //                break;
-    //            case CUBEDIR.Left:
-    //                cubeWallsObj[random_Cube].GetComponent<AttackCube>().cubeDir = (float)CUBEDIR.Left;
-    //                break;
-    //            case CUBEDIR.Right:
-    //                cubeWallsObj[random_Cube].GetComponent<AttackCube>().cubeDir = (float)CUBEDIR.Right;
-    //                break;
-
-    //        }
-    //        cubeWallsObj[random_Cube].GetComponent<AttackCube>().check_attack = false;
-    //    }
-
-    //}
 
 }

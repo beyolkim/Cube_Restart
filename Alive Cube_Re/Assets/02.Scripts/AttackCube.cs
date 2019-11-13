@@ -110,7 +110,7 @@ public class AttackCube : MonoBehaviour
         }
     
     }
-
+    //큐브 매터리얼 알파값 조절
     private void CubeAlpha(int _number, float _cubeAlphaValue)
     {
         cubeMats = BodyParts[_number].gameObject.GetComponent<MeshRenderer>().material;
@@ -182,8 +182,11 @@ public class AttackCube : MonoBehaviour
         //BodyParts[0].DOJump(targetTr.position, 3.0f, 3, 3);
         if (check_Dotween == false)
         {
+            //BodyParts[0].DOSpiral(3, null, SpiralMode.ExpandThenContract, 0.5f, 5);
             BodyParts[0].DOMove(targetTr.position, 2.0f);
             BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None);
+
+            //BodyParts[0].DOSpiral(3, null, SpiralMode.ExpandThenContract, 0.1f, 5);
 
             //첫번째 머리 오디오 추가
             attackSound = BodyParts[0].gameObject.AddComponent<AudioSource>();            
@@ -197,7 +200,8 @@ public class AttackCube : MonoBehaviour
             attackSound.Play();
 
 
-            // BodyParts[0].DOSpiral(3, null, SpiralMode.ExpandThenContract, 0.1f, 5);
+
+
             check_Dotween = !check_Dotween;
             
             

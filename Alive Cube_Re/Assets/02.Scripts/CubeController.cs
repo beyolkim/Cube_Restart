@@ -126,7 +126,7 @@ public class CubeController : MonoBehaviour
         for (int i = 1; i < cubeWallsTr.Length; i++)
         {
             cubeWallsObj[i - 1] = cubeWallsTr[i].gameObject;
-        
+            PlayerController.coint = 1;
         }
     }
 

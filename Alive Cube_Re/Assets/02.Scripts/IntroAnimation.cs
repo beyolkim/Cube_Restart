@@ -13,6 +13,14 @@ public class IntroAnimation : MonoBehaviour
     private Transform nextTr;
     private List<GameObject> nowObjs = new List<GameObject>();
     private bool mapMake = false;
+    //인스턴스 큐브 오브젝트
+    private GameObject nextObj;
+
+    //큐브 매터리얼 정보
+    private Material cubeLine;
+    private float lineX;
+    private float lineY;
+    private GameObject tempObj; 
 
     private Animator anim;
     private int cubeTouch;
@@ -41,7 +49,8 @@ public class IntroAnimation : MonoBehaviour
         //StartCoroutine(MakeMapTop());
         //StartCoroutine(MakeMapLeftWall(tr));
         //StartCoroutine(MakeMapRightWall(tr));
-
+        nextObj = Resources.Load("MakeIntroCube") as GameObject;
+        cubeLine = Resources.Load("CubeGridLines_Glow") as Material;
 
     }
 
@@ -60,7 +69,7 @@ public class IntroAnimation : MonoBehaviour
 
     IEnumerator MakeMapTop()
     {
-        GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
+        //GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
         Vector3 left_Rot = new Vector3(0, 180.0f, 0);
         Vector3 right_dir = Vector3.zero;
         Vector3 left_dir = Vector3.zero;
@@ -108,7 +117,7 @@ public class IntroAnimation : MonoBehaviour
 
     IEnumerator MakeMapLeftRight()
     {
-        GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
+        //GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
         Vector3 left_Rot = new Vector3(0, 180.0f, 0);
         Vector3 right_dir = Vector3.zero;
         Vector3 left_dir = Vector3.zero;
@@ -155,7 +164,7 @@ public class IntroAnimation : MonoBehaviour
 
     IEnumerator MakeMapForwardBack(Transform _tr)
     {
-        GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
+        //GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
 
         Vector3 forward_Rot = new Vector3(0.0f, 270.0f, 0.0f);
         Vector3 forward_dir_Var = new Vector3(-0.5f, 0, 0.5f);
@@ -183,7 +192,7 @@ public class IntroAnimation : MonoBehaviour
 
     IEnumerator MakeMapUp(Transform _tr, int _dirnum)
     {
-        GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
+        //GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
         Vector3 up_Rot = new Vector3(0.0f, 0.0f, 180.0f);
         Vector3 up_dir_Var = new Vector3(1.0f, 1.0f, 0.0f);
         Vector3 up_Rot_Var = new Vector3(0.0f, 0.0f, 270.0f);
@@ -208,7 +217,7 @@ public class IntroAnimation : MonoBehaviour
 
     IEnumerator MakeMapLeftWall(Transform _tr)
     {
-        GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
+        //GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
         Vector3 LeftWall_Rot = new Vector3(0.0f, 0.0f, 90.0f);
         Vector3 LeftWall_dir_Var = new Vector3(0.0f, -1.0f, 0.0f);
         Vector3 LeftWall_Rot_Var = new Vector3(0.0f, 0.0f, 0.0f);
@@ -241,7 +250,7 @@ public class IntroAnimation : MonoBehaviour
 
     IEnumerator MakeMapRightWall(Transform _tr)
     {
-        GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
+        //GameObject nextObj = Resources.Load("MakeIntroCube") as GameObject;
         Vector3 RightWall_Rot = new Vector3(0.0f, 0.0f, 90.0f);
         Vector3 RightWall_dir_Var = new Vector3(0.0f, -1.0f, 0.0f);
         Vector3 RightWall_Rot_Var = new Vector3(0.0f, 0.0f, 0.0f);
@@ -289,6 +298,8 @@ public class IntroAnimation : MonoBehaviour
         anim.SetBool(cubeTouch, true);
 
         yield return new WaitForSeconds(0.9f);
+        
+        tr.transform.position = tr.transform.position + Vector3.back*4; // 큐브 사라진 후 위치 재조정(사람 뒤에서 부터 생성)
         _audio.PlayOneShot(mapMaking_audio);
 
         gameObject.GetComponent<MeshRenderer>().enabled = true;
@@ -296,8 +307,16 @@ public class IntroAnimation : MonoBehaviour
         StartCoroutine(MakeMapTop());
         StartCoroutine(MakeMapLeftWall(tr));
         StartCoroutine(MakeMapRightWall(tr));
+
         cubeCopy.gameObject.SetActive(true);
 
+        //tempObj = nextObj.gameObject.transform.GetChild(0).gameObject;
+        //cubeLine = tempObj.GetComponent<MeshRenderer>().material;
+        lineX = 2;
+        lineY = 2;
+
+        cubeLine.SetVector("_WallCubeGrid", new Vector2(lineX,lineY));
+        
         yield return new WaitForSeconds(4.3f);
         PlayerController.instance.AudioCtrl();
         _audio.PlayOneShot(mapMakingEnd_audio);

@@ -7,6 +7,14 @@ public class AttackCube : MonoBehaviour
 
     public List<Transform> BodyParts = new List<Transform>();
 
+    //스파이럴움직임
+    float timeCounter = 0;
+
+    float spiralspeed;
+    float width;
+    float height;
+
+
     //오디오 부분
     private AudioSource attackSound;
     private AudioClip cubeHead_Audio;
@@ -41,6 +49,10 @@ public class AttackCube : MonoBehaviour
 
     void Start()
     {
+
+        spiralspeed = 1;
+        width = 1;
+        height = 1;
         for (int i = 0; i < beginSize - 1; i++)
         {
             AddBodyPart();
@@ -83,7 +95,7 @@ public class AttackCube : MonoBehaviour
         if(check_Dotween == true)
         {
             mySequence.Append(BodyParts[0].DOMove(firstTr.position, 1.0f))
-                      .Append(BodyParts[0].DOLocalMoveZ(15.0f, 2.0f));
+                      .Append(BodyParts[0].DOLocalMoveZ(15.0f, 1.0f));
             //BodyParts[0].DOMove(firstTr.position, 1.0f);
             //BodyParts[0].DOLocalMoveZ(15.0f, 2.0f);
             //오디오 뒤로 갈 경우 AudioSource 끄거나 오디오 사운드 바꾸기?
@@ -188,9 +200,11 @@ public class AttackCube : MonoBehaviour
         if (check_Dotween == false)
         {
             //BodyParts[0].DOSpiral(3, null, SpiralMode.ExpandThenContract, 0.5f, 5);
-            //mySequence.Append(BodyParts[0].DOMove(targetTr.position, 2.0f))
-            //          .Join(BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None));
-            BodyParts[0].DOMove(targetTr.position, 2.0f);
+            mySequence.Append(BodyParts[0].DOMove(targetTr.position, 2.0f))
+                      .Join(BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None));
+            //BodyParts[0].DOMove(targetTr.position, 2.0f);
+
+            
             //BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None);
 
 

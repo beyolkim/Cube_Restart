@@ -215,6 +215,7 @@ public class AttackCube : MonoBehaviour
             attackSound.priority = 10;
             attackSound.spatialBlend = 1;
             attackSound.dopplerLevel = 3;
+            attackSound.minDistance = 2;
             attackSound.maxDistance = 50;
             attackSound.rolloffMode = AudioRolloffMode.Logarithmic;
             attackSound.clip = cubeHead_Audio;

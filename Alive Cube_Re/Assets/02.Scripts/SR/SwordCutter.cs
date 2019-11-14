@@ -52,7 +52,7 @@ public class SwordCutter : MonoBehaviour {
             Destroy(_hit, 1.5f);
 
             GameObject[] pieces = BLINDED_AM_ME.MeshCut.Cut(victim, transform.position, transform.right, capMaterial);
-            Debug.Log(power);
+            //Debug.Log(power);
 
             //큐브 되돌아가기
             victim.GetComponentInParent<AttackCube>().check_attack = true;

@@ -6,7 +6,7 @@ public class AttackController : MonoBehaviour
 {
     
     public static int scoreCount;
-    public static int playerHp;
+    public static int playerHp = 6;
     public static AttackController instance;
 
     private int turnRandomNum01;
@@ -16,8 +16,7 @@ public class AttackController : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
-        playerHp = 3;
+        instance = this;        
     }
     private void Start()
     {
@@ -27,7 +26,11 @@ public class AttackController : MonoBehaviour
 
     IEnumerator AttackTurn()
     {
-        while (scoreCount != 100)
+        PlayerController.instance.CountDown_Audio();
+
+        yield return new WaitForSeconds(13f);
+
+        while (AttackController.playerHp != 0)
         {
             turnRandomNum01 = Random.Range(0, 3);
             turnRandomNum02 = Random.Range(0, 3);

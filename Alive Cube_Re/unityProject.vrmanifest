@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.alivecube.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "D:\\FinalProject\\Cube_Restart\\Alive Cube_Re\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "action_manifest_path": "D:\\Cube_Restart\\Alive Cube_Re\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
           "name": "Alive Cube [Testing]"

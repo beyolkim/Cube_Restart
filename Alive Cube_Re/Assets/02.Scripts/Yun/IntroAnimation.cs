@@ -12,8 +12,7 @@ public class IntroAnimation : MonoBehaviour
     //메인큐브맵 오브젝트
     public GameObject maincubeMap;
 
-    public Transform tr;
-    public GameObject cubeCopy;
+    public Transform tr;    
     private Transform preTr_right;
     private Transform preTr_left;
     private Transform nextTr;
@@ -313,7 +312,7 @@ public class IntroAnimation : MonoBehaviour
 
         yield return new WaitForSeconds(2.0f);
         
-        tr.transform.position = tr.transform.position + Vector3.back*4; // 큐브 사라진 후 위치 재조정(사람 뒤에서 부터 생성)
+        tr.transform.position = tr.transform.position + Vector3.back*4 + Vector3.down*1.5f; // 큐브 사라진 후 위치 재조정(사람 뒤에서 부터 생성)
 
         _audio.PlayOneShot(mapMaking_audio);
 
@@ -322,10 +321,7 @@ public class IntroAnimation : MonoBehaviour
         StartCoroutine(MakeMapTop());
         StartCoroutine(MakeMapLeftWall(tr));
         StartCoroutine(MakeMapRightWall(tr));
-
-        cubeCopy.gameObject.SetActive(true);
-
-            
+                    
         yield return new WaitForSeconds(4.3f);
         PlayerController.instance.AudioCtrl();
         _audio.PlayOneShot(mapMakingEnd_audio);

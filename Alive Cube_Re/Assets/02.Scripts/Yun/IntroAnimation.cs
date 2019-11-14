@@ -312,7 +312,7 @@ public class IntroAnimation : MonoBehaviour
 
         yield return new WaitForSeconds(2.0f);
         
-        tr.transform.position = tr.transform.position + Vector3.back*4 + Vector3.down*1.5f; // 큐브 사라진 후 위치 재조정(사람 뒤에서 부터 생성)
+        tr.transform.position = tr.transform.position + Vector3.back*4.5f + Vector3.down*2.2f; // 큐브 사라진 후 위치 재조정(사람 뒤에서 부터 생성)
 
         _audio.PlayOneShot(mapMaking_audio);
 

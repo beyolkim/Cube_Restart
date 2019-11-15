@@ -9,8 +9,8 @@ public class SnakeCubeController : MonoBehaviour
     public enum CUBEDIR
     {
         Front = -15
-      , Left = -6
-      , Right = -5
+      , Left = -8
+      , Right = -9
     }
 
     public CUBEDIR attackDir = CUBEDIR.Front;

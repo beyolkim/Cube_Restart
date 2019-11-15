@@ -63,7 +63,7 @@ public class AttackCube : MonoBehaviour
         
         if ((BodyParts[0].localPosition - firstTr.position).z < cubeDir)
         {
-            Invoke("delayCheck", 2.0f);
+            Invoke("delayCheck", 4.0f);
         }
         if (check_attack==false)
         {
@@ -174,11 +174,11 @@ public class AttackCube : MonoBehaviour
         {
 
             waitpoint[0] = BodyParts[0].transform.position + Vector3.forward * -2.0f;
-            waitpoint[1] = BodyParts[0].transform.localPosition + new Vector3(Random.Range(-8.0f, -1.0f), Random.Range(2.0f, 8.0f), Random.Range(2.0f, 7.0f));
-            waitpoint[2] = BodyParts[0].transform.localPosition + new Vector3(Random.Range(-8.0f, -1.0f), Random.Range(2.0f, 8.0f), Random.Range(2.0f, 7.0f));
+            waitpoint[1] = BodyParts[0].transform.localPosition + new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(2.0f, 8.0f), Random.Range(3.0f, 7.0f));
+            waitpoint[2] = BodyParts[0].transform.localPosition + new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(2.0f, 8.0f), Random.Range(3.0f, 7.0f));
             waitpoint[3] = targetTr.position;
 
-            BodyParts[0].DOPath(waitpoint, 3.0f, PathType.CatmullRom, PathMode.Full3D, 10, Color.red).SetLookAt(targetTr).SetEase(Ease.InExpo);
+            BodyParts[0].DOPath(waitpoint, 4.0f, PathType.CatmullRom, PathMode.Full3D, 10, Color.red).SetLookAt(targetTr)/*.SetEase(Ease.InOutCirc)*/;
 
 
             //mySequence.Append(BodyParts[0].DOMove(targetTr.position, 2.0f))

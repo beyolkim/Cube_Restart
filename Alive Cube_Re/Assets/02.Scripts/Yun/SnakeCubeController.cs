@@ -9,7 +9,7 @@ public class SnakeCubeController : MonoBehaviour
     public enum CUBEDIR
     {
         Front = -15
-      , Left = -8
+      , Left = -4
       , Right = -9
     }
 

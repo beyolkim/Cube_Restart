@@ -227,8 +227,20 @@ public class AttackCube : MonoBehaviour
             {
                 T = 0.5f;
             }
-            curBodypart.position = Vector3.Lerp(curBodypart.position, newpos + disTarget.normalized * (-1.2f), T);
-            curBodypart.rotation = Quaternion.Lerp(curBodypart.rotation, prevBodypart.rotation, T);
+          
+
+            if (BodyParts[0].position ==targetTr.position)
+            {
+                
+                curBodypart.position = Vector3.Slerp(curBodypart.position, newpos + disTarget.normalized * (-0.5f), T);
+                curBodypart.rotation = Quaternion.Slerp(curBodypart.rotation, prevBodypart.rotation, T);
+            }
+            else
+            {
+                curBodypart.position = Vector3.Slerp(curBodypart.position, newpos , T);
+                curBodypart.rotation = Quaternion.Slerp(curBodypart.rotation, prevBodypart.rotation, T);
+
+            }
 
         }
     }

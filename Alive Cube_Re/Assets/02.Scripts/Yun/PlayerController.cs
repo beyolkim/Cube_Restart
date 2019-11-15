@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 
     private AudioSource _audio;
     public AudioClip intro_audio;
+    public AudioClip mapMaking_audio;
+    public AudioClip mapMakingEnd_audio;
     public AudioClip countDown_audio;
     public AudioClip gameOver_audio;
 
@@ -17,6 +19,15 @@ public class PlayerController : MonoBehaviour
     public static int coint = 0;
 
     public bool playerDie = false;
+
+    private void OnEnable()
+    {
+        IntroAnimation.IntroAudio += MapMaking_Audio;
+    }
+    private void OnDisable()
+    {
+        IntroAnimation.IntroAudio -= MapMaking_Audio;
+    }
 
     void Start()
     {
@@ -44,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(!playerDie && AttackController.playerHp == 0)
+        if(!playerDie && AttackController.playerHp <= 0)
         {            
             Debug.Log("Game Over");
             _audio.PlayOneShot(gameOver_audio);
@@ -52,9 +63,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void AudioCtrl()
+    public void MapMaking_Audio()
     {
         _audio.Stop();
+        _audio.PlayOneShot(mapMaking_audio);
+
+    }
+    public void _IntroAudio()
+    {
+        _audio.PlayOneShot(mapMakingEnd_audio);
     }
 
     public void CountDown_Audio()

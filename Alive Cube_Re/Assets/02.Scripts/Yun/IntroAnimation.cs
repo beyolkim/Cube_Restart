@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class IntroAnimation : MonoBehaviour
 {
+    public delegate void AudioHandler();
+    public static AudioHandler IntroAudio;
     //빈오브젝트 생성
     GameObject emptyGameObject;
 
@@ -31,8 +33,6 @@ public class IntroAnimation : MonoBehaviour
     private AudioSource _audio;
     public AudioClip cube_default_audio;
     public AudioClip mapStart_audio;
-    public AudioClip mapMaking_audio;
-    public AudioClip mapMakingEnd_audio;
 
     void Start()
     {
@@ -304,27 +304,26 @@ public class IntroAnimation : MonoBehaviour
     {
         yield return new WaitForSeconds(0.4f);
         _audio.Stop();
-        _audio.PlayOneShot(mapStart_audio);
+        _audio.PlayOneShot(mapStart_audio);        
 
         yield return new WaitForSeconds(0.5f);
         anim.SetBool(cubeTouch, true);
+        HelpMe_Audio.instance.AudioStop();
 
 
         yield return new WaitForSeconds(2.0f);
-        
-        tr.transform.position = tr.transform.position + Vector3.back*4.5f + Vector3.down*2.2f; // 큐브 사라진 후 위치 재조정(사람 뒤에서 부터 생성)
 
-        _audio.PlayOneShot(mapMaking_audio);
+        tr.transform.position = tr.transform.position + Vector3.back * 4.5f + Vector3.down * 2.2f; // 큐브 사라진 후 위치 재조정(사람 뒤에서 부터 생성)
 
-        gameObject.GetComponent<MeshRenderer>().enabled = true;
+        IntroAudio();
+                    
         StartCoroutine(MakeMapLeftRight());
         StartCoroutine(MakeMapTop());
         StartCoroutine(MakeMapLeftWall(tr));
         StartCoroutine(MakeMapRightWall(tr));
                     
         yield return new WaitForSeconds(4.3f);
-        PlayerController.instance.AudioCtrl();
-        _audio.PlayOneShot(mapMakingEnd_audio);
+        PlayerController.instance._IntroAudio();
         
         //큐브라인 생성
         cubeLine.DOVector(new Vector2(2, 2), "_WallCubeGrid", 2.5f).SetEase(Ease.OutQuad);

@@ -30,7 +30,7 @@ public class AttackController : MonoBehaviour
 
         yield return new WaitForSeconds(13f);
 
-        while (AttackController.playerHp != 0)
+        while (playerHp != 0)
         {
             turnRandomNum01 = Random.Range(0, 3);
             turnRandomNum02 = Random.Range(0, 3);

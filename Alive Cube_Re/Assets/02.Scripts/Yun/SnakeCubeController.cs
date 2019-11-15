@@ -94,9 +94,12 @@ public class SnakeCubeController : MonoBehaviour
             for (int i = 0; i < 1; i++)
             {
                 int random_Cube = Random.Range(0, 99);
+                //int random_Cube = 0;
                 while (((random_Cube)%10 == 0 && attackDir == CUBEDIR.Left) || ((random_Cube) % 9 == 0 && attackDir == CUBEDIR.Right))
                 {
+
                     random_Cube = Random.Range(0, 99);
+                    //random_Cube = 0;
                 }
 
                 warningCubeObj[random_Cube].SetActive(true);

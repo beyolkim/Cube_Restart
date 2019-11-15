@@ -8,12 +8,7 @@ public class AttackCube : MonoBehaviour
     public List<Transform> BodyParts = new List<Transform>();
 
     //스파이럴움직임
-    float timeCounter = 0;
-
-    float spiralspeed;
-    float width;
-    float height;
-
+    Vector3[] waitpoint = new Vector3[4];
 
     //오디오 부분
     private AudioSource attackSound;
@@ -50,9 +45,7 @@ public class AttackCube : MonoBehaviour
     void Start()
     {
 
-        spiralspeed = 1;
-        width = 1;
-        height = 1;
+       
         for (int i = 0; i < beginSize - 1; i++)
         {
             AddBodyPart();
@@ -65,7 +58,7 @@ public class AttackCube : MonoBehaviour
         
     }
 
-    void Update()
+    void FixedUpdate()
     {
         
         if ((BodyParts[0].localPosition - firstTr.position).z < cubeDir)
@@ -94,37 +87,17 @@ public class AttackCube : MonoBehaviour
         float curspeed = speed;
         if(check_Dotween == true)
         {
-            mySequence.Append(BodyParts[0].DOMove(firstTr.position, 1.0f))
-                      .Append(BodyParts[0].DOLocalMoveZ(15.0f, 1.0f));
+           mySequence.Append(BodyParts[0].DOMove(firstTr.position, 1.0f))
+                     .Join(BodyParts[0].DOLocalMoveZ(15.0f, 1.0f));
+            //BodyParts[0].DOLocalMoveZ(15.0f, 1.0f);
             //BodyParts[0].DOMove(firstTr.position, 1.0f);
             //BodyParts[0].DOLocalMoveZ(15.0f, 2.0f);
             //오디오 뒤로 갈 경우 AudioSource 끄거나 오디오 사운드 바꾸기?
             attackSound.enabled = false;
             check_Dotween = !check_Dotween;
         }
-        for (int i = 1; i < BodyParts.Count; i++)
-        {
-            curBodypart = BodyParts[i];
-            prevBodypart = BodyParts[i - 1];
+        SnakeMove(speed);
 
-            dis = Vector3.Distance(prevBodypart.position, curBodypart.position);
-
-            //Vector3 newpos = prevBodypart.position;
-
-            //newpos.y = BodyParts[0].position.y;
-
-            float T = Time.deltaTime * dis / minDistance * curspeed;
-            if (T > 0.5f)
-            {
-                T = 0.5f;
-            }
-            
-            //curBodypart.position = Vector3.MoveTowards(curBodypart.position, prevBodypart.position, T);
-            curBodypart.position = Vector3.Lerp(curBodypart.position, prevBodypart.position, T);
-            curBodypart.rotation = Quaternion.Lerp(curBodypart.rotation, prevBodypart.rotation, T);
-
-        }
-    
     }
     //큐브 매터리얼 알파값 조절
     private void CubeAlpha(int _number, float _cubeAlphaValue)
@@ -194,18 +167,22 @@ public class AttackCube : MonoBehaviour
     {
         
         float curspeed = speed;
-        Sequence mySequence = DOTween.Sequence();
+        //Sequence mySequence = DOTween.Sequence();
 
 
         if (check_Dotween == false)
         {
-            //BodyParts[0].DOSpiral(3, null, SpiralMode.ExpandThenContract, 0.5f, 5);
-            mySequence.Append(BodyParts[0].DOMove(targetTr.position, 2.0f))
-                      .Join(BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None));
-            //BodyParts[0].DOMove(targetTr.position, 2.0f);
 
-            
-            //BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None);
+            waitpoint[0] = BodyParts[0].transform.position + Vector3.forward * -2.0f;
+            waitpoint[1] = BodyParts[0].transform.localPosition + new Vector3(Random.Range(-8.0f, -1.0f), Random.Range(2.0f, 8.0f), Random.Range(2.0f, 7.0f));
+            waitpoint[2] = BodyParts[0].transform.localPosition + new Vector3(Random.Range(-8.0f, -1.0f), Random.Range(2.0f, 8.0f), Random.Range(2.0f, 7.0f));
+            waitpoint[3] = targetTr.position;
+
+            BodyParts[0].DOPath(waitpoint, 3.0f, PathType.CatmullRom, PathMode.Full3D, 10, Color.red).SetLookAt(targetTr).SetEase(Ease.InExpo);
+
+
+            //mySequence.Append(BodyParts[0].DOMove(targetTr.position, 2.0f))
+            //          .Join(BodyParts[0].DOLookAt(targetTr.eulerAngles, 1.0f, AxisConstraint.None));
 
 
             //첫번째 머리 오디오 추가
@@ -228,7 +205,12 @@ public class AttackCube : MonoBehaviour
             
             
         }
+        SnakeMove(speed);
+             
+    }
 
+    private void SnakeMove(float _curspeed)
+    {
         for (int i = 1; i < BodyParts.Count; i++)
         {
             curBodypart = BodyParts[i];
@@ -240,7 +222,7 @@ public class AttackCube : MonoBehaviour
 
             //newpos.y = BodyParts[0].position.y;
 
-            float T = Time.deltaTime * dis / minDistance * curspeed;
+            float T = Time.deltaTime * dis / minDistance * _curspeed;
             if (T > 0.5f)
             {
                 T = 0.5f;
@@ -249,8 +231,8 @@ public class AttackCube : MonoBehaviour
             curBodypart.rotation = Quaternion.Lerp(curBodypart.rotation, prevBodypart.rotation, T);
 
         }
-        
     }
+
     public void AddBodyPart()
     {
         Transform newpart = (Instantiate(bodyprefab, BodyParts[BodyParts.Count - 1].position, BodyParts[BodyParts.Count -1].rotation) as GameObject).transform;

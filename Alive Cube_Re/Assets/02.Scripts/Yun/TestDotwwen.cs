@@ -5,11 +5,7 @@ using DG.Tweening;
 public class TestDotwwen : MonoBehaviour
 {
     // Start is called before the first frame update
-    float timeCounter = 0;
 
-    float speed;
-    float width;
-    float height;
     public Transform target;
     public float homingDelay = 1f;
     public float maxSpeed = 50f;
@@ -37,7 +33,7 @@ public class TestDotwwen : MonoBehaviour
 
         float t = 0;
         t += Time.deltaTime / (homingDelay + 0.0001f) * 100f;
-        this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.ClampMagnitude(Vector3.Slerp(this.gameObject.GetComponent<Rigidbody>().velocity, this.gameObject.GetComponent<Rigidbody>().velocity + diff * speed * 0.01f * f, t), maxSpeed);
+        this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.ClampMagnitude(Vector3.Slerp(this.gameObject.GetComponent<Rigidbody>().velocity, this.gameObject.GetComponent<Rigidbody>().velocity + diff * 1 * 0.01f * f, t), maxSpeed);
         //for (int i = 0; i < numParticlesAlive; i++)
         //{
         //}

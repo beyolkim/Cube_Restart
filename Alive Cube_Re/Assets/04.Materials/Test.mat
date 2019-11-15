@@ -8,9 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Test
-  m_Shader: {fileID: 4800000, guid: 9d1427f91e5a4114692ce69a5b2f2dbc, type: 3}
-  m_ShaderKeywords: _DISSOLVEALPHASOURCE_TWO_CUSTOM_MAPS _DISSOLVEMASK_XYZ_AXIS _DISTORTION_ON
-    _FADING_ON _RECEIVE_SHADOWS_OFF _SOFTPARTICLES_ON _SPECULAR_COLOR
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_ShaderKeywords: _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -166,7 +165,7 @@ Material:
     - _Dissolve_ObjectWorldPos: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SoftParticleFadeParams: {r: 0.41, g: 1.6949153, b: 0, a: 0}
-    - _SpecColor: {r: 0.6792453, g: 0.22747979, b: 0.22747979, a: 0.866}
+    - _SpecColor: {r: 0.6792453, g: 0.22747976, b: 0.22747976, a: 0.866}
     - _UvOffset: {r: 0, g: 0, b: 0, a: 0}
     - _UvTiling: {r: 1, g: 1, b: 0, a: 0}
 --- !u!114 &8007872541927417703

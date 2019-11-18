@@ -39,16 +39,17 @@ public class AttackCube : MonoBehaviour
 
     public bool check_attack;
     private bool check_Dotween;
-    
 
-
+    public bool targetCheck;
+   
     void Start()
     {
 
-       
+        // 머리를 제외한 꼬리부분 생성
         for (int i = 0; i < beginSize - 1; i++)
         {
             AddBodyPart();
+            //BodyParts[i+1].localScale = BodyParts[i + 1].localScale - ((Vector3.one)*(i+1)*0.05f);
         }
 
         firstTr = this.gameObject.transform;
@@ -61,9 +62,10 @@ public class AttackCube : MonoBehaviour
     void FixedUpdate()
     {
         
-        if ((BodyParts[0].localPosition - firstTr.position).z < cubeDir)
+        //if ((BodyParts[0].localPosition - firstTr.position).z < cubeDir)
+        if (targetCheck == true) // 타켓에 도착시 
         {
-            Invoke("delayCheck", 4.0f);
+            Invoke("delayCheck", 3.0f);
         }
         if (check_attack==false)
         {
@@ -229,7 +231,7 @@ public class AttackCube : MonoBehaviour
             }
           
 
-            if (BodyParts[0].position ==targetTr.position)
+            if (targetCheck == true)
             {
                 
                 curBodypart.position = Vector3.Slerp(curBodypart.position, newpos + disTarget.normalized * (-0.5f), T);

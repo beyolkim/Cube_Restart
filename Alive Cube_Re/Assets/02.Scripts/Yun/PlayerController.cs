@@ -8,11 +8,15 @@ public class PlayerController : MonoBehaviour
 
     public static PlayerController instance = null;
 
+    private bool playerHit = false;
+    public GameObject hitEffect;
+
     private AudioSource _audio;
     public AudioClip intro_audio;
     public AudioClip mapMaking_audio;
     public AudioClip mapMakingEnd_audio;
     public AudioClip countDown_audio;
+    public AudioClip hit_audio;
     public AudioClip gameOver_audio;
 
 
@@ -46,7 +50,12 @@ public class PlayerController : MonoBehaviour
         {
             
             Debug.Log("맞았다!!!");
+            _audio.PlayOneShot(hit_audio);
             AttackController.playerHp--;
+            if(!playerHit)
+            {
+                StartCoroutine(HitEffect());
+            }            
             Debug.Log("PlayerHP : " + AttackController.playerHp);
             
         }
@@ -63,7 +72,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void MapMaking_Audio()
+    public void MapMaking_Audio() //Intro 씬에서 Intro큐브를 trigger하면 audiosource가 있는 그 큐브의 위치가 바뀌어서 어쩔 수 없음
     {
         _audio.Stop();
         _audio.PlayOneShot(mapMaking_audio);
@@ -79,4 +88,16 @@ public class PlayerController : MonoBehaviour
         _audio.PlayOneShot(countDown_audio);
 
     }
+    IEnumerator HitEffect()
+    {
+        playerHit = true;
+        this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        hitEffect.SetActive(true);
+        
+        yield return new WaitForSeconds(2.5f); //Player가 맞으면 2.5초간 무적
+        hitEffect.SetActive(false);
+        this.gameObject.GetComponent<CapsuleCollider>().enabled = true;
+        playerHit = false;        
+    }
+
 }

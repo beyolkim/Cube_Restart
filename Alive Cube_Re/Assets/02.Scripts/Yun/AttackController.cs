@@ -26,11 +26,11 @@ public class AttackController : MonoBehaviour
 
     IEnumerator AttackTurn()
     {
-        PlayerController.instance.CountDown_Audio();
+        //PlayerController.instance.CountDown_Audio();
 
-        yield return new WaitForSeconds(13f);
+        //yield return new WaitForSeconds(13f);
 
-        while (playerHp != 0)
+        while (playerHp > 0)
         {
             turnRandomNum01 = Random.Range(0, 3);
             turnRandomNum02 = Random.Range(0, 3);

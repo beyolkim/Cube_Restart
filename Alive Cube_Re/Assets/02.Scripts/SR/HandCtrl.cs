@@ -12,13 +12,13 @@ public class HandCtrl : MonoBehaviour
     public SteamVR_Action_Boolean trigger = SteamVR_Actions.default_InteractUI;
     public SteamVR_Action_Vibration haptic = SteamVR_Actions.default_Haptic;
 
-    public GameObject sword;
+    public GameObject[] sword;
     public Transform sword_particle_pos;
     public GameObject sword_particle;
 
-    private float swordValue = 0.5f;
+    private float[] swordValue = new float[14];
     private float[] gunValue = new float[4]; //gun 파트의 각각의 gunValue 선언
-    private Material swordMat;
+    private Material[] swordMat = new Material[14];
     private Material[] gunMat = new Material[4]; //public이 아닌 private로 선언할 때는 new배열로 선언 필요
 
     private bool swordOn = false;
@@ -44,7 +44,11 @@ public class HandCtrl : MonoBehaviour
 
     void Start()
     {        
-        swordMat = sword.GetComponent<MeshRenderer>().material;
+        for(int i =0; i < 14; i ++)
+        {
+            swordValue[i] = 0.5f;
+            swordMat[i] = sword[i].GetComponent<MeshRenderer>().material;
+        }       
 
 
         for (int i = 0; i < 4; i++)
@@ -62,7 +66,7 @@ public class HandCtrl : MonoBehaviour
 
         _audio = GetComponent<AudioSource>();
 
-        Debug.Log("씬 이름 : " + sword.scene.name + "!!!");
+        Debug.Log("씬 이름 : " + this.gameObject.scene.name + "!!!");
     }
 
     
@@ -120,13 +124,19 @@ public class HandCtrl : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f); //Spawn 파티클 나오고 칼 생성되도록
         _audio.PlayOneShot(swordSpawn);
-        while (swordValue >= -0.9f)
+        while (swordValue[0] >= -0.9f)
         {
-            swordValue -= 0.015f;
-            swordMat.SetFloat("_Dissolve", swordValue);
+            for(int i = 0; i < 14; i++)
+            {
+                swordValue[i] -= 0.015f;
+                swordMat[i].SetFloat("_Dissolve", swordValue[i]);                
+            }
             yield return new WaitForSeconds(0.015f);
         }
-        sword.GetComponent<MeshCollider>().enabled = true;
+        for(int i = 0; i < 14; i++)
+        {
+            sword[i].GetComponent<MeshCollider>().enabled = true;
+        }        
     }
 
     IEnumerator GunSpawn()

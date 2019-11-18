@@ -178,7 +178,7 @@ public class AttackCube : MonoBehaviour
             waitpoint[2] = BodyParts[0].transform.localPosition + new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(2.0f, 8.0f), Random.Range(3.0f, 7.0f));
             waitpoint[3] = targetTr.position;
 
-            BodyParts[0].DOPath(waitpoint, 4.0f, PathType.CatmullRom, PathMode.Full3D, 10, Color.red).SetLookAt(targetTr)/*.SetEase(Ease.InOutCirc)*/;
+            BodyParts[0].DOPath(waitpoint, 4.0f, PathType.CatmullRom, PathMode.Full3D, 10, Color.red).SetLookAt(targetTr).SetEase(Ease.InFlash);
 
 
             //mySequence.Append(BodyParts[0].DOMove(targetTr.position, 2.0f))

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WallGrid
-  m_Shader: {fileID: -6465566751694194690, guid: 62f3e699be105b54b86583031f890e6a,
+  m_Shader: {fileID: -6465566751694194690, guid: d1204954996baca49b558bf3130e407b,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4

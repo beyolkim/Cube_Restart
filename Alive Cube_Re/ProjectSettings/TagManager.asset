@@ -18,6 +18,7 @@ TagManager:
   - ENEMY
   - PURPLEMON
   - REDMON
+  - TARGET
   layers:
   - Default
   - TransparentFX

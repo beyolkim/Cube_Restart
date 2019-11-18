@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Dissolve_Sword
-  m_Shader: {fileID: -6465566751694194690, guid: 31114b9c27bf4e2498075907e5617ae8,
+  m_Shader: {fileID: -6465566751694194690, guid: b7a201567321aec42bfa683e24c0bd7a,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -58,11 +58,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_4DAAE770_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 721a3752ecad6544a9388aa97caaa857, type: 3}
+        m_Texture: {fileID: 2800000, guid: 894bad07d08b2f94abedc103507e8f4a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_9818E318_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 384eccbd8dca0014b99eeb8e528b81ca, type: 3}
+        m_Texture: {fileID: 2800000, guid: 85863cb64a3edcd44a1b03a871e466de, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_B50C6540_Texture_1:
@@ -70,7 +70,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_FFC6BEE8_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 23b40a2c95033494abe459ad8ba5bb98, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4c503f2f2edee36449514ec87d398276, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -84,7 +84,8 @@ Material:
     - _BumpScale: 1
     - _Cull: 2
     - _Cutoff: 0.5
-    - _Dissolve: -1.14
+    - _Dissolve: -1.06
+    - _DissolveSword: -1.27
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
@@ -103,6 +104,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_4819D326: {r: 0, g: 2.070588, b: 16, a: 0}
+    - Color_E575DE6: {r: 4, g: 4, b: 4, a: 0}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

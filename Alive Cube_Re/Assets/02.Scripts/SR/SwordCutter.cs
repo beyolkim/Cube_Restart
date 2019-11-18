@@ -23,7 +23,6 @@ public class SwordCutter : MonoBehaviour {
     private AudioSource _audio;
     public AudioClip[] swordHit;
 
-   
 
     private void Start()
     {
@@ -55,10 +54,13 @@ public class SwordCutter : MonoBehaviour {
             //Debug.Log(power);
 
             //큐브 되돌아가기
-            victim.GetComponentInParent<AttackCube>().check_attack = true;
-            AttackController.scoreCount++;
-            GameObject fragment = Instantiate(Resources.Load("PurplePiece") as GameObject);
-            fragment.transform.position = victim.transform.position;
+                victim.GetComponentInParent<AttackCube>().check_attack = true;
+                AttackController.scoreCount++;
+                GameObject fragment = Instantiate(Resources.Load("PurplePiece") as GameObject);
+                fragment.transform.position = victim.transform.position;
+            //if(coll.gameObject == victim.GetComponentInParent<AttackCube>().BodyParts[2])
+            //{
+            //}
 
             if (!pieces[1].GetComponent<Rigidbody>())
             {

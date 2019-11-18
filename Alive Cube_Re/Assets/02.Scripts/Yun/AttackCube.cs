@@ -39,16 +39,17 @@ public class AttackCube : MonoBehaviour
 
     public bool check_attack;
     private bool check_Dotween;
-    
 
-
+    public bool targetCheck;
+   
     void Start()
     {
 
-       
+        // 머리를 제외한 꼬리부분 생성
         for (int i = 0; i < beginSize - 1; i++)
         {
             AddBodyPart();
+            //BodyParts[i+1].localScale = BodyParts[i + 1].localScale - ((Vector3.one)*(i+1)*0.05f);
         }
 
         firstTr = this.gameObject.transform;
@@ -61,9 +62,10 @@ public class AttackCube : MonoBehaviour
     void FixedUpdate()
     {
         
-        if ((BodyParts[0].localPosition - firstTr.position).z < cubeDir)
+        //if ((BodyParts[0].localPosition - firstTr.position).z < cubeDir)
+        if (targetCheck == true) // 타켓에 도착시 
         {
-            Invoke("delayCheck", 4.0f);
+            Invoke("delayCheck", 3.0f);
         }
         if (check_attack==false)
         {
@@ -178,7 +180,7 @@ public class AttackCube : MonoBehaviour
             waitpoint[2] = BodyParts[0].transform.localPosition + new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(2.0f, 8.0f), Random.Range(3.0f, 7.0f));
             waitpoint[3] = targetTr.position;
 
-            BodyParts[0].DOPath(waitpoint, 4.0f, PathType.CatmullRom, PathMode.Full3D, 10, Color.red).SetLookAt(targetTr)/*.SetEase(Ease.InOutCirc)*/;
+            BodyParts[0].DOPath(waitpoint, 4.0f, PathType.CatmullRom, PathMode.Full3D, 10, Color.red).SetLookAt(targetTr).SetEase(Ease.InFlash);
 
 
             //mySequence.Append(BodyParts[0].DOMove(targetTr.position, 2.0f))
@@ -229,7 +231,7 @@ public class AttackCube : MonoBehaviour
             }
           
 
-            if (BodyParts[0].position ==targetTr.position)
+            if (targetCheck == true)
             {
                 
                 curBodypart.position = Vector3.Slerp(curBodypart.position, newpos + disTarget.normalized * (-0.5f), T);

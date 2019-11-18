@@ -24,6 +24,15 @@ public class SnakeExplosion : MonoBehaviour
         }
 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("TARGET"))
+        {
+            parentObj.GetComponent<AttackCube>().targetCheck = true;
+        }
+
+    }
     void Start()
     {
         parentTr = this.transform.parent.transform;

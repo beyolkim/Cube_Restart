@@ -344,7 +344,7 @@ ModelImporter:
     second: Tentacles
   - first:
       74: 7400000
-    second: Spin Attack
+    second: Attack
   - first:
       95: 9500000
     second: //RootNode
@@ -366,7 +366,8 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: Event StateIdle has a time (1.000000) outside the clip's
+      valid range (0.000000..0.666667). It will never be fired
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -380,7 +381,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Spin Attack
+      name: Attack
       takeName: Take 001
       internalID: 0
       firstFrame: 0
@@ -403,7 +404,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 1
+        functionName: StateIdle
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: bf01b614221864a4281f18f6c1fa5e99,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

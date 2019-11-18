@@ -124,7 +124,7 @@ public class HandCtrl : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f); //Spawn 파티클 나오고 칼 생성되도록
         _audio.PlayOneShot(swordSpawn);
-        while (swordValue[0] >= -0.9f)
+        while (swordValue[0] >= -1f)
         {
             for(int i = 0; i < 14; i++)
             {
@@ -150,7 +150,7 @@ public class HandCtrl : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f);
         _audio.PlayOneShot(gunSpawn_audio);        
-        while(gunValue[0] >= -0.9f)
+        while(gunValue[0] >= -1f)
         {
             for (int i = 0; i < 4; i++)
             {

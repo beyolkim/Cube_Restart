@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Dissolve_Sword
-  m_Shader: {fileID: -6465566751694194690, guid: b7a201567321aec42bfa683e24c0bd7a,
+  m_Shader: {fileID: -6465566751694194690, guid: 42822fbc60702884fa7d03ad46c33b96,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -69,6 +69,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 4886340048796474aab961a82a3a8dee, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_CA903527_Texture_1:
+        m_Texture: {fileID: 2800000, guid: fa03199c88609964a99df77f51d53794, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_FFC6BEE8_Texture_1:
         m_Texture: {fileID: 2800000, guid: 4c503f2f2edee36449514ec87d398276, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -84,8 +88,8 @@ Material:
     - _BumpScale: 1
     - _Cull: 2
     - _Cutoff: 0.5
-    - _Dissolve: -1.06
-    - _DissolveSword: -1.27
+    - _Dissolve: -1.37
+    - _DissolveSword: -1.32
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
@@ -103,7 +107,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_12B6246B: {r: 0, g: 2.1249413, b: 21.361254, a: 0}
     - Color_4819D326: {r: 0, g: 2.070588, b: 16, a: 0}
+    - Color_8CCF93D0: {r: 15.999998, g: 15.999998, b: 15.999998, a: 0}
     - Color_E575DE6: {r: 4, g: 4, b: 4, a: 0}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}

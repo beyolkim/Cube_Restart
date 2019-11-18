@@ -9,11 +9,11 @@ public class LeftHandCtrl : MonoBehaviour
     public SteamVR_Input_Sources lefthand = SteamVR_Input_Sources.LeftHand;
     public SteamVR_Action_Boolean trigger = SteamVR_Actions.default_InteractUI;
 
-    public GameObject sword;
+    public GameObject[] sword;
     public Transform sword_particle_pos;
     public GameObject sword_particle;
-    private float swordValue = 0.5f;
-    private Material swordMat;
+    private float[] swordValue = new float[14];
+    private Material[] swordMat = new Material[14];
     private bool swordOn = false;
     private int swordGrab;
     public GameObject[] shield;
@@ -40,12 +40,15 @@ public class LeftHandCtrl : MonoBehaviour
         // cubeHit = Animator.StringToHash("cubeHit");
         shieldGrab = Animator.StringToHash("shield");
         swordGrab = Animator.StringToHash("sword");
-
-        swordMat = sword.GetComponent<MeshRenderer>().material;
         _audio = GetComponent<AudioSource>();
-        
 
-        for(int i = 0; i<3; i++)
+        for (int i = 0; i < 14; i++)
+        {
+            swordValue[i] = 0.5f;
+            swordMat[i] = sword[i].GetComponent<MeshRenderer>().material;
+        }
+
+        for (int i = 0; i<3; i++)
         {
             shieldValue[i] = 0.5f;
             _shieldValue[i] = 3f;
@@ -85,18 +88,25 @@ public class LeftHandCtrl : MonoBehaviour
         _audio.PlayOneShot(beamUp);
         Quaternion rot = Quaternion.FromToRotation(Vector3.forward, sword_particle_pos.forward);
         GameObject _sword_particle = Instantiate(sword_particle, sword_particle_pos.position, rot);
-        
+
         Destroy(_sword_particle, 1.5f);
 
         yield return new WaitForSeconds(0.4f); //Spawn 파티클 나오고 칼 생성되도록
         _audio.PlayOneShot(swordSpawn);
-        while(swordValue >= -0.9f)
+        while (swordValue[0] >= -1f)
         {
-            swordValue -= 0.015f;
-            swordMat.SetFloat("_Dissolve", swordValue);
-            yield return new WaitForSeconds(0.015f);
+            for (int i = 0; i < 14; i++)
+            {
+                swordValue[i] -= 0.017f;
+                swordMat[i].SetFloat("_Dissolve", swordValue[i]);
+            }
+            yield return new WaitForSeconds(0.008f);
         }
-        sword.GetComponent<MeshCollider>().enabled = true;
+        for (int i = 0; i < 14; i++)
+        {
+            sword[i].GetComponent<MeshCollider>().enabled = true;
+        }
+        L_SwordCtrl.instance.left_swordOn = true;
     }
 
     IEnumerator ShieldSpawn()

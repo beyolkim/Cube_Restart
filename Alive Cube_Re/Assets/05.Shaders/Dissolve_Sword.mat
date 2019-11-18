@@ -88,7 +88,7 @@ Material:
     - _BumpScale: 1
     - _Cull: 2
     - _Cutoff: 0.5
-    - _Dissolve: -1.37
+    - _Dissolve: 0.5
     - _DissolveSword: -1.32
     - _DstBlend: 0
     - _EnvironmentReflections: 1
@@ -107,9 +107,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_12B6246B: {r: 0, g: 2.1249413, b: 21.361254, a: 0}
+    - Color_12B6246B: {r: 0, g: 3.371929, b: 33.89676, a: 0}
     - Color_4819D326: {r: 0, g: 2.070588, b: 16, a: 0}
-    - Color_8CCF93D0: {r: 15.999998, g: 15.999998, b: 15.999998, a: 0}
+    - Color_8CCF93D0: {r: 4, g: 4, b: 4, a: 0}
     - Color_E575DE6: {r: 4, g: 4, b: 4, a: 0}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}

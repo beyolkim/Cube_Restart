@@ -128,15 +128,16 @@ public class HandCtrl : MonoBehaviour
         {
             for(int i = 0; i < 14; i++)
             {
-                swordValue[i] -= 0.015f;
+                swordValue[i] -= 0.017f;
                 swordMat[i].SetFloat("_Dissolve", swordValue[i]);                
             }
-            yield return new WaitForSeconds(0.015f);
+            yield return new WaitForSeconds(0.008f);
         }
         for(int i = 0; i < 14; i++)
         {
             sword[i].GetComponent<MeshCollider>().enabled = true;
-        }        
+        }
+        R_SwordCtrl.instance.right_swordOn = true;
     }
 
     IEnumerator GunSpawn()

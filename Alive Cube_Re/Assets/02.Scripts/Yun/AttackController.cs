@@ -26,9 +26,9 @@ public class AttackController : MonoBehaviour
 
     IEnumerator AttackTurn()
     {
-        PlayerController.instance.CountDown_Audio();
+        //PlayerController.instance.CountDown_Audio();
 
-        yield return new WaitForSeconds(13f);
+        //yield return new WaitForSeconds(13f);
 
         while (true) //playerHp > 0
 

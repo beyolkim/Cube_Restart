@@ -75,7 +75,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
-        m_Scale: {x: 12, y: 12}
+        m_Scale: {x: 20, y: 20}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -106,6 +106,8 @@ Material:
     - _DissolveAlphaStrength: 0.1
     - _DissolveAlphaTextureBlend: 0
     - _DissolveAxisInvert: 1
+    - _DissolveCombineWithMasterNodeAlpha: 0
+    - _DissolveCombineWithMasterNodeColor: 0
     - _DissolveCutoff: 0.25
     - _DissolveCutoffAxis: 0
     - _DissolveEdgeColorIntensity: 6
@@ -125,6 +127,12 @@ Material:
     - _DissolveGIStrength: 1
     - _DissolveGlobalControl: 1
     - _DissolveMainMapTiling: 1
+    - _DissolveMap1Channel: 3
+    - _DissolveMap1Intensity: 1
+    - _DissolveMap2Channel: 3
+    - _DissolveMap2Intensity: 1
+    - _DissolveMap3Channel: 3
+    - _DissolveMap3Intensity: 1
     - _DissolveMappingType: 0
     - _DissolveMask: 2
     - _DissolveMaskAxis: 0

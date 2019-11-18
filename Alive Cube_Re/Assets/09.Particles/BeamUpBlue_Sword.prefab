@@ -4841,7 +4841,7 @@ GameObject:
   - component: {fileID: 198653806844278688}
   - component: {fileID: 199065171600798384}
   m_Layer: 0
-  m_Name: BeamUpBlue
+  m_Name: BeamUpBlue_Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4999,7 +4999,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 12
+      scalar: 7
       minScalar: 1
       maxCurve:
         serializedVersion: 2

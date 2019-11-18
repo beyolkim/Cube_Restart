@@ -29,6 +29,7 @@ public class AttackCube : MonoBehaviour
 
     public int beginSize;
 
+    public GameObject headprefab;
     public GameObject bodyprefab;
 
     Vector3 disTarget;
@@ -45,14 +46,14 @@ public class AttackCube : MonoBehaviour
     void Start()
     {
 
-        // 머리를 제외한 꼬리부분 생성
-        for (int i = 0; i < beginSize - 1; i++)
-        {
-            AddBodyPart();
-            //BodyParts[i+1].localScale = BodyParts[i + 1].localScale - ((Vector3.one)*(i+1)*0.05f);
-        }
-
         firstTr = this.gameObject.transform;
+        AddBodyPart();
+        // 머리를 제외한 꼬리부분 생성
+        //for (int i = 0; i < beginSize; i++)
+        //{
+        //    //BodyParts[i+1].localScale = BodyParts[i + 1].localScale - ((Vector3.one)*(i+1)*0.05f);
+        //}
+
         disTarget = targetTr.position - firstTr.position;
 
         cubeHead_Audio = Resources.Load<AudioClip>("bonus_energy_004");
@@ -66,6 +67,7 @@ public class AttackCube : MonoBehaviour
         if (targetCheck == true) // 타켓에 도착시 
         {
             Invoke("delayCheck", 3.0f);
+            
         }
         if (check_attack==false)
         {
@@ -91,9 +93,7 @@ public class AttackCube : MonoBehaviour
         {
            mySequence.Append(BodyParts[0].DOMove(firstTr.position, 1.0f))
                      .Join(BodyParts[0].DOLocalMoveZ(15.0f, 1.0f));
-            //BodyParts[0].DOLocalMoveZ(15.0f, 1.0f);
-            //BodyParts[0].DOMove(firstTr.position, 1.0f);
-            //BodyParts[0].DOLocalMoveZ(15.0f, 2.0f);
+          
             //오디오 뒤로 갈 경우 AudioSource 끄거나 오디오 사운드 바꾸기?
             attackSound.enabled = false;
             check_Dotween = !check_Dotween;
@@ -126,13 +126,14 @@ public class AttackCube : MonoBehaviour
         ResetCube();
         AddBodyPart();
         //cubeDir = 0;
-        for (int i = 0; i < BodyParts.Count; i++)
+        for (int i = 0; i < beginSize; i++)
         {
             CubeAlpha(i, 1.0f);
             
             BodyParts[i].gameObject.GetComponent<BoxCollider>().enabled = true;
             BodyParts[i].gameObject.transform.position = firstTr.position;
         }
+        targetCheck = false;
     }
 
     
@@ -234,7 +235,7 @@ public class AttackCube : MonoBehaviour
             if (targetCheck == true)
             {
                 
-                curBodypart.position = Vector3.Slerp(curBodypart.position, newpos + disTarget.normalized * (-0.5f), T);
+                curBodypart.position = Vector3.Slerp(curBodypart.position, newpos + disTarget.normalized * (-1.0f), T);
                 curBodypart.rotation = Quaternion.Slerp(curBodypart.rotation, prevBodypart.rotation, T);
             }
             else
@@ -249,18 +250,34 @@ public class AttackCube : MonoBehaviour
 
     public void AddBodyPart()
     {
-        Transform newpart = (Instantiate(bodyprefab, BodyParts[BodyParts.Count - 1].position, BodyParts[BodyParts.Count -1].rotation) as GameObject).transform;
-        newpart.SetParent(transform);
+        Transform newpart;
+        for (int i=0; i<beginSize; i++)
+        {
 
-        BodyParts.Add(newpart);
+            if (i ==0)
+            {
+                newpart = (Instantiate(headprefab,firstTr.position,firstTr.rotation) as GameObject).transform;
+            }
+            else
+            {
+                newpart = (Instantiate(bodyprefab, BodyParts[BodyParts.Count - 1].position, BodyParts[BodyParts.Count -1].rotation) as GameObject).transform;
+
+            }
+            newpart.SetParent(transform);
+            BodyParts.Add(newpart);
+        }
+
         
     }
 
     public void ResetCube()
     {
-        BodyParts.RemoveAt(0);
-        Destroy(this.gameObject.transform.GetChild(0).gameObject);
-        
+        BodyParts.Clear();
+        for (int i=0; i<beginSize;i++)
+        {
+            Destroy(this.gameObject.transform.GetChild(i).gameObject);
+
+        }
     }
 
 

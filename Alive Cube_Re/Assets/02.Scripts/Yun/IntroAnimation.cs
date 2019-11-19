@@ -328,12 +328,19 @@ public class IntroAnimation : MonoBehaviour
         //큐브라인 생성
         cubeLine.DOVector(new Vector2(2, 2), "_WallCubeGrid", 2.5f).SetEase(Ease.OutQuad);
 
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(2);
+
+        cubeLine.DOFloat(1.0f, "_LineThickness", 1.5f);
+
+        yield return new WaitForSeconds(2);
+
         this.gameObject.SetActive(false);
 
         maincubeMap.SetActive(true);
 
         cubeLine.DOVector(new Vector2(1, 1), "_WallCubeGrid", 0.1f);
+        cubeLine.DOFloat(0.9f, "_LineThickness", 0.1f);
+
         Destroy(emptyGameObject);
     }
 

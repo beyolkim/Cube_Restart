@@ -13,12 +13,13 @@ public class HandCtrl : MonoBehaviour
     public SteamVR_Action_Vibration haptic = SteamVR_Actions.default_Haptic;
 
     public GameObject[] sword;
+    public GameObject sword_blade;
     public Transform sword_particle_pos;
     public GameObject sword_particle;
 
-    private float[] swordValue = new float[14];
+    private float[] swordValue = new float[10];
     private float[] gunValue = new float[4]; //gun 파트의 각각의 gunValue 선언
-    private Material[] swordMat = new Material[14];
+    private Material[] swordMat = new Material[10];
     private Material[] gunMat = new Material[4]; //public이 아닌 private로 선언할 때는 new배열로 선언 필요
 
     private bool swordOn = false;
@@ -44,7 +45,7 @@ public class HandCtrl : MonoBehaviour
 
     void Start()
     {        
-        for(int i =0; i < 14; i ++)
+        for(int i =0; i < 10; i ++)
         {
             swordValue[i] = 0.5f;
             swordMat[i] = sword[i].GetComponent<MeshRenderer>().material;
@@ -126,17 +127,18 @@ public class HandCtrl : MonoBehaviour
         _audio.PlayOneShot(swordSpawn);
         while (swordValue[0] >= -1f)
         {
-            for(int i = 0; i < 14; i++)
+            for(int i = 0; i < 10; i++)
             {
                 swordValue[i] -= 0.017f;
                 swordMat[i].SetFloat("_Dissolve", swordValue[i]);                
             }
             yield return new WaitForSeconds(0.008f);
         }
-        for(int i = 0; i < 14; i++)
+        for(int i = 0; i < 10; i++)
         {
             sword[i].GetComponent<MeshCollider>().enabled = true;
         }
+        sword_blade.gameObject.SetActive(true);
         R_SwordCtrl.instance.right_swordOn = true;
     }
 

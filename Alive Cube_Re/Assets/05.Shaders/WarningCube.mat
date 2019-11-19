@@ -51,7 +51,7 @@ Material:
     m_Floats:
     - Vector1_22D2F540: 1
     - _AlphaClip: 0
-    - _AlphaPower: 1
+    - _AlphaPower: 1.5
     - _Blend: 0
     - _BumpScale: 1
     - _Cull: 2

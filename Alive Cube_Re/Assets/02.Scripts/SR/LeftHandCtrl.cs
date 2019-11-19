@@ -10,10 +10,11 @@ public class LeftHandCtrl : MonoBehaviour
     public SteamVR_Action_Boolean trigger = SteamVR_Actions.default_InteractUI;
 
     public GameObject[] sword;
+    public GameObject sword_blade;
     public Transform sword_particle_pos;
     public GameObject sword_particle;
-    private float[] swordValue = new float[14];
-    private Material[] swordMat = new Material[14];
+    private float[] swordValue = new float[10];
+    private Material[] swordMat = new Material[10];
     private bool swordOn = false;
     private int swordGrab;
     public GameObject[] shield;
@@ -42,7 +43,7 @@ public class LeftHandCtrl : MonoBehaviour
         swordGrab = Animator.StringToHash("sword");
         _audio = GetComponent<AudioSource>();
 
-        for (int i = 0; i < 14; i++)
+        for (int i = 0; i < 10; i++)
         {
             swordValue[i] = 0.5f;
             swordMat[i] = sword[i].GetComponent<MeshRenderer>().material;
@@ -95,17 +96,18 @@ public class LeftHandCtrl : MonoBehaviour
         _audio.PlayOneShot(swordSpawn);
         while (swordValue[0] >= -1f)
         {
-            for (int i = 0; i < 14; i++)
+            for (int i = 0; i < 10; i++)
             {
                 swordValue[i] -= 0.017f;
                 swordMat[i].SetFloat("_Dissolve", swordValue[i]);
             }
             yield return new WaitForSeconds(0.008f);
         }
-        for (int i = 0; i < 14; i++)
+        for (int i = 0; i < 10; i++)
         {
             sword[i].GetComponent<MeshCollider>().enabled = true;
         }
+        sword_blade.gameObject.SetActive(true);
         L_SwordCtrl.instance.left_swordOn = true;
     }
 

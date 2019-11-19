@@ -4,7 +4,6 @@ using UnityEngine;
 using DG.Tweening;
 public class AttackCube : MonoBehaviour
 {
-
     public List<Transform> BodyParts = new List<Transform>();
 
     //스파이럴움직임
@@ -19,7 +18,7 @@ public class AttackCube : MonoBehaviour
     private Material cubeMats;
     private float cubeAlphaValue;
 
-    public Transform targetTr;
+    public Transform[] targetTr;
 
     
     public float minDistance = 0.25f;
@@ -54,7 +53,7 @@ public class AttackCube : MonoBehaviour
         //    //BodyParts[i+1].localScale = BodyParts[i + 1].localScale - ((Vector3.one)*(i+1)*0.05f);
         //}
 
-        disTarget = targetTr.position - firstTr.position;
+        //disTarget = targetTr.position - firstTr.position;
 
         cubeHead_Audio = Resources.Load<AudioClip>("bonus_energy_004");
         
@@ -62,7 +61,6 @@ public class AttackCube : MonoBehaviour
 
     void FixedUpdate()
     {
-        
         //if ((BodyParts[0].localPosition - firstTr.position).z < cubeDir)
         if (targetCheck == true) // 타켓에 도착시 
         {
@@ -179,15 +177,16 @@ public class AttackCube : MonoBehaviour
             waitpoint[0] = BodyParts[0].transform.position + Vector3.forward * -2.0f;
             waitpoint[1] = BodyParts[0].transform.localPosition + new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(2.0f, 8.0f), Random.Range(3.0f, 7.0f));
             waitpoint[2] = BodyParts[0].transform.localPosition + new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(2.0f, 8.0f), Random.Range(3.0f, 7.0f));
-            waitpoint[3] = targetTr.position;
+            waitpoint[3] = targetTr[Random.Range(0, targetTr.Length)].position;
 
-            Tween attackSnake = BodyParts[0].DOPath(waitpoint, 4.0f, PathType.CatmullRom, PathMode.Full3D, 10, Color.red).SetLookAt(targetTr);
+            Tween attackSnake = BodyParts[0].DOPath(waitpoint, 3.0f, PathType.CatmullRom, PathMode.Full3D, 10, Color.red).SetLookAt(waitpoint[3]);
 
             //난이도 조절구간
-            //if(특정조건시 난이도 상승)
-            //{
-            //    attackSnake.SetEase(Ease.InFlash);
-            //}
+            if (PlayerController.instance.attackAllow)
+            {
+                attackSnake.SetEase(Ease.InFlash);                
+                PlayerController.instance.curTime = 0;
+            }
 
 
             //첫번째 머리 오디오 추가
@@ -281,8 +280,5 @@ public class AttackCube : MonoBehaviour
 
         }
     }
-
-
-
-
+       
 }

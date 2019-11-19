@@ -5,8 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-
     public static PlayerController instance = null;
+
+    public float curTime = 0;
+    private float attackTime = 10;
+    public bool attackAllow = false;
 
     private bool playerHit = false;
     public GameObject hitEffect;
@@ -19,10 +22,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip hit_audio;
     public AudioClip gameOver_audio;
 
-
     public static int coint = 0;
 
-    public bool playerDie = false;
+    public bool playerDie = false;   
 
     private void OnEnable()
     {
@@ -64,12 +66,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        AttackDifficulty();
+
         if(!playerDie && AttackController.playerHp <= 0)
         {            
             Debug.Log("Game Over");
             _audio.PlayOneShot(gameOver_audio);
             playerDie = true;
-        }
+        }        
     }
 
     public void MapMaking_Audio() //Intro 씬에서 Intro큐브를 trigger하면 audiosource가 있는 그 큐브의 위치가 바뀌어서 어쩔 수 없음
@@ -100,4 +104,19 @@ public class PlayerController : MonoBehaviour
         playerHit = false;        
     }
 
+    void AttackDifficulty()
+    {
+        curTime += Time.deltaTime;
+        //Debug.Log(curTime);
+        if (curTime < attackTime)
+        {
+            attackAllow = false;
+        }
+
+        else
+        {
+            attackAllow = true;
+        }
+
+    }
 }

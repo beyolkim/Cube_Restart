@@ -91,7 +91,7 @@ public class SnakeCubeController : MonoBehaviour
         {
 
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 2; i++)
             {
                 int random_Cube = Random.Range(0, 99);
                 //int random_Cube = 0;

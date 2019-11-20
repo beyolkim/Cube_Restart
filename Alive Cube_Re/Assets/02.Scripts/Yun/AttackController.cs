@@ -14,20 +14,60 @@ public class AttackController : MonoBehaviour
     private WaitForSeconds turncheckDelay = new WaitForSeconds(0.5f);
     public List<GameObject> TurnCheck = new List<GameObject>();
 
+    //카운트다운
+    private GameObject frist_CountObj;
+    private Transform[] CountDown;
+    public List<GameObject> countDownObj = new List<GameObject>();
+   
     private void Awake()
     {
         instance = this;        
     }
     private void Start()
     {
+        frist_CountObj = transform.GetChild(0).gameObject;
+        CountDown = frist_CountObj.GetComponentsInChildren<Transform>();
+        
+
+        for (int i=0; i<CountDown.Length; i++)
+        {
+            if(CountDown[i].CompareTag("COUNTDOWN"))
+            {
+                countDownObj.Add(CountDown[i].gameObject);
+                
+            }
+            
+        }
+        for(int i=0;i<countDownObj.Count; i++)
+        {
+            countDownObj[i].SetActive(false);
+        }
+
+
         StartCoroutine(AttackTurn());
     }
 
 
     IEnumerator AttackTurn()
     {
-        //PlayerController.instance.CountDown_Audio();
 
+        PlayerController.instance.CountDown_Audio();
+        //yield return new WaitForSeconds(1f);
+        countDownObj[0].SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        countDownObj[0].SetActive(false);
+
+        for (int i=1; i<countDownObj.Count-1; i++)
+        {
+            countDownObj[i].SetActive(true);
+            yield return new WaitForSeconds(1f);
+            countDownObj[i].SetActive(false);
+
+        }
+
+        countDownObj[10].SetActive(true);
+        yield return new WaitForSeconds(2f);
+        countDownObj[10].SetActive(false);
         //yield return new WaitForSeconds(13f);
 
         while (true) //playerHp > 0

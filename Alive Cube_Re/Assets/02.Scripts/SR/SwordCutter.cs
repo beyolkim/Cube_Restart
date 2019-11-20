@@ -66,6 +66,8 @@ public class SwordCutter : MonoBehaviour {
             {
                 GameObject fragment = Instantiate(Resources.Load("PurplePiece") as GameObject);
                 fragment.transform.position = victim.transform.position;
+                fragment.GetComponent<Rigidbody>().useGravity = true;
+                fragment.GetComponent<BoxCollider>().enabled = true;
                 check_fallStone = 0;
                 AttackController.stage1_Count += 1;
                 Debug.Log("stage1_Count : " + AttackController.stage1_Count);

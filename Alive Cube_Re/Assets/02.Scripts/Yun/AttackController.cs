@@ -16,6 +16,7 @@ public class AttackController : MonoBehaviour
     private int turnRandomNum02;
     private WaitForSeconds turncheckDelay = new WaitForSeconds(0.5f);
     public List<GameObject> TurnCheck = new List<GameObject>();
+    public AudioSource stage1_audio;
 
     //카운트다운
     private GameObject frist_CountObj;
@@ -73,7 +74,7 @@ public class AttackController : MonoBehaviour
         countDownObj[10].SetActive(false);
         hpUI.gameObject.SetActive(true);
 
-        while (stage1_Count < 1) //Stage1에서 조각이 10개 생겨나기 전까지 공격 반복
+        while (stage1_Count < 3) //Stage1에서 조각이 10개 생겨나기 전까지 공격 반복
         {
             turnRandomNum01 = Random.Range(0, 3);
             turnRandomNum02 = Random.Range(0, 3);
@@ -89,7 +90,11 @@ public class AttackController : MonoBehaviour
             yield return new WaitForSeconds(1.0f);
         }
         Debug.Log("Stage1 Clear!");
-        yield return new WaitForSeconds(5);
+        stage1_audio.Stop();
+        AttackCube.instance.check_attack = true; //나와있는 큐브들 모두 들어가도록
+        yield return new WaitForSeconds(2f);
+        FadeCtrl.instance.FadeOut();
+        yield return new WaitForSeconds(4);
         SceneManager.LoadScene(2); //Stage1 클리어 -> Stage2 씬 전환
     }
 

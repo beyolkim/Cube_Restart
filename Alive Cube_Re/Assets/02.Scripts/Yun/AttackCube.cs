@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+
 public class AttackCube : MonoBehaviour
 {
+    public static AttackCube instance = null;
+
     public List<Transform> BodyParts = new List<Transform>();
 
     //스파이럴움직임
@@ -44,7 +47,7 @@ public class AttackCube : MonoBehaviour
    
     void Start()
     {
-
+        instance = this;
         firstTr = this.gameObject.transform;
         AddBodyPart();
         // 머리를 제외한 꼬리부분 생성
@@ -71,7 +74,6 @@ public class AttackCube : MonoBehaviour
         }
         if (check_attack==false)
         {
-
             Move();
         }
         else

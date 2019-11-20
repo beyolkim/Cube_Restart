@@ -62,7 +62,7 @@ public class LeftHandCtrl : MonoBehaviour
 
     void Update()
     {
-        if (this.gameObject.scene.name == "Yun_Test")
+        if (this.gameObject.scene.name == "Stage1")
         {
             if (!swordOn && trigger.GetStateDown(lefthand)) //Scene이 Sword일 때 검 생성
             {

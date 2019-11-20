@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using Valve.VR;
 
 public class IntroAnimation : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class IntroAnimation : MonoBehaviour
 
     //메인큐브맵 오브젝트
     public GameObject maincubeMap;
+    public GameObject _introAudio;
 
     public Transform tr;    
     private Transform preTr_right;
@@ -61,11 +63,11 @@ public class IntroAnimation : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            SceneManager.LoadScene("Intro");
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    SceneManager.LoadScene("Intro");
 
-        }
+        //}
         
     }
 
@@ -308,12 +310,10 @@ public class IntroAnimation : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         anim.SetBool(cubeTouch, true);
-        HelpMe_Audio.instance.AudioStop();
-
+        HelpMe_Audio.instance.Audio_Volume();
 
         yield return new WaitForSeconds(2.0f);
-
-        tr.transform.position = tr.transform.position + Vector3.back * 4.5f + Vector3.down * 2.2f; // 큐브 사라진 후 위치 재조정(사람 뒤에서 부터 생성)
+        tr.transform.position = tr.transform.position + Vector3.back * 3.5f + Vector3.down * 2.2f; // 큐브 사라진 후 위치 재조정(사람 뒤에서 부터 생성)
 
         IntroAudio();
                     
@@ -324,7 +324,8 @@ public class IntroAnimation : MonoBehaviour
                     
         yield return new WaitForSeconds(4.3f);
         PlayerController.instance._IntroAudio();
-        
+        _introAudio.gameObject.SetActive(false);
+
         //큐브라인 생성
         cubeLine.DOVector(new Vector2(2, 2), "_WallCubeGrid", 2.5f).SetEase(Ease.OutQuad);
 
@@ -332,18 +333,21 @@ public class IntroAnimation : MonoBehaviour
 
         cubeLine.DOFloat(1.0f, "_LineThickness", 1.5f);
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(4);
 
         this.gameObject.SetActive(false);
 
-        maincubeMap.SetActive(true);
+        //maincubeMap.SetActive(true);
 
         cubeLine.DOVector(new Vector2(1, 1), "_WallCubeGrid", 0.1f);
         cubeLine.DOFloat(0.9f, "_LineThickness", 0.1f);
 
         Destroy(emptyGameObject);
+        SteamVR_Fade.Start(Color.black, 0.3f);
+        SceneManager.LoadScene(1);        
+        Debug.Log("씬전환!!!!!!!");
+        SteamVR_Fade.Start(Color.clear, 0.3f);
     }
-
 }
 
 

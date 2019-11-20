@@ -33,9 +33,8 @@ public class HelpMe_Audio : MonoBehaviour
         _audio.clip = scaryVoice[1];
         _audio.Play();
     }
-
-    public void AudioStop()
+    public void Audio_Volume()
     {
-        _audio.Stop();        
+        _audio.volume = 0.3f;
     }
 }

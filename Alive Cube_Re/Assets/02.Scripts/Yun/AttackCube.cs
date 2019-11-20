@@ -11,7 +11,7 @@ public class AttackCube : MonoBehaviour
 
     //오디오 부분
     private AudioSource attackSound;
-    private AudioClip cubeHead_Audio;
+    private AudioClip[] cubeHead_Audio = new AudioClip[3];
 
     public float cubeDir;
 
@@ -54,9 +54,11 @@ public class AttackCube : MonoBehaviour
         //}
 
         //disTarget = targetTr.position - firstTr.position;
-
-        cubeHead_Audio = Resources.Load<AudioClip>("bonus_energy_004");
         
+        cubeHead_Audio[0] = Resources.Load<AudioClip>("Whispering1");
+        cubeHead_Audio[1] = Resources.Load<AudioClip>("Whispering2");
+        cubeHead_Audio[2] = Resources.Load<AudioClip>("Whispering3");
+
     }
 
     void FixedUpdate()
@@ -194,12 +196,13 @@ public class AttackCube : MonoBehaviour
             attackSound.loop = true;
             attackSound.spatialize = true;
             attackSound.priority = 10;
+            attackSound.volume = 1;
             attackSound.spatialBlend = 1;
             attackSound.dopplerLevel = 3;
-            attackSound.minDistance = 2;
+            attackSound.minDistance = 3;
             attackSound.maxDistance = 50;
             attackSound.rolloffMode = AudioRolloffMode.Logarithmic;
-            attackSound.clip = cubeHead_Audio;
+            attackSound.clip = cubeHead_Audio[Random.Range(0, cubeHead_Audio.Length)];
             attackSound.Play();
 
 

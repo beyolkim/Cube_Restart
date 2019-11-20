@@ -22,8 +22,10 @@ public class PlayerController : MonoBehaviour
     public AudioClip hit_audio;
     public AudioClip gameOver_audio;
 
-    public static int coint = 0;
+    public GameObject warningZone;
+    public GameObject attackCube;
 
+    public static int coint = 0;
     public bool playerDie = false;   
 
     private void OnEnable()
@@ -44,6 +46,11 @@ public class PlayerController : MonoBehaviour
         _audio.Play();
 
         Debug.Log(AttackController.playerHp);
+
+        if(this.gameObject.scene.name == "Stage1")
+        {
+            StartCoroutine(MapSpawn());
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,8 +68,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("PlayerHP : " + AttackController.playerHp);
             
         }
-    }
-    
+    }    
 
     void Update()
     {
@@ -118,5 +124,11 @@ public class PlayerController : MonoBehaviour
             attackAllow = true;
         }
 
+    }
+    IEnumerator MapSpawn()
+    {
+        yield return new WaitForSeconds(2.5f);
+        warningZone.gameObject.SetActive(true);
+        attackCube.gameObject.SetActive(true);
     }
 }

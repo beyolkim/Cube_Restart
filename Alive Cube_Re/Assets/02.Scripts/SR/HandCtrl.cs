@@ -73,7 +73,7 @@ public class HandCtrl : MonoBehaviour
     
     void Update()
     {
-        if (this.gameObject.scene.name == "Yun_Test") 
+        if (this.gameObject.scene.name == "Stage1") 
         {
             if (!swordOn && trigger.GetStateDown(rightHand)) //Scene이 Sword일 때 검 생성
             {
@@ -101,18 +101,6 @@ public class HandCtrl : MonoBehaviour
             }                                    
         }
     }    
-
-    //private void OnTriggerEnter(Collider coll)
-    //{        
-    //    if(coll.gameObject.CompareTag("CUBE"))
-    //    {
-    //        Debug.Log("CUBE!");
-    //        anim.SetTrigger(cubeHit);
-    //        GameObject target = coll.gameObject;            
-    //        haptic.Execute(0.2f, 0.4f, 10f, 5f, hand);
-    //        Destroy(target);
-    //    }
-    //}
 
     IEnumerator SwordSpawn()
     {

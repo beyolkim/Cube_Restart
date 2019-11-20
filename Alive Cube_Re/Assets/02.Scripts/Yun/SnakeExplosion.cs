@@ -11,12 +11,12 @@ public class SnakeExplosion : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.CompareTag("SWORD"))
-        {
-            AttackController.scoreCount++;
-            Debug.Log(AttackController.scoreCount);
-            StartCoroutine(dissolvedCube.CubeEexplosion());
-        }
+        //if(collision.collider.CompareTag("SWORD"))
+        //{
+        //    AttackController.scoreCount++;
+        //    Debug.Log(AttackController.scoreCount);
+        //    StartCoroutine(dissolvedCube.CubeEexplosion());
+        //}
 
         if (collision.collider.CompareTag("CHECKINIT"))
         {

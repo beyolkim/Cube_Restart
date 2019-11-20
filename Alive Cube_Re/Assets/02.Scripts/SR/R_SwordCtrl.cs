@@ -13,6 +13,7 @@ public class R_SwordCtrl : MonoBehaviour
     private Animator anim;
     public bool right_swordOn = false;
     private bool swordAudio = false;
+    public GameObject handle;
 
     private AudioSource _audio;
     public AudioClip open;
@@ -32,6 +33,9 @@ public class R_SwordCtrl : MonoBehaviour
             swordAudio = true;
             anim.SetBool(swordOpen, true);
             _audio.PlayOneShot(open);
+            this.gameObject.GetComponent<BoxCollider>().enabled = true;
+            handle.gameObject.GetComponent<MeshCollider>().enabled = false;
         }
-    }    
+    }
+
 }

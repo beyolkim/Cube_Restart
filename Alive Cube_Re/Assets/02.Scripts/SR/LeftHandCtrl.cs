@@ -103,10 +103,8 @@ public class LeftHandCtrl : MonoBehaviour
             }
             yield return new WaitForSeconds(0.008f);
         }
-        for (int i = 0; i < 10; i++)
-        {
-            sword[i].GetComponent<MeshCollider>().enabled = true;
-        }
+
+        sword[9].GetComponent<MeshCollider>().enabled = true;
         sword_blade.gameObject.SetActive(true);
         L_SwordCtrl.instance.left_swordOn = true;
     }

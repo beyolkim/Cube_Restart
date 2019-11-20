@@ -41,29 +41,33 @@ public class SwordCutter : MonoBehaviour {
     {
         GameObject victim = coll.collider.gameObject;
         
-        if (coll.gameObject.transform.CompareTag("CUBE") && power >= 0.6f)
+        if (coll.gameObject.transform.CompareTag("CUBE") && power >= 0.5f)
         {
-            check_fallStone++;
+            check_fallStone += 1;
+            Debug.Log(check_fallStone);
             ContactPoint contact = coll.contacts[0];
             Vector3 _normal = contact.normal;
 
             _audio.PlayOneShot(swordHit[Random.Range(0, swordHit.Length)]);
             GameObject _hit = Instantiate(hit, hitPos.position, hitPos.rotation);
-            haptic.Execute(0f, 0.1f, 80, 1f, hand);
+            haptic.Execute(0f, 0.15f, 80, 2f, hand);
             Destroy(_hit, 1.5f);
 
             GameObject[] pieces = BLINDED_AM_ME.MeshCut.Cut(victim, transform.position, transform.right, capMaterial);
             //Debug.Log(power);
 
             //큐브 되돌아가기
-            if(check_fallStone > 3)
+            victim.GetComponentInParent<AttackCube>().check_attack = true;
+            AttackController.scoreCount++;
+
+            if (check_fallStone > 5)
             {
-                victim.GetComponentInParent<AttackCube>().check_attack = true;
-                AttackController.scoreCount++;
+                Debug.Log("떳따");
                 GameObject fragment = Instantiate(Resources.Load("PurplePiece") as GameObject);
                 fragment.transform.position = victim.transform.position;
                 check_fallStone = 0;
             }
+
             //if(coll.gameObject == victim.GetComponentInParent<AttackCube>().BodyParts[2])
             //{
             //}
@@ -74,10 +78,8 @@ public class SwordCutter : MonoBehaviour {
                 pieces[1].AddComponent<BoxCollider>();
 
             }
-            //Destroy(pieces[1], 4);
-            
+            //Destroy(pieces[1], 4);            
         }
-               
     }
     void SwordPower()
     {

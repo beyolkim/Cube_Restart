@@ -122,10 +122,7 @@ public class HandCtrl : MonoBehaviour
             }
             yield return new WaitForSeconds(0.008f);
         }
-        for(int i = 0; i < 10; i++)
-        {
-            sword[i].GetComponent<MeshCollider>().enabled = true;
-        }
+        sword[9].GetComponent<MeshCollider>().enabled = true;
         sword_blade.gameObject.SetActive(true);
         R_SwordCtrl.instance.right_swordOn = true;
     }

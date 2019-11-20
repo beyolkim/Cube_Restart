@@ -19,6 +19,9 @@ TagManager:
   - PURPLEMON
   - REDMON
   - TARGET
+  - INTROCUBE
+  - REDPIECE
+  - PURPLEPIECE
   layers:
   - Default
   - TransparentFX

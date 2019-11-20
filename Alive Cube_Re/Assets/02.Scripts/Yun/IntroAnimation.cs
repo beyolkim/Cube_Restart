@@ -343,10 +343,12 @@ public class IntroAnimation : MonoBehaviour
         cubeLine.DOFloat(0.9f, "_LineThickness", 0.1f);
 
         Destroy(emptyGameObject);
-        SteamVR_Fade.Start(Color.black, 0.3f);
+        FadeCtrl.instance.Fade();
+
         SceneManager.LoadScene(1);        
+
         Debug.Log("씬전환!!!!!!!");
-        SteamVR_Fade.Start(Color.clear, 0.3f);
+        FadeCtrl.instance.Fade();
     }
 }
 

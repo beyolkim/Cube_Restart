@@ -22,6 +22,7 @@ TagManager:
   - INTROCUBE
   - REDPIECE
   - PURPLEPIECE
+  - COUNTDOWN
   layers:
   - Default
   - TransparentFX

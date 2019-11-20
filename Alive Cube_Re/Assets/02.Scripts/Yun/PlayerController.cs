@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator MapSpawn()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(4f);
         warningZone.gameObject.SetActive(true);
         attackCube.gameObject.SetActive(true);
     }

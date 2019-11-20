@@ -7,39 +7,36 @@ public class FadeCtrl : MonoBehaviour
     public static FadeCtrl instance = null;
 
     private Animator anim;
-    private int fadeCtrl;
-    private bool fadeState = false;
+    private int fadeIn;
+    private int fadeOut;
+
     
     void Start()
     {
         instance = this;
         anim = GetComponent<Animator>();
-        fadeCtrl = Animator.StringToHash("fadeCtrl");
+        fadeIn = Animator.StringToHash("fadeIn");
+        fadeOut = Animator.StringToHash("fadeOut");
+
+        if(this.gameObject.scene.name == "Stage1")
+        {
+            Debug.Log("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+            anim.SetBool(fadeIn, false);
+        }
     }
 
     
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Fade();
-            Debug.Log("페이드!");
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Fade();
+        //    Debug.Log("페이드!");
+        //}
     }
-    public void Fade()
+    public void FadeOut()
     {
-        if (!fadeState)
-        {
-            Debug.Log("if " + fadeState);
-            anim.SetBool(fadeCtrl, true);
-            fadeState = true;
-        }          
-        else if(fadeState)
-        {
-            Debug.Log("else if " + fadeState);
-            anim.SetBool(fadeCtrl, false);
-            fadeState = false;
-        }
-
+        Debug.Log("페이드 아웃!");
+        anim.SetBool(fadeOut, true);
     }
 }

@@ -343,12 +343,11 @@ public class IntroAnimation : MonoBehaviour
         cubeLine.DOFloat(0.9f, "_LineThickness", 0.1f);
 
         Destroy(emptyGameObject);
-        FadeCtrl.instance.Fade();
+        //FadeCtrl.instance.FadeOut();
+        //yield return new WaitForSeconds(2);
 
         SceneManager.LoadScene(1);        
-
-        Debug.Log("씬전환!!!!!!!");
-        FadeCtrl.instance.Fade();
+        Debug.Log("씬전환!!!!!!!");       
     }
 }
 

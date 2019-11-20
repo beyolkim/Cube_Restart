@@ -23,6 +23,7 @@ public class SwordCutter : MonoBehaviour {
     private AudioSource _audio;
     public AudioClip[] swordHit;
 
+    private int check_fallStone;
 
     private void Start()
     {
@@ -42,6 +43,7 @@ public class SwordCutter : MonoBehaviour {
         
         if (coll.gameObject.transform.CompareTag("CUBE") && power >= 0.6f)
         {
+            check_fallStone++;
             ContactPoint contact = coll.contacts[0];
             Vector3 _normal = contact.normal;
 
@@ -54,10 +56,14 @@ public class SwordCutter : MonoBehaviour {
             //Debug.Log(power);
 
             //큐브 되돌아가기
+            if(check_fallStone > 3)
+            {
                 victim.GetComponentInParent<AttackCube>().check_attack = true;
                 AttackController.scoreCount++;
                 GameObject fragment = Instantiate(Resources.Load("PurplePiece") as GameObject);
                 fragment.transform.position = victim.transform.position;
+                check_fallStone = 0;
+            }
             //if(coll.gameObject == victim.GetComponentInParent<AttackCube>().BodyParts[2])
             //{
             //}

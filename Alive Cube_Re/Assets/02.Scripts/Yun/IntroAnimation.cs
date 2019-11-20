@@ -296,7 +296,6 @@ public class IntroAnimation : MonoBehaviour
     {
         if(!mapMake)
         {
-            Debug.Log("걸려 들어쓰");
             mapMake = true;
             StartCoroutine(MapMaking());            
         }        
@@ -346,8 +345,7 @@ public class IntroAnimation : MonoBehaviour
         //FadeCtrl.instance.FadeOut();
         //yield return new WaitForSeconds(2);
 
-        SceneManager.LoadScene(1);        
-        Debug.Log("씬전환!!!!!!!");       
+        SceneManager.LoadScene(1);         
     }
 }
 

@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AttackController : MonoBehaviour
 {
     
     public static int scoreCount;
     public static int playerHp = 6;
+    public static int stage1_Count = 0;
+    public GameObject hpUI;
     public static AttackController instance;
 
     private int turnRandomNum01;
@@ -68,10 +71,9 @@ public class AttackController : MonoBehaviour
         countDownObj[10].SetActive(true);
         yield return new WaitForSeconds(2f);
         countDownObj[10].SetActive(false);
-        //yield return new WaitForSeconds(13f);
+        hpUI.gameObject.SetActive(true);
 
-        while (true) //playerHp > 0
-
+        while (stage1_Count < 1) //Stage1에서 조각이 10개 생겨나기 전까지 공격 반복
         {
             turnRandomNum01 = Random.Range(0, 3);
             turnRandomNum02 = Random.Range(0, 3);
@@ -86,10 +88,9 @@ public class AttackController : MonoBehaviour
             TurnCheck[turnRandomNum02].GetComponent<SnakeCubeController>().check_AllAttack = !TurnCheck[turnRandomNum02].GetComponent<SnakeCubeController>().check_AllAttack;
             yield return new WaitForSeconds(1.0f);
         }
-
-
+        Debug.Log("Stage1 Clear!");
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene(2); //Stage1 클리어 -> Stage2 씬 전환
     }
-
-
 
 }

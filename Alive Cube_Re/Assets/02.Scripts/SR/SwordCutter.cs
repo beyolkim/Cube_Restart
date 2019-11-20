@@ -5,6 +5,8 @@ using Valve.VR;
 [RequireComponent (typeof(Rigidbody))]
 public class SwordCutter : MonoBehaviour {
 
+    public static SwordCutter instance = null;
+
     public SteamVR_Input_Sources hand = SteamVR_Input_Sources.Any;
     public SteamVR_Input_Sources righHhand = SteamVR_Input_Sources.RightHand;
     public SteamVR_Input_Sources leftHhand = SteamVR_Input_Sources.LeftHand;
@@ -27,6 +29,7 @@ public class SwordCutter : MonoBehaviour {
 
     private void Start()
     {
+        instance = this;
         //hit = Resources.Load<GameObject>("SwordSlash");
         _audio = GetComponent<AudioSource>();
     }
@@ -44,7 +47,6 @@ public class SwordCutter : MonoBehaviour {
         if (coll.gameObject.transform.CompareTag("CUBE") && power >= 0.5f)
         {
             check_fallStone += 1;
-            Debug.Log(check_fallStone);
             ContactPoint contact = coll.contacts[0];
             Vector3 _normal = contact.normal;
 
@@ -62,10 +64,11 @@ public class SwordCutter : MonoBehaviour {
 
             if (check_fallStone > 5)
             {
-                Debug.Log("떳따");
                 GameObject fragment = Instantiate(Resources.Load("PurplePiece") as GameObject);
                 fragment.transform.position = victim.transform.position;
                 check_fallStone = 0;
+                AttackController.stage1_Count += 1;
+                Debug.Log("stage1_Count : " + AttackController.stage1_Count);
             }
 
             //if(coll.gameObject == victim.GetComponentInParent<AttackCube>().BodyParts[2])

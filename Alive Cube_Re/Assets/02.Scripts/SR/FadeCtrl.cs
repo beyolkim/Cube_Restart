@@ -20,7 +20,7 @@ public class FadeCtrl : MonoBehaviour
 
         if(this.gameObject.scene.name == "Stage1")
         {
-            Debug.Log("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+            Debug.Log("Stage1 페이드 인");
             anim.SetBool(fadeIn, false);
         }
     }

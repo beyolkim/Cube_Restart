@@ -82,7 +82,7 @@ public class HandCtrl : MonoBehaviour
                 StartCoroutine(SwordSpawn());
             }
         }
-        else if(this.gameObject.scene.name == "Go_Gun")
+        else if(this.gameObject.scene.name == "Stage2")
         {
             if(!gunSpawn && !gunOn && trigger.GetStateDown(rightHand)) //Scene이 Gun일 때 총 생성
             {

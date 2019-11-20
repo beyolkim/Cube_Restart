@@ -21,19 +21,28 @@ public class GunCtrl : MonoBehaviour
     public float fireRate = 0.25f;
     private bool fireAllowed = true;
     private bool gunReady = false;
-    private Ray ray;
-    private RaycastHit hit;
+    
     public float range = 30f;
     private LineRenderer line;
 
     public AudioClip[] audioClip;
     private AudioSource _audio;
 
+
+    private Ray ray;
+    private RaycastHit hit;
+    private bool flag;
+
+    public RedMonCtrl redMonCtrl;
+
     void Start()
     {
         instance = this;
         fireLight.GetComponent<Light>().enabled = false;
         _audio = GetComponent<AudioSource>();
+
+        ray = new Ray(transform.position, transform.forward);
+        flag = true;
     }
 
 
@@ -93,12 +102,28 @@ public class GunCtrl : MonoBehaviour
     void GunRay()
     {
 
-        ray = new Ray(transform.position, transform.forward);
-        if (Physics.Raycast(ray, out hit, range))
+        //ray = new Ray(transform.position, transform.forward);
+        //if (Physics.Raycast(ray, out hit, range))
+        //{
+        //    if (hit.collider.CompareTag("CUBE"))
+        //    {
+        //        Debug.Log("큐브다!!");
+        //    }
+        //}
+
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 10.0f) && hit.collider.CompareTag("REDMON"))
         {
-            if (hit.collider.CompareTag("CUBE"))
+            Debug.Log(hit.collider.name);
+            var monPos = hit.collider.gameObject.GetComponentInParent<Transform>();
+            //Idle상태일 때만 회피 가능, 공격 또는 회피 도중 피격은 피할 수 없음
+            if (monPos.position.x > -4.5 && monPos.position.x <= -0.1 && flag == true)
             {
-                Debug.Log("큐브다!!");
+                redMonCtrl.StateStrafeLeft();
+            }
+
+            else if (monPos.position.x >= -8.9 && monPos.position.x <= -4.5 && flag == true)
+            {
+                redMonCtrl.StateStrafeRight();
             }
         }
     }

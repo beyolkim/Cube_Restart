@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+//퍼플, 레드 조각들이 몬스터 생성 위치로 떠올라 반짝이고,
+//그 위치에서 몬스터들이 생성되며 조각들은 사라짐
 public class PieceCtrl : MonoBehaviour
 {
     private GameObject[] P_Mons = new GameObject[3];      //퍼플몬스터 
@@ -32,12 +34,13 @@ public class PieceCtrl : MonoBehaviour
         {
             R_pieces[i].transform.DOLocalMoveY(R_Mons[i].transform.position.y, 2.0f);
             R_Mons[i].SetActive(false);
-
         }
-        Invoke("P_SpawnPos", 2.5f);
-        Invoke("R_SpawnPos", 2.5f);
-        Invoke("Twinkling", 5.0f);
 
+        Invoke("P_SpawnPos", 2.0f);
+        Invoke("R_SpawnPos", 2.0f);
+        Invoke("Twinkling", 4.0f);
+        Invoke("SpawnParticle", 5.0f);
+        Invoke("RevealMons", 5.0f);
     }
 
     void P_SpawnPos()
@@ -78,8 +81,34 @@ public class PieceCtrl : MonoBehaviour
             R_pieces[i].gameObject.transform.GetChild(0).transform.GetChild(4).gameObject.SetActive(true);
             R_pieces[i].gameObject.transform.GetChild(0).transform.GetChild(5).gameObject.SetActive(true);
         }
+        
+        Destroy(Del_PurPlePieces, 2.0f);
+        Destroy(Del_RedPieces, 2.0f);
+    }
 
-        Invoke("RevealMons", 10.0f);
+    void SpawnParticle()
+    {
+        //몬스터 생성 파티클 (BeamUpRed)
+        for (int i = 0; i < P_pieces.Length; i++)
+        {
+            P_pieces[i].gameObject.transform.GetChild(1).gameObject.SetActive(true);
+        }
+
+        for (int i = 0; i < R_pieces.Length; i++)
+        {
+            R_pieces[i].gameObject.transform.GetChild(1).gameObject.SetActive(true);
+        }
+
+        //조각들 꺼짐
+        for (int i = 0; i < P_pieces.Length; i++)
+        {
+            P_pieces[i].gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        }                                                                                          
+                                                                                                   
+        for (int i = 0; i < R_pieces.Length; i++)                                                  
+        {                                                                                          
+            R_pieces[i].gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        }
     }
 
     void RevealMons()
@@ -93,8 +122,5 @@ public class PieceCtrl : MonoBehaviour
         {
             R_Mons[i].SetActive(true);
         }
-
-        Destroy(Del_PurPlePieces, 0.5f);
-        Destroy(Del_RedPieces, 0.5f);
     }
 }

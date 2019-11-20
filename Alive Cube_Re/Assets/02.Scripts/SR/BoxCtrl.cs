@@ -36,7 +36,7 @@ public class BoxCtrl : MonoBehaviour
             }
         }
 
-        if (this.gameObject.scene.name == "Go_Gun")
+        if (this.gameObject.scene.name == "Stage2")
         {
             if (trigger.GetStateDown(righHhand))
             {

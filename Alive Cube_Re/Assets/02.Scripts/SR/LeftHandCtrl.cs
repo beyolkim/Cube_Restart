@@ -72,7 +72,7 @@ public class LeftHandCtrl : MonoBehaviour
             }
         }
 
-        else if (this.gameObject.scene.name == "Go_Gun")
+        else if (this.gameObject.scene.name == "Stage2")
         {
             if (!shieldOn && trigger.GetStateDown(lefthand))
             {

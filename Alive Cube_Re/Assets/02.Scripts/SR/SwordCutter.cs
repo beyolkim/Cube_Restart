@@ -27,11 +27,17 @@ public class SwordCutter : MonoBehaviour {
 
     private int check_fallStone;
 
+
+    //빈오브젝트 생성
+    public GameObject redGameObject;
+    public GameObject purpleGameObject;
+
     private void Start()
     {
         instance = this;
         //hit = Resources.Load<GameObject>("SwordSlash");
         _audio = GetComponent<AudioSource>();
+ 
     }
 
     private void Update()
@@ -64,12 +70,28 @@ public class SwordCutter : MonoBehaviour {
 
             if (check_fallStone > 5)
             {
-                GameObject fragment = Instantiate(Resources.Load("PurplePiece") as GameObject);
-                fragment.transform.position = victim.transform.position;
-                fragment.GetComponent<Rigidbody>().useGravity = true;
-                fragment.GetComponent<BoxCollider>().enabled = true;
-                check_fallStone = 0;
-                AttackController.stage1_Count += 1;
+                if (AttackController.stage1_Count <7)
+                {
+                    GameObject fragment = Instantiate(Resources.Load("RedPiece") as GameObject);
+                    fragment.transform.parent = redGameObject.transform;
+                    fragment.transform.position = victim.transform.position;
+                    fragment.GetComponent<Rigidbody>().useGravity = true;
+                    fragment.GetComponent<BoxCollider>().enabled = true;
+                    check_fallStone = 0;
+                    AttackController.stage1_Count += 1;
+                    StartCoroutine(UnCheckGravity(fragment));
+                }
+                else
+                {
+                    GameObject fragment = Instantiate(Resources.Load("PurplePiece") as GameObject);
+                    fragment.transform.parent = purpleGameObject.transform;
+                    fragment.transform.position = victim.transform.position;
+                    fragment.GetComponent<Rigidbody>().useGravity = true;
+                    fragment.GetComponent<BoxCollider>().enabled = true;
+                    check_fallStone = 0;
+                    AttackController.stage1_Count += 1;
+                    StartCoroutine(UnCheckGravity(fragment));
+                }
                 Debug.Log("stage1_Count : " + AttackController.stage1_Count);
             }
 
@@ -93,6 +115,12 @@ public class SwordCutter : MonoBehaviour {
         prePos = curPos;
 
         power = dist.magnitude;
+    }
+
+    IEnumerator UnCheckGravity(GameObject _fragment)
+    {
+        yield return new WaitForSeconds(3.0f);
+        _fragment.GetComponent<Rigidbody>().useGravity = false;
     }
 
     //IEnumerator LaserOff()

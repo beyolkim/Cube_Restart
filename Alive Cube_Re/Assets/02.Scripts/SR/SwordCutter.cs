@@ -120,7 +120,7 @@ public class SwordCutter : MonoBehaviour {
     IEnumerator UnCheckGravity(GameObject _fragment)
     {
         yield return new WaitForSeconds(3.0f);
-        _fragment.GetComponent<Rigidbody>().useGravity = false;
+        _fragment.GetComponent<Rigidbody>().isKinematic = true;
     }
 
     //IEnumerator LaserOff()

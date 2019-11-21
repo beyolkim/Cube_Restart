@@ -9,7 +9,7 @@ public class AttackController : MonoBehaviour
     public static ReverceHandler CubeReverce;
 
     public static int scoreCount;
-    public static int playerHp = 2;
+    public static int playerHp = 10;
     public static int stage1_Count = 0;
     public GameObject hpUI;
     public GameObject gameOverUI;
@@ -58,25 +58,25 @@ public class AttackController : MonoBehaviour
     IEnumerator AttackTurn()
     {
 
-        //PlayerController.instance.CountDown_Audio();
-        //countDownObj[0].SetActive(true);
-        //yield return new WaitForSeconds(1.5f);
-        //countDownObj[0].SetActive(false);
+        PlayerController.instance.CountDown_Audio();
+        countDownObj[0].SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        countDownObj[0].SetActive(false);
 
-        //for (int i = 1; i < countDownObj.Count - 1; i++)
-        //{
-        //    countDownObj[i].SetActive(true);
-        //    yield return new WaitForSeconds(1f);
-        //    countDownObj[i].SetActive(false);
+        for (int i = 1; i < countDownObj.Count - 1; i++)
+        {
+            countDownObj[i].SetActive(true);
+            yield return new WaitForSeconds(1f);
+            countDownObj[i].SetActive(false);
 
-        //}
+        }
 
-        //countDownObj[10].SetActive(true);
-        //yield return new WaitForSeconds(2f);
-        //countDownObj[10].SetActive(false);
+        countDownObj[10].SetActive(true);
+        yield return new WaitForSeconds(2f);
+        countDownObj[10].SetActive(false);
         hpUI.gameObject.SetActive(true);
 
-        while (stage1_Count < 10) //Stage1에서 조각이 10개 생겨나기 전까지 공격 반복
+        while (stage1_Count < 2) //Stage1에서 조각이 10개 생겨나기 전까지 공격 반복
         {
             Debug.Log("큐브공격!!");
             turnRandomNum01 = Random.Range(0, 3);

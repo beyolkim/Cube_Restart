@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip countDown_audio;
     public AudioClip hit_audio;
     public AudioClip gameOver_audio;
+    public AudioClip earthquake_audio;
 
     public GameObject warningZone;
     public GameObject attackCube;
@@ -98,6 +99,10 @@ public class PlayerController : MonoBehaviour
     {
         _audio.PlayOneShot(countDown_audio);
 
+    }
+    public void Earthquake_Audio()
+    {
+        _audio.PlayOneShot(earthquake_audio);
     }
     IEnumerator HitEffect()
     {

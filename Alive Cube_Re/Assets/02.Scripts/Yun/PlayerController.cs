@@ -74,12 +74,13 @@ public class PlayerController : MonoBehaviour
     {
         AttackDifficulty();
 
-        if(!playerDie && AttackController.playerHp <= 0)
-        {            
-            Debug.Log("Game Over");
-            _audio.PlayOneShot(gameOver_audio);
-            playerDie = true;
-        }        
+        //if(!playerDie && AttackController.playerHp <= 0)
+        //{            
+        //    Debug.Log("Game Over");
+        //    _audio.PlayOneShot(gameOver_audio);
+        //    playerDie = true;
+        //    AttackController.playerHp = 6;
+        //}        
     }
 
     public void MapMaking_Audio() //Intro 씬에서 Intro큐브를 trigger하면 audiosource가 있는 그 큐브의 위치가 바뀌어서 어쩔 수 없음
@@ -123,8 +124,15 @@ public class PlayerController : MonoBehaviour
         {
             attackAllow = true;
         }
-
     }
+
+    public void PlayerDie()
+    {
+        Debug.Log("Game Over");
+        _audio.PlayOneShot(gameOver_audio);
+        //AttackController.playerHp = 6;
+    }
+
     IEnumerator MapSpawn()
     {
         yield return new WaitForSeconds(4f);

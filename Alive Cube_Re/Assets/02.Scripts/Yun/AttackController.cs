@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class AttackController : MonoBehaviour
 {
-    
+    public delegate void ReverceHandler();
+    public static ReverceHandler CubeReverce;
+
     public static int scoreCount;
     public static int playerHp = 6;
     public static int stage1_Count = 0;
@@ -56,12 +58,11 @@ public class AttackController : MonoBehaviour
     {
 
         PlayerController.instance.CountDown_Audio();
-        //yield return new WaitForSeconds(1f);
         countDownObj[0].SetActive(true);
         yield return new WaitForSeconds(1.5f);
         countDownObj[0].SetActive(false);
 
-        for (int i=1; i<countDownObj.Count-1; i++)
+        for (int i = 1; i < countDownObj.Count - 1; i++)
         {
             countDownObj[i].SetActive(true);
             yield return new WaitForSeconds(1f);
@@ -76,6 +77,7 @@ public class AttackController : MonoBehaviour
 
         while (stage1_Count < 3) //Stage1에서 조각이 10개 생겨나기 전까지 공격 반복
         {
+            Debug.Log("큐브공격!!");
             turnRandomNum01 = Random.Range(0, 3);
             turnRandomNum02 = Random.Range(0, 3);
             while(turnRandomNum01 == turnRandomNum02)
@@ -88,10 +90,18 @@ public class AttackController : MonoBehaviour
             TurnCheck[turnRandomNum01].GetComponent<SnakeCubeController>().check_AllAttack = !TurnCheck[turnRandomNum01].GetComponent<SnakeCubeController>().check_AllAttack;
             TurnCheck[turnRandomNum02].GetComponent<SnakeCubeController>().check_AllAttack = !TurnCheck[turnRandomNum02].GetComponent<SnakeCubeController>().check_AllAttack;
             yield return new WaitForSeconds(1.0f);
+
+            if(AttackController.playerHp <= 0)
+            {
+                CubeReverce(); //나와있는 큐브들 모두 들어가도록
+                PlayerController.instance.PlayerDie();
+                yield return new WaitForSeconds(5);
+                SceneManager.LoadScene(3);                
+            }
         }
         Debug.Log("Stage1 Clear!");
         stage1_audio.Stop();
-        AttackCube.instance.check_attack = true; //나와있는 큐브들 모두 들어가도록
+        CubeReverce(); //나와있는 큐브들 모두 들어가도록
         yield return new WaitForSeconds(2f);
         FadeCtrl.instance.FadeOut();
         yield return new WaitForSeconds(4);

@@ -41,10 +41,21 @@ public class AttackCube : MonoBehaviour
     private Transform prevBodypart;
 
     public bool check_attack;
-    private bool check_Dotween;
+    public bool check_Dotween;
 
     public bool targetCheck;
-   
+
+    private void OnEnable()
+    {
+        AttackController.CubeReverce += ReverseMove;
+        AttackController.CubeReverce += DotweenCheck;
+    }
+    private void OnDisable()
+    {
+        AttackController.CubeReverce -= ReverseMove;
+        AttackController.CubeReverce += DotweenCheck;
+    }
+
     void Start()
     {
         instance = this;
@@ -86,8 +97,14 @@ public class AttackCube : MonoBehaviour
     {
         check_attack = true;
     }
-    public void ReverseMove()
+
+    void DotweenCheck()
     {
+        check_Dotween = true;
+    }
+    void ReverseMove()
+    {
+        
         Sequence mySequence = DOTween.Sequence();
 
         float curspeed = speed;

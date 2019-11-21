@@ -9,6 +9,7 @@ public class IntroAnimation : MonoBehaviour
 {
     public delegate void AudioHandler();
     public static AudioHandler IntroAudio;
+
     //빈오브젝트 생성
     GameObject emptyGameObject;
 

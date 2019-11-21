@@ -467,10 +467,16 @@ ModelImporter:
     second: TongueTip
   - first:
       74: 7400000
-    second: SmallSteps_NeutralFaceFwdALLAnglesFwdTOBack_2
+    second: walking
   - first:
       95: 9500000
     second: //RootNode
+  - first:
+      74: -288076669447283086
+    second: walkStop
+  - first:
+      74: 1416200751532587318
+    second: walking
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -484,7 +490,9 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
+      copied configuration does not match position in animation file:\n\t'LeftLeg'
+      : position error = 7.696520 mm\n\t'LeftFoot' : position error = 15.233778 mm\n"
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -500,11 +508,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: SmallSteps_NeutralFaceFwdALLAnglesFwdTOBack_2
+      name: walkStop
       takeName: _182_183B_a_U1_M_P_SmallSteps_NeutralFaceFwdALLAnglesFwdTOBack__Fb_p0-180_No_0_2
       internalID: 0
-      firstFrame: 59
-      lastFrame: 629
+      firstFrame: 120
+      lastFrame: 279
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -528,6 +536,35 @@ ModelImporter:
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: walking
+      takeName: _182_183B_a_U1_M_P_SmallSteps_NeutralFaceFwdALLAnglesFwdTOBack__Fb_p0-180_No_0_2
+      internalID: 0
+      firstFrame: 120
+      lastFrame: 178
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 59
     isReadable: 1
   meshes:
     lODScreenPercentages: []

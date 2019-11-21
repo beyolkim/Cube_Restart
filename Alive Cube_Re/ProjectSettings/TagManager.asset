@@ -24,6 +24,7 @@ TagManager:
   - PURPLEPIECE
   - COUNTDOWN
   - HUMAN
+  - WEAKPOINT
   layers:
   - Default
   - TransparentFX

@@ -79,7 +79,7 @@ public class SwordCutter : MonoBehaviour {
                     fragment.GetComponent<BoxCollider>().enabled = true;
                     check_fallStone = 0;
                     AttackController.stage1_Count += 1;
-                    StartCoroutine(UnCheckGravity(fragment));
+                    //StartCoroutine(UnCheckGravity(fragment));
                 }
                 else
                 {
@@ -90,7 +90,7 @@ public class SwordCutter : MonoBehaviour {
                     fragment.GetComponent<BoxCollider>().enabled = true;
                     check_fallStone = 0;
                     AttackController.stage1_Count += 1;
-                    StartCoroutine(UnCheckGravity(fragment));
+                    //StartCoroutine(UnCheckGravity(fragment));
                 }
                 Debug.Log("stage1_Count : " + AttackController.stage1_Count);
             }

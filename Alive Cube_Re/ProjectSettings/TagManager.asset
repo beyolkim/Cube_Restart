@@ -23,6 +23,7 @@ TagManager:
   - REDPIECE
   - PURPLEPIECE
   - COUNTDOWN
+  - HUMAN
   layers:
   - Default
   - TransparentFX

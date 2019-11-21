@@ -23,8 +23,11 @@ TagManager:
   - REDPIECE
   - PURPLEPIECE
   - COUNTDOWN
+  - RED
+  - PURPLE
   - HUMAN
   - WEAKPOINT
+
   layers:
   - Default
   - TransparentFX

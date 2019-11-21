@@ -18,24 +18,25 @@ public class GunCtrl : MonoBehaviour
     public float fireRate = 0.25f;
     private bool fireAllowed = true;
     private bool gunReady = false;
+    private bool flag;
     public AudioClip[] audioClip;
     private AudioSource _audio;
 
     private Ray ray;
     private RaycastHit hit;
-    private bool flag;
+    public bool strafeFlag;
 
-    //public Material lineMat;
-    //public Transform rayPos;
-    //public float range = 30f;
-    //private LineRenderer line;
+    public Material lineMat;
+    public Transform rayPos;
+    public float range = 30f;
+    private LineRenderer line;
 
     void Start()
     {
         instance = this;
         fireLight.GetComponent<Light>().enabled = false;
         _audio = GetComponent<AudioSource>();
-        flag = true;
+        strafeFlag = true;
     }
 
     void Update()
@@ -44,33 +45,46 @@ public class GunCtrl : MonoBehaviour
         {
             gunReady = true;
             _audio.Play();
+            Invoke("CreateLine", 2.0f);
         }
         if (gunReady) //Gun의 Line이 생성되었다면 Ray를 발사
         {
-            Debug.DrawRay(ray.origin, ray.direction * 30.0f, Color.green);
-            ray = new Ray(transform.position, transform.forward);
+            //Debug.DrawRay(ray.origin, ray.direction * 30.0f, Color.green);
+            ray = new Ray(firePos.position, transform.forward);
 
-            if (Physics.Raycast(ray, out hit, 30.0f) && hit.collider.CompareTag("REDMON"))
+            if (Physics.Raycast(ray, out hit, 30.0f) && hit.collider.CompareTag("ENEMY"))
             {
+                
+                Debug.Log("Raycast가 ENEMY을 맞추면 flag 값은 ? " + strafeFlag);
+
                 Transform monPos = hit.collider.gameObject.transform.parent.transform;
                 RedMonCtrl redMonCtrl = hit.collider.gameObject.transform.parent.gameObject.GetComponent<RedMonCtrl>();
-                
-                Debug.Log("레이캐스트 발사");
-                Debug.Log("맞은 놈의 이름" + hit.collider.name);
-                Debug.Log(monPos);
+
+                Debug.Log("RayCast에 맞은 레드몬은 : " + hit.collider.transform.parent.name);
 
                 //Idle상태일 때만 회피 가능, 공격 또는 회피 도중 피격은 피할 수 없음
-                if (monPos.position.x > -4.5 && monPos.position.x <= -0.1 && flag == true)
+                if (monPos.position.x > -4.5 && monPos.position.x <= -0.1 )
                 {
+                    strafeFlag = false;
                     redMonCtrl.StateStrafeLeft();
+                    Debug.Log("레드몬이 왼쪽으로 피했습니다, flag값은 ? " + strafeFlag);
                 }
 
-                else if (monPos.position.x >= -8.9 && monPos.position.x <= -4.5 && flag == true)
+                else if (monPos.position.x >= -8.9 && monPos.position.x <= -4.5 && strafeFlag == true)
                 {
+                    strafeFlag = false;
                     redMonCtrl.StateStrafeRight();
+                    Debug.Log("레드몬이 오른쪽으로 피했습니다, flag값은 ? " + strafeFlag);
                 }
+                StartCoroutine(BanRay());
             }
         }
+    }
+    IEnumerator BanRay()
+    {
+        yield return new WaitForSeconds(3.0f);
+        strafeFlag = true;
+
     }
     public void Fire()
     {
@@ -95,18 +109,18 @@ public class GunCtrl : MonoBehaviour
         fireLight.GetComponent<Light>().enabled = false;
         fireAllowed = true;
     }
-    //void CreateLine()
-    //{
-        //line = this.gameObject.AddComponent<LineRenderer>();
-        //line.useWorldSpace = false;
-        //line.receiveShadows = false;
-        //line.positionCount = 2;
-        //line.SetPosition(0, rayPos.localPosition);
-        //line.SetPosition(1, new Vector3(0, 0, range));
-        //line.startWidth = 0.005f;
-        //line.endWidth = 0.005f;
-        //line.material = lineMat;
-   //}
+    void CreateLine()
+    {
+        line = this.gameObject.AddComponent<LineRenderer>();
+        line.useWorldSpace = false;
+        line.receiveShadows = false;
+        line.positionCount = 2;
+        line.SetPosition(0, firePos.localPosition);
+        line.SetPosition(1, new Vector3(0, 0, range));
+        line.startWidth = 0.005f;
+        line.endWidth = 0.005f;
+        line.material = lineMat;
+    }
     //void GunRay()
     //{
     //    //if (Physics.Raycast(ray, out hit, range))

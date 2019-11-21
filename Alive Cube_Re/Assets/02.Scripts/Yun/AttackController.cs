@@ -75,7 +75,7 @@ public class AttackController : MonoBehaviour
         //countDownObj[10].SetActive(false);
         hpUI.gameObject.SetActive(true);
 
-        while (stage1_Count < 3) //Stage1에서 조각이 10개 생겨나기 전까지 공격 반복
+        while (stage1_Count < 10) //Stage1에서 조각이 10개 생겨나기 전까지 공격 반복
         {
             Debug.Log("큐브공격!!");
             turnRandomNum01 = Random.Range(0, 3);

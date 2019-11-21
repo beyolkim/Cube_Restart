@@ -27,8 +27,11 @@ public class PlayerController : MonoBehaviour
     public GameObject attackCube;
 
     public static int coint = 0;
-    public bool playerDie = false;   
+    public bool playerDie = false;
 
+    //죽었을 경우 조각들 파편 파괴(스테이지 클리어에만 파괴되지 않음)
+    public GameObject redObjs;
+    public GameObject purbpleObjs;
     private void OnEnable()
     {
         IntroAnimation.IntroAudio += MapMaking_Audio;
@@ -134,6 +137,8 @@ public class PlayerController : MonoBehaviour
     public void PlayerDie()
     {
         Debug.Log("Game Over");
+        Destroy(purbpleObjs);
+        Destroy(redObjs);
         _audio.PlayOneShot(gameOver_audio);
         //AttackController.playerHp = 6;
     }

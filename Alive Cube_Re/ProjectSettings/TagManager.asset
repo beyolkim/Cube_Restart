@@ -25,6 +25,8 @@ TagManager:
   - COUNTDOWN
   - RED
   - PURPLE
+  - HUMAN
+
   layers:
   - Default
   - TransparentFX

@@ -17,9 +17,9 @@ public class PieceCtrl : MonoBehaviour
 
     void Start()
     {
-        P_Mons = GameObject.FindGameObjectsWithTag("PURPLEMON");
+        P_Mons = GameObject.FindGameObjectsWithTag("PURPLE");
         P_pieces = GameObject.FindGameObjectsWithTag("PURPLEPIECE");
-        R_Mons = GameObject.FindGameObjectsWithTag("REDMON");
+        R_Mons = GameObject.FindGameObjectsWithTag("RED");
         R_pieces = GameObject.FindGameObjectsWithTag("REDPIECE");
         
         //PurplePiece 떠오름

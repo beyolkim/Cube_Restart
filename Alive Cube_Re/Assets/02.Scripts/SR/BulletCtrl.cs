@@ -8,8 +8,6 @@ public class BulletCtrl : MonoBehaviour
     public float damage = 20f;
     public float speed;
 
-    
-    
     void Start()
     {
         GetComponent<Rigidbody>().AddForce(transform.forward * 3000f);
@@ -27,20 +25,15 @@ public class BulletCtrl : MonoBehaviour
         GameObject _sparkParticle = Instantiate(sparkParticle, contact.point, Quaternion.LookRotation(_normal));
         Destroy(this.gameObject);
         Destroy(_sparkParticle, 1.5f);
-
-        //if (coll.transform.CompareTag("REDMON"))
-        //{
-        //    ContactPoint contact = coll.contacts[0];
-        //    Vector3 _normal = contact.normal; //coll(부딫힌 Cube)의 법선벡터            
-            
-        //    GameObject _sparkParticle = Instantiate(sparkParticle, contact.point, Quaternion.LookRotation(_normal));
-        //    Destroy(this.gameObject);
-        //    Destroy(_sparkParticle, 1.5f);
-        //}
-        if(coll.transform.CompareTag("REDMON"))
-        {
-            RedMonCtrl redMonCtrl = coll.transform.GetComponentInParent<RedMonCtrl>();
-            redMonCtrl.R_MonHP--;
-        }
     }
+
+    //if (coll.transform.CompareTag("REDMON"))
+    //{
+    //    ContactPoint contact = coll.contacts[0];
+    //    Vector3 _normal = contact.normal; //coll(부딫힌 Cube)의 법선벡터            
+
+    //    GameObject _sparkParticle = Instantiate(sparkParticle, contact.point, Quaternion.LookRotation(_normal));
+    //    Destroy(this.gameObject);
+    //    Destroy(_sparkParticle, 1.5f);
+    //}
 }

@@ -34,7 +34,6 @@ public class PurpleMonCtrl : MonoBehaviour
         purpleLaser = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
         deadParticle = transform.GetChild(1).gameObject;
         rigHub = transform.GetChild(0).gameObject;
-        //redMonBody = transform.GetChild(2).gameObject; //Tentacles 폴더
     }
     private void Start()
     {

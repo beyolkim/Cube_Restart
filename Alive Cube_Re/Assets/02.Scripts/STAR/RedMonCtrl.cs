@@ -6,8 +6,10 @@ using DG.Tweening;
 //보라색 몬스터 : 고정 위치에서 좌우로 레이저 발사 
 public class RedMonCtrl : MonoBehaviour
 {
+    public float rotDuration;
+    public Vector3 attackAngle;
+
     //레이저 
-    //private TestRayCast testRayCast;
     private GameObject redLaser;
     private Transform targetTr;
 
@@ -18,7 +20,7 @@ public class RedMonCtrl : MonoBehaviour
     private WaitForSeconds ws;
     private GameObject rigHub;
     private GameObject deadParticle;
-    private enum State
+    public enum State
     {
         IDLE,
         STRAFE,
@@ -27,14 +29,10 @@ public class RedMonCtrl : MonoBehaviour
         TAKEDAMAGE,
         DIE
     }
-    private State state;
+    public State state;
 
-    public float rotDuration;
-    public Vector3 attackAngle = new Vector3(-90, 0, 0);
-
-    public int R_MonHP =2;
+    public int R_MonHP;
     private bool isDie = false;
-    private bool flag = true;          //실행 제어 변수
 
     //애니메이터 파라미터의 문자열을 해시값으로 추출 
     private readonly int h_Idle = Animator.StringToHash("Idle");
@@ -44,10 +42,9 @@ public class RedMonCtrl : MonoBehaviour
     private readonly int h_TakeDamage = Animator.StringToHash("Take Damage");
     private readonly int h_FastAttack = Animator.StringToHash("Fast Attack");
     private readonly int h_Die = Animator.StringToHash("Die");
-    private Animator animator;
+    public Animator animator;
 
-
-    void Awake()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
         redLaser = transform.GetChild(0).transform.GetChild(0).gameObject;
@@ -66,6 +63,7 @@ public class RedMonCtrl : MonoBehaviour
     {
         //RedMonCtrl 시작과 동시에 Spwan Sound 재생
         audioSource.PlayOneShot(audioClip[0]);
+
         Invoke("StateIdle", 5.3f);
     }
 
@@ -87,81 +85,104 @@ public class RedMonCtrl : MonoBehaviour
             else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Take Damage"))
                 state = State.TAKEDAMAGE;
             else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Fast Attack"))
+            {
                 state = State.FASTATTACK;
+                StateFastAttack();
+            }
             else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+            {
                 state = State.DIE;
+                StateDie();
+                isDie = true;
+            }
 
-            Debug.Log("현재 상태 : " + state);
-            Debug.Log("현재 HP : " + R_MonHP);
+            Debug.Log("레드몬 상태 : " + state);
+            Debug.Log("레드몬 HP : " + R_MonHP);
 
             yield return ws;
         }
     }
+    IEnumerator RedMonAction()
+    {
+        while (!isDie)
 
-    void StateIdle()
-    {
-        redLaser.SetActive(false);
-        animator.SetTrigger(h_Idle);
-        //레드몬스터가 AttckMode로 방향 전환
-        animator.SetFloat("AnimSpeed", Random.Range(1.0f, 1.5f));
-        animator.SetFloat("AnimOffset", Random.Range(0.0f, 1.0f));
-        transform.DORotate(attackAngle, rotDuration);
+            yield return ws;
     }
-    void StateAttack()
+
+    void StateIdle() //Idle : 레이 닿으면 피하고 피격시 공격모드
     {
-        //플레이어를 향해 Spin + 레이저 발사
+        if (state == State.IDLE || state == State.ATTACK)
+        {
+            redLaser.SetActive(false);  //Idle재실행 때 레이저 끄기
+            animator.ResetTrigger(h_Attack);
+
+            animator.SetTrigger(h_Idle);
+            animator.SetFloat("AnimSpeed", Random.Range(1.0f, 1.5f));
+            animator.SetFloat("AnimOffset", Random.Range(0.0f, 1.0f));
+            transform.DORotate(attackAngle, rotDuration);
+        }
+    }
+    public void StateStrafeLeft() //Strafe - 레이닿으면 왼쪽으로 피하고 즉시 공격모드
+    {
+
+        if (state == State.STRAFE || state == State.IDLE)
+        {
+        Debug.Log("StateStrafeLeft가 실행되었습니다");
+            transform.DORotate(attackAngle, 0.0f);
+            redLaser.SetActive(false);
+            animator.SetTrigger(h_StrafeLeft);
+            StartCoroutine(MoveLeft());
+            
+        }
+    }
+    public void StateStrafeRight() //Strafe - 레이닿으면 오른쪽으로 피하고 즉시 공격모드
+    {
+
+        if (state == State.STRAFE || state == State.IDLE)
+        {
+        Debug.Log("StateStrafeRight가 실행되었습니다");
+            transform.DORotate(attackAngle, 0.0f);
+            redLaser.SetActive(false);
+            animator.SetTrigger(h_StrafeRight);
+            StartCoroutine(MoveRight());
+        }
+    }
+
+    void StateAttack() //Attack - 회전 + 레이저, 레이 못 피함, 이후 Idle로 돌아감
+    {
+
+        if (state == State.ATTACK || state == State.STRAFE)
+        {
+        Debug.Log("StateAttack이 실행되었습니다");
+            animator.ResetTrigger(h_StrafeRight);
+            animator.ResetTrigger(h_StrafeRight);
+            animator.SetTrigger(h_Attack);
+            redLaser.transform.DOLookAt(targetTr.position, 1f, AxisConstraint.None);
+            redLaser.SetActive(true);
+        }
+    }
+
+    void StateFastAttack() //FastAttack - Take Damage 이후 실행, 죽을때까지 멈추지 않음
+    {
+        Debug.Log("StateAttack이 실행되었습니다");
+
+        transform.DORotate(attackAngle, 0.0f);
         redLaser.transform.DOLookAt(targetTr.position, 1f, AxisConstraint.None);
-        animator.SetTrigger(h_Attack);
         redLaser.SetActive(true);
-        // +sound, +playerAttackDamage
     }
 
-    public void StateStrafeLeft()
+    void StateDie() //Die - 죽는 애니메이션, 몸체 끄기, 죽는 파티클
     {
-        Debug.Log("레드몬이 왼쪽으로 피했습니다");
-        
-        transform.DORotate(attackAngle, 0.5f);
-        redLaser.SetActive(false);
-        animator.SetTrigger(h_StrafeLeft);
-        StartCoroutine(MoveLeft());
-        flag = false;
+        Debug.Log("StateAttack이 실행되었습니다");
+
+        rigHub.SetActive(false);
+        deadParticle.SetActive(true);
     }
 
-    public void StateStrafeRight()
-    {
-        Debug.Log("레드몬이 오른쪽으로 피했습니다");
-
-        transform.DORotate(attackAngle, 0.5f);
-        redLaser.SetActive(false);
-        animator.SetTrigger(h_StrafeRight);
-        StartCoroutine(MoveRight());
-        flag = false;
-    }
-
-    void StateDie()
-    {
-        if (R_MonHP == 0)
-        {
-            animator.SetTrigger(h_Die);
-            // + 사운드
-            rigHub.SetActive(false);
-            deadParticle.SetActive(true);
-            isDie = true;
-        }
-    }
-
-    void StateTakeDamage()
-    {
-        if (R_MonHP == 1)
-        {
-            animator.SetTrigger(h_TakeDamage);
-        }
-    }
     //Strafe 이동 코루틴
     IEnumerator MoveLeft()
     {
-
-        for (int i = 0; i < 120; i++)
+        for (int i = 0; i < 60; i++)
         {
             transform.Translate(transform.right * -0.03f);
             yield return null;
@@ -169,7 +190,7 @@ public class RedMonCtrl : MonoBehaviour
     }
     IEnumerator MoveRight()
     {
-        for (int i = 0; i < 120; i++)
+        for (int i = 0; i < 60; i++)
         {
             transform.Translate(transform.right * 0.03f);
             yield return null;

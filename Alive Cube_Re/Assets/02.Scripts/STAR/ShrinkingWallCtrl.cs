@@ -7,7 +7,7 @@ public class ShrinkingWallCtrl : MonoBehaviour
     private GameObject frontWall;
     private GameObject rightWall;
     private GameObject leftWall;
-    private CameraShake cameraShake;
+    public CameraShake cameraShake;
 
     //지진 효과
     private void Start()
@@ -15,7 +15,7 @@ public class ShrinkingWallCtrl : MonoBehaviour
         frontWall = transform.GetChild(0).gameObject;
         rightWall = transform.GetChild(2).gameObject;
         leftWall = transform.GetChild(3).gameObject;
-        cameraShake = GameObject.FindWithTag("Player").transform.parent.GetComponent<CameraShake>();
+        //cameraShake = GameObject.FindWithTag("Player").transform.parent.GetComponent<CameraShake>();
     }
     // Update is called once per frame
     void Update()

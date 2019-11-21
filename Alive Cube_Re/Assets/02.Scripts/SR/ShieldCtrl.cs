@@ -35,13 +35,11 @@ public class ShieldCtrl : MonoBehaviour
             _audio.PlayOneShot(open);
         }
     }
-
-    private void OnCollisionEnter(Collision coll)
+    private void OnTriggerEnter(Collider other)
     {
-        if(coll.transform.CompareTag("CUBE"))
+        if (other.transform.CompareTag("LASER"))
         {
             _audio.PlayOneShot(shieldHit[Random.Range(0, shieldHit.Length)]);
         }
     }
-    
 }

@@ -37,5 +37,10 @@ public class BulletCtrl : MonoBehaviour
         //    Destroy(this.gameObject);
         //    Destroy(_sparkParticle, 1.5f);
         //}
+        if(coll.transform.CompareTag("REDMON"))
+        {
+            RedMonCtrl redMonCtrl = coll.transform.GetComponentInParent<RedMonCtrl>();
+            redMonCtrl.R_MonHP--;
+        }
     }
 }

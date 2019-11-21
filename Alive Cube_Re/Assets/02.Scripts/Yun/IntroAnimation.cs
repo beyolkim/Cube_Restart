@@ -62,15 +62,16 @@ public class IntroAnimation : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    SceneManager.LoadScene("Intro");
+    //private void Update()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        AliveCube_UI.instance.AliveCube_UI_Open();
+    //        Debug.Log("UI 오픈!");
 
-        //}
-        
-    }
+    //    }
+
+    //}
 
     
 
@@ -332,6 +333,8 @@ public class IntroAnimation : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         cubeLine.DOFloat(1.0f, "_LineThickness", 1.5f);
+
+        AliveCube_UI.instance.AliveCube_UI_Open();
 
         yield return new WaitForSeconds(4);
 

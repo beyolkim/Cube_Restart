@@ -25,6 +25,27 @@ public class BulletCtrl : MonoBehaviour
         GameObject _sparkParticle = Instantiate(sparkParticle, contact.point, Quaternion.LookRotation(_normal));
         Destroy(this.gameObject);
         Destroy(_sparkParticle, 1.5f);
+
+        if (coll.transform.CompareTag("ENEMY"))
+        {
+            RedMonCtrl redMonCtrl = coll.transform.GetComponentInParent<RedMonCtrl>();
+
+            Debug.Log("BulletCtrl가 레드몬스크립트를 가져왔나요 : " + redMonCtrl);
+
+            if (redMonCtrl.R_MonHP > 0)
+            {
+                Debug.Log("StateTakeDamage가 실행되었습니다");
+
+                redMonCtrl.StateTakeDamage();
+            }
+
+            if (redMonCtrl.R_MonHP <= 0)
+            {
+                Debug.Log("레드몬스터가 사망했습니다 : " + name);
+
+                redMonCtrl.animator.SetTrigger("Die");
+            }
+        }
     }
 
     //if (coll.transform.CompareTag("REDMON"))

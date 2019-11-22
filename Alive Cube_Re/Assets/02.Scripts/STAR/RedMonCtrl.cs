@@ -6,7 +6,6 @@ using DG.Tweening;
 //보라색 몬스터 : 고정 위치에서 좌우로 레이저 발사 
 public class RedMonCtrl : MonoBehaviour
 {
-    public float rotDuration;
     public Vector3 attackAngle;
 
     //레이저 
@@ -33,6 +32,7 @@ public class RedMonCtrl : MonoBehaviour
 
     public int R_MonHP;
     private bool isDie = false;
+    private bool strafingFlag = true;
 
     //애니메이터 파라미터의 문자열을 해시값으로 추출 
     private readonly int h_Idle = Animator.StringToHash("Idle");
@@ -43,6 +43,7 @@ public class RedMonCtrl : MonoBehaviour
     private readonly int h_FastAttack = Animator.StringToHash("Fast Attack");
     private readonly int h_Die = Animator.StringToHash("Die");
     public Animator animator;
+
 
     private void Awake()
     {
@@ -119,7 +120,7 @@ public class RedMonCtrl : MonoBehaviour
             animator.SetTrigger(h_Idle);
             animator.SetFloat("AnimSpeed", Random.Range(1.0f, 1.5f));
             animator.SetFloat("AnimOffset", Random.Range(0.0f, 1.0f));
-            transform.DORotate(attackAngle, rotDuration);
+            transform.DORotate(attackAngle, 0.0f);
         }
     }
     public void StateStrafeLeft() //Strafe - 레이닿으면 왼쪽으로 피하고 즉시 공격모드
@@ -127,12 +128,15 @@ public class RedMonCtrl : MonoBehaviour
 
         if (state == State.STRAFE || state == State.IDLE)
         {
-        Debug.Log("StateStrafeLeft가 실행되었습니다");
-            transform.DORotate(attackAngle, 0.0f);
-            redLaser.SetActive(false);
-            animator.SetTrigger(h_StrafeLeft);
-            StartCoroutine(MoveLeft());
-            
+            if (strafingFlag == true)
+            {
+                //GunCtrl.instance.strafing = true;
+                Debug.Log("StateStrafeLeft가 실행되었습니다");
+                transform.DORotate(attackAngle, 0.0f);
+                redLaser.SetActive(false);
+                animator.SetTrigger(h_StrafeLeft);
+                StartCoroutine(MoveLeft());
+            }
         }
     }
     public void StateStrafeRight() //Strafe - 레이닿으면 오른쪽으로 피하고 즉시 공격모드
@@ -140,11 +144,15 @@ public class RedMonCtrl : MonoBehaviour
 
         if (state == State.STRAFE || state == State.IDLE)
         {
-        Debug.Log("StateStrafeRight가 실행되었습니다");
-            transform.DORotate(attackAngle, 0.0f);
-            redLaser.SetActive(false);
-            animator.SetTrigger(h_StrafeRight);
-            StartCoroutine(MoveRight());
+            if (strafingFlag == true)
+            {
+                //GunCtrl.instance.strafing = true;
+                Debug.Log("StateStrafeRight가 실행되었습니다");
+                transform.DORotate(attackAngle, 0.0f);
+                redLaser.SetActive(false);
+                animator.SetTrigger(h_StrafeRight);
+                StartCoroutine(MoveRight());
+            }
         }
     }
 
@@ -154,10 +162,11 @@ public class RedMonCtrl : MonoBehaviour
         if (state == State.ATTACK || state == State.STRAFE)
         {
         Debug.Log("StateAttack이 실행되었습니다");
+            transform.DORotate(attackAngle, 0.0f);
             animator.ResetTrigger(h_StrafeRight);
             animator.ResetTrigger(h_StrafeRight);
             animator.SetTrigger(h_Attack);
-            redLaser.transform.DOLookAt(targetTr.position, 1f, AxisConstraint.None);
+            redLaser.transform.DOLookAt(targetTr.position, 0.5f, AxisConstraint.None);
             redLaser.SetActive(true);
         }
     }
@@ -167,8 +176,17 @@ public class RedMonCtrl : MonoBehaviour
         Debug.Log("StateAttack이 실행되었습니다");
 
         transform.DORotate(attackAngle, 0.0f);
-        redLaser.transform.DOLookAt(targetTr.position, 1f, AxisConstraint.None);
+        redLaser.transform.DOLookAt(targetTr.position, 0.5f, AxisConstraint.None);
         redLaser.SetActive(true);
+    }
+
+    public void StateTakeDamage()
+    {
+        Debug.Log("StateTakeDamage가 실행되었습니다");
+
+        transform.DORotate(attackAngle, 0.0f);
+        animator.SetTrigger("Take Damage");
+        R_MonHP--;
     }
 
     void StateDie() //Die - 죽는 애니메이션, 몸체 끄기, 죽는 파티클
@@ -182,19 +200,25 @@ public class RedMonCtrl : MonoBehaviour
     //Strafe 이동 코루틴
     IEnumerator MoveLeft()
     {
-        for (int i = 0; i < 60; i++)
+        strafingFlag = false;
+        for (int i = 0; i < 120; i++)
         {
             transform.Translate(transform.right * -0.03f);
             yield return null;
         }
+        strafingFlag = true;
     }
     IEnumerator MoveRight()
     {
-        for (int i = 0; i < 60; i++)
+        strafingFlag = false;
+
+        for (int i = 0; i < 120; i++)
         {
             transform.Translate(transform.right * 0.03f);
             yield return null;
         }
+        strafingFlag = true;
+
     }
 }
 

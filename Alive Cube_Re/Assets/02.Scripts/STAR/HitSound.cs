@@ -14,7 +14,7 @@ public class HitSound : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("SHIELD"))
         {
             audioSource.Play();
             Debug.Log(other.gameObject);

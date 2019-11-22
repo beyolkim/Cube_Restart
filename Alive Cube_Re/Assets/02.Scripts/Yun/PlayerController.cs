@@ -59,9 +59,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("CUBE"))
-        {
-            
+        if (other.CompareTag("CUBE") || other.CompareTag("LASER"))
+        {            
             Debug.Log("맞았다!!!");
             _audio.PlayOneShot(hit_audio);
             AttackController.playerHp--;

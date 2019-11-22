@@ -18,7 +18,7 @@ public class FadeCtrl : MonoBehaviour
         fadeIn = Animator.StringToHash("fadeIn");
         fadeOut = Animator.StringToHash("fadeOut");
 
-        if(this.gameObject.scene.name == "Stage1")
+        if(this.gameObject.scene.name == "Stage1" || this.gameObject.scene.name == "Stage2")
         {
             Debug.Log("Stage1 페이드 인");
             anim.SetBool(fadeIn, false);

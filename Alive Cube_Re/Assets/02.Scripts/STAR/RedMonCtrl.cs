@@ -103,26 +103,17 @@ public class RedMonCtrl : MonoBehaviour
             yield return ws;
         }
     }
-    IEnumerator RedMonAction()
-    {
-        while (!isDie)
-
-            yield return ws;
-    }
 
     void StateIdle() //Idle : 레이 닿으면 피하고 피격시 공격모드
     {
-        if (state == State.IDLE || state == State.ATTACK)
-        {
             redLaser.SetActive(false);  //Idle재실행 때 레이저 끄기
             animator.ResetTrigger(h_Attack);
-
             animator.SetTrigger(h_Idle);
             animator.SetFloat("AnimSpeed", Random.Range(1.0f, 1.5f));
             animator.SetFloat("AnimOffset", Random.Range(0.0f, 1.0f));
             transform.DORotate(attackAngle, 0.0f);
-        }
     }
+
     public void StateStrafeLeft() //Strafe - 레이닿으면 왼쪽으로 피하고 즉시 공격모드
     {
 
@@ -211,6 +202,8 @@ public class RedMonCtrl : MonoBehaviour
             transform.Translate(transform.forward * zz);
 
             yield return null;
+            if (isDie)
+                break;
         }
         strafingFlag = true;
     }
@@ -226,9 +219,10 @@ public class RedMonCtrl : MonoBehaviour
             transform.Translate(transform.up * yy);
             transform.Translate(transform.forward * zz);
             yield return null;
+            if (isDie)
+                break;
         }
         strafingFlag = true;
-
     }
 }
 

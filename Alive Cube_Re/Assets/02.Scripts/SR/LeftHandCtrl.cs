@@ -8,6 +8,7 @@ public class LeftHandCtrl : MonoBehaviour
     public static LeftHandCtrl instance = null;
     public SteamVR_Input_Sources lefthand = SteamVR_Input_Sources.LeftHand;
     public SteamVR_Action_Boolean trigger = SteamVR_Actions.default_InteractUI;
+    public GameObject weaponUI;
 
     public GameObject[] sword;
     public GameObject sword_blade;
@@ -69,6 +70,7 @@ public class LeftHandCtrl : MonoBehaviour
                 swordOn = true;
                 anim.SetBool(swordGrab, true);                
                 StartCoroutine(SwordSpawn());
+                weaponUI.gameObject.SetActive(false);
             }
         }
 

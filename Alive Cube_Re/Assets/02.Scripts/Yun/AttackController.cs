@@ -78,7 +78,7 @@ public class AttackController : MonoBehaviour
         //countDownObj[10].SetActive(false);
         hpUI.gameObject.SetActive(true);
 
-        while (stage1_Count < 10) //Stage1에서 조각이 10개 생겨나기 전까지 공격 반복
+        while (stage1_Count < 2) //Stage1에서 조각이 10개 생겨나기 전까지 공격 반복
         {
             Debug.Log("큐브공격!!");
             turnRandomNum01 = Random.Range(0, 3);
@@ -112,7 +112,8 @@ public class AttackController : MonoBehaviour
         stage1_audio.Stop();
         CubeReverce(); //나와있는 큐브들 모두 들어가도록
         stageClearUI.gameObject.SetActive(true); //Stage1 Clear UI 표시
-        yield return new WaitForSeconds(2f);
+        hpUI.gameObject.SetActive(false);
+        yield return new WaitForSeconds(4f);
         FadeCtrl.instance.FadeOut();
         yield return new WaitForSeconds(4);
         SceneManager.LoadScene(2); //Stage1 클리어 -> Stage2 씬 전환

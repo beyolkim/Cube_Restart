@@ -14,6 +14,7 @@ public class AttackController : MonoBehaviour
     public static int stage1_Count = 0;
     public GameObject hpUI;
     public GameObject gameOverUI;
+    public GameObject stageClearUI;
     public static AttackController instance;
 
     private int turnRandomNum01;
@@ -110,7 +111,7 @@ public class AttackController : MonoBehaviour
         Debug.Log("Stage1 Clear!");
         stage1_audio.Stop();
         CubeReverce(); //나와있는 큐브들 모두 들어가도록
-        //Stage1 UI 표시
+        stageClearUI.gameObject.SetActive(true); //Stage1 Clear UI 표시
         yield return new WaitForSeconds(2f);
         FadeCtrl.instance.FadeOut();
         yield return new WaitForSeconds(4);

@@ -27,7 +27,8 @@ TagManager:
   - PURPLE
   - HUMAN
   - WEAKPOINT
-
+  - THORN
+  - THORNTARGET
   layers:
   - Default
   - TransparentFX

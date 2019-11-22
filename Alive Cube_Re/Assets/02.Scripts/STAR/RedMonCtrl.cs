@@ -200,21 +200,31 @@ public class RedMonCtrl : MonoBehaviour
     //Strafe 이동 코루틴
     IEnumerator MoveLeft()
     {
+        float yy = Random.Range(-0.02f, 0.02f);
+        float zz = Random.Range(-0.02f, 0.02f);
+
         strafingFlag = false;
         for (int i = 0; i < 120; i++)
         {
-            transform.Translate(transform.right * -0.03f);
+            transform.Translate(transform.right * -0.06f);
+            transform.Translate(transform.up * yy);
+            transform.Translate(transform.forward * zz);
+
             yield return null;
         }
         strafingFlag = true;
     }
     IEnumerator MoveRight()
     {
+        float yy = Random.Range(-0.02f, 0.02f);
+        float zz = Random.Range(-0.02f, 0.02f);
         strafingFlag = false;
 
         for (int i = 0; i < 120; i++)
         {
-            transform.Translate(transform.right * 0.03f);
+            transform.Translate(transform.right * 0.06f);
+            transform.Translate(transform.up * yy);
+            transform.Translate(transform.forward * zz);
             yield return null;
         }
         strafingFlag = true;

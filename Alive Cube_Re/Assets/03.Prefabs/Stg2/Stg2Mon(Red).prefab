@@ -4855,7 +4855,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1165691161474778697
 Transform:
   m_ObjectHideFlags: 0
@@ -29663,7 +29663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf01b614221864a4281f18f6c1fa5e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackAngle: {x: -145, y: 0, z: 0}
+  attackAngle: {x: -150, y: 0, z: 0}
   audioClip:
   - {fileID: 8300000, guid: 0a9bd8b7576033040b1c8edb630aa630, type: 3}
   - {fileID: 8300000, guid: bdf77da77abb1ca4d9ba9dff4e53b156, type: 3}

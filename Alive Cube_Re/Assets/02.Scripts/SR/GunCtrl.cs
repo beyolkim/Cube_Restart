@@ -24,19 +24,20 @@ public class GunCtrl : MonoBehaviour
 
     private Ray ray;
     private RaycastHit hit;
-    public bool strafeFlag;
+    public RedMonCtrl[] redMonCtrl;
 
     public Material lineMat;
     public Transform rayPos;
     public float range = 30f;
     private LineRenderer line;
 
+    //public bool strafing = false;
+
     void Start()
     {
         instance = this;
         fireLight.GetComponent<Light>().enabled = false;
         _audio = GetComponent<AudioSource>();
-        strafeFlag = true;
     }
 
     void Update()
@@ -54,36 +55,39 @@ public class GunCtrl : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 30.0f) && hit.collider.CompareTag("ENEMY"))
             {
+                var hitRedMonCtrl = hit.collider.transform.parent.GetComponent<RedMonCtrl>();
+                Transform monPos = hit.collider.transform.parent;
                 
-                Debug.Log("Raycast가 ENEMY을 맞추면 flag 값은 ? " + strafeFlag);
-
-                Transform monPos = hit.collider.gameObject.transform.parent.transform;
-                RedMonCtrl redMonCtrl = hit.collider.gameObject.transform.parent.gameObject.GetComponent<RedMonCtrl>();
 
                 Debug.Log("RayCast에 맞은 레드몬은 : " + hit.collider.transform.parent.name);
 
-                //Idle상태일 때만 회피 가능, 공격 또는 회피 도중 피격은 피할 수 없음
-                if (monPos.position.x > -4.5 && monPos.position.x <= -0.1 )
+                if (hitRedMonCtrl.state == RedMonCtrl.State.IDLE)
                 {
-                    strafeFlag = false;
-                    redMonCtrl.StateStrafeLeft();
-                    Debug.Log("레드몬이 왼쪽으로 피했습니다, flag값은 ? " + strafeFlag);
-                }
+                    Debug.Log(hitRedMonCtrl.state);
+                    //hitRedMonCtrl.StateStrafeRight();
 
-                else if (monPos.position.x >= -8.9 && monPos.position.x <= -4.5 && strafeFlag == true)
-                {
-                    strafeFlag = false;
-                    redMonCtrl.StateStrafeRight();
-                    Debug.Log("레드몬이 오른쪽으로 피했습니다, flag값은 ? " + strafeFlag);
+                    //Idle상태일 때만 회피 가능, 공격 또는 회피 도중 피격은 피할 수 없음
+                    if (monPos.position.x >= 0 && monPos.position.x <= 4.5)
+                    {
+                        hitRedMonCtrl.StateStrafeLeft();
+                        Debug.Log("레드몬이 왼쪽으로 피했습니다");
+                    }
+
+                    else if (monPos.position.x >= -4.5 && monPos.position.x < 0)
+                    {
+                        hitRedMonCtrl.StateStrafeRight();
+                        Debug.Log("레드몬이 오른쪽으로 피했습니다");
+                    }
+
+
                 }
-                StartCoroutine(BanRay());
+                //StartCoroutine(BanRay());
             }
         }
     }
     IEnumerator BanRay()
     {
         yield return new WaitForSeconds(3.0f);
-        strafeFlag = true;
 
     }
     public void Fire()

@@ -8,6 +8,7 @@ public class HandCtrl : MonoBehaviour
     public SteamVR_Input_Sources hand = SteamVR_Input_Sources.Any;
     public SteamVR_Input_Sources rightHand = SteamVR_Input_Sources.RightHand;
     public SteamVR_Input_Sources leftHand = SteamVR_Input_Sources.LeftHand;
+    public GameObject weaponUI;
     
     public SteamVR_Action_Boolean trigger = SteamVR_Actions.default_InteractUI;
     public SteamVR_Action_Vibration haptic = SteamVR_Actions.default_Haptic;
@@ -80,6 +81,7 @@ public class HandCtrl : MonoBehaviour
                 swordOn = true;
                 anim.SetBool(swordGrab, true);                
                 StartCoroutine(SwordSpawn());
+                weaponUI.gameObject.SetActive(false);
             }
         }
         else if(this.gameObject.scene.name == "Stage2")

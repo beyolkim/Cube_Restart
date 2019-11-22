@@ -29,6 +29,7 @@ TagManager:
   - WEAKPOINT
   - THORN
   - THORNTARGET
+  - HANDATTACK
   layers:
   - Default
   - TransparentFX

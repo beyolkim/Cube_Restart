@@ -6,26 +6,26 @@ using DG.Tweening;
 public class HandAttack : MonoBehaviour
 {
     // Start is called before the first frame update
-    Tween handAttack;
+    
+    
     void Start()
     {
-        handAttack = transform.DOLocalRotate(new Vector3(240, 0, 180), 3.0f).SetEase(Ease.InFlash);
+        //handAttack = transform.DOLocalRotate(new Vector3(240, 0, 180), 3.0f).SetEase(Ease.InFlash).SetLoops(2,LoopType.Yoyo);
+        
+       
+        StartCoroutine(HandAttackRepeat());
     }
 
-    
-    // Update is called once per frame
-    void Update()
+
+    IEnumerator HandAttackRepeat()
     {
-        if(Input.GetMouseButtonDown(0))
+        while(AttackController.playerHp >0)
         {
-            transform.DOLocalRotate(new Vector3(45, 0, 180), 3.0f).SetEase(Ease.OutFlash);
-
+            transform.DOLocalRotate(new Vector3(240, 0, 180), 3.0f).SetEase(Ease.InFlash).SetDelay(2).SetLoops(2,LoopType.Yoyo);
+            yield return new WaitForSeconds(10.0f);
         }
-        else if(Input.GetMouseButtonDown(1))
-        {
-            transform.DOLocalRotate(new Vector3(240, 0, 180), 3.0f).SetEase(Ease.InFlash);
-            
 
-        }
     }
+
+  
 }

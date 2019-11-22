@@ -8,7 +8,7 @@ public class ThronSingeAttack : MonoBehaviour
 
     public void SingleThronAttack()
     {
-        transform.DOMoveY(Random.Range(0.3f, 0.5f), 0.5f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InFlash);
+        transform.DOMoveY(Random.Range(0.3f, 0.5f), 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InFlash);
     }
 
 

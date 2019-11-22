@@ -84,13 +84,14 @@ public class HandCtrl : MonoBehaviour
                 weaponUI.gameObject.SetActive(false);
             }
         }
-        else if(this.gameObject.scene.name == "Stage2")
+        else if(this.gameObject.scene.name == "Stage2" || this.gameObject.scene.name == "Stage2_Copy")
         {
             if(!gunSpawn && !gunOn && trigger.GetStateDown(rightHand)) //Scene이 Gun일 때 총 생성
             {
                 gunSpawn = true; //총이 생성되는 중임을 true로 알림
                 anim.SetBool(gunGrab, true);
                 StartCoroutine(GunSpawn());
+                weaponUI.gameObject.SetActive(false);
             }
             else if(gunOn && trigger.GetStateDown(rightHand)) //총이 생성되었으면 trigger을 누를때마다 격발
             {                

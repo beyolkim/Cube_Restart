@@ -74,13 +74,14 @@ public class LeftHandCtrl : MonoBehaviour
             }
         }
 
-        else if (this.gameObject.scene.name == "Stage2")
+        else if (this.gameObject.scene.name == "Stage2" || this.gameObject.scene.name == "Stage2_Copy")
         {
             if (!shieldOn && trigger.GetStateDown(lefthand))
             {
                 shieldOn = true;
                 anim.SetBool(shieldGrab, true);
                 StartCoroutine(ShieldSpawn());
+                weaponUI.gameObject.SetActive(false);
             }            
         }
     }

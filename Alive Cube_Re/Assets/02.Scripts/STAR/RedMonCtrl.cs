@@ -103,26 +103,17 @@ public class RedMonCtrl : MonoBehaviour
             yield return ws;
         }
     }
-    IEnumerator RedMonAction()
-    {
-        while (!isDie)
-
-            yield return ws;
-    }
 
     void StateIdle() //Idle : 레이 닿으면 피하고 피격시 공격모드
     {
-        if (state == State.IDLE || state == State.ATTACK)
-        {
             redLaser.SetActive(false);  //Idle재실행 때 레이저 끄기
             animator.ResetTrigger(h_Attack);
-
             animator.SetTrigger(h_Idle);
             animator.SetFloat("AnimSpeed", Random.Range(1.0f, 1.5f));
             animator.SetFloat("AnimOffset", Random.Range(0.0f, 1.0f));
             transform.DORotate(attackAngle, 0.0f);
-        }
     }
+
     public void StateStrafeLeft() //Strafe - 레이닿으면 왼쪽으로 피하고 즉시 공격모드
     {
 
@@ -200,25 +191,38 @@ public class RedMonCtrl : MonoBehaviour
     //Strafe 이동 코루틴
     IEnumerator MoveLeft()
     {
+        float yy = Random.Range(-0.02f, 0.02f);
+        float zz = Random.Range(-0.02f, 0.02f);
+
         strafingFlag = false;
         for (int i = 0; i < 120; i++)
         {
-            transform.Translate(transform.right * -0.03f);
+            transform.Translate(transform.right * -0.06f);
+            transform.Translate(transform.up * yy);
+            transform.Translate(transform.forward * zz);
+
             yield return null;
+            if (isDie)
+                break;
         }
         strafingFlag = true;
     }
     IEnumerator MoveRight()
     {
+        float yy = Random.Range(-0.02f, 0.02f);
+        float zz = Random.Range(-0.02f, 0.02f);
         strafingFlag = false;
 
         for (int i = 0; i < 120; i++)
         {
-            transform.Translate(transform.right * 0.03f);
+            transform.Translate(transform.right * 0.06f);
+            transform.Translate(transform.up * yy);
+            transform.Translate(transform.forward * zz);
             yield return null;
+            if (isDie)
+                break;
         }
         strafingFlag = true;
-
     }
 }
 

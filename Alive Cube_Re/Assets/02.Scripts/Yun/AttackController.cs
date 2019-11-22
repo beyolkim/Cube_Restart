@@ -14,6 +14,7 @@ public class AttackController : MonoBehaviour
     public static int stage1_Count = 0;
     public GameObject hpUI;
     public GameObject gameOverUI;
+    public GameObject stageClearUI;
     public static AttackController instance;
 
     private int turnRandomNum01;
@@ -59,22 +60,22 @@ public class AttackController : MonoBehaviour
     IEnumerator AttackTurn()
     {
 
-        PlayerController.instance.CountDown_Audio();
-        countDownObj[0].SetActive(true);
-        yield return new WaitForSeconds(1.5f);
-        countDownObj[0].SetActive(false);
+        //PlayerController.instance.CountDown_Audio();
+        //countDownObj[0].SetActive(true);
+        //yield return new WaitForSeconds(1.5f);
+        //countDownObj[0].SetActive(false);
 
-        for (int i = 1; i < countDownObj.Count - 1; i++)
-        {
-            countDownObj[i].SetActive(true);
-            yield return new WaitForSeconds(1f);
-            countDownObj[i].SetActive(false);
+        //for (int i = 1; i < countDownObj.Count - 1; i++)
+        //{
+        //    countDownObj[i].SetActive(true);
+        //    yield return new WaitForSeconds(1f);
+        //    countDownObj[i].SetActive(false);
 
-        }
+        //}
 
-        countDownObj[10].SetActive(true);
-        yield return new WaitForSeconds(2f);
-        countDownObj[10].SetActive(false);
+        //countDownObj[10].SetActive(true);
+        //yield return new WaitForSeconds(2f);
+        //countDownObj[10].SetActive(false);
         hpUI.gameObject.SetActive(true);
 
         while (stage1_Count < 10) //Stage1에서 조각이 10개 생겨나기 전까지 공격 반복
@@ -110,6 +111,7 @@ public class AttackController : MonoBehaviour
         Debug.Log("Stage1 Clear!");
         stage1_audio.Stop();
         CubeReverce(); //나와있는 큐브들 모두 들어가도록
+        stageClearUI.gameObject.SetActive(true); //Stage1 Clear UI 표시
         yield return new WaitForSeconds(2f);
         FadeCtrl.instance.FadeOut();
         yield return new WaitForSeconds(4);

@@ -29,12 +29,10 @@ TagManager:
   - WEAKPOINT
   - THORN
   - THORNTARGET
-
   - WALL
   - FrontWall
-
   - HANDATTACK
-
+  - HOMMING
   layers:
   - Default
   - TransparentFX

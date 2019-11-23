@@ -13,9 +13,9 @@ public class RedMonCtrl : MonoBehaviour
     private Transform targetTr;
 
     //파티클 미사일
-    public ParticleSystem ps;
-    public List<ParticleCollisionEvent> collisionEvents;
-    public GameObject target;
+    private ParticleSystem ps;
+    private List<ParticleCollisionEvent> collisionEvents;
+    public GameObject particletargetObj;
 
 
     //오디오 
@@ -72,9 +72,13 @@ public class RedMonCtrl : MonoBehaviour
     {
         //RedMonCtrl 시작과 동시에 Spwan Sound 재생
         audioSource.PlayOneShot(audioClip[0]);
+        ps = redLaser.GetComponent<ParticleSystem>();
+        collisionEvents = new List<ParticleCollisionEvent>();
 
         Invoke("StateIdle", 5.3f);
     }
+
+   
 
     IEnumerator CheckState()
     {
@@ -162,13 +166,13 @@ public class RedMonCtrl : MonoBehaviour
         if (state == State.ATTACK || state == State.STRAFE)
         {
         Debug.Log("StateAttack이 실행되었습니다");
-            //transform.DORotate(attackAngle, 0.0f);
+            transform.DORotate(attackAngle, 0.0f);
             animator.ResetTrigger(h_StrafeRight);
             animator.ResetTrigger(h_StrafeRight);
             animator.SetTrigger(h_Attack);
 
 
-            //redLaser.transform.LookAt(targetTr.position);
+         
             //redLaser.transform.DOLookAt(targetTr.position, 0.5f, AxisConstraint.None);
             redLaser.SetActive(true);
         }
@@ -181,7 +185,7 @@ public class RedMonCtrl : MonoBehaviour
     {
         Debug.Log("StateAttack이 실행되었습니다");
 
-        //transform.DORotate(attackAngle, 0.0f);
+        transform.DORotate(attackAngle, 0.0f);
 
         //redLaser.transform.LookAt(targetTr.position);
 

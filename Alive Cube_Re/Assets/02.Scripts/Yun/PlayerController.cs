@@ -73,12 +73,16 @@ public class PlayerController : MonoBehaviour
             playerHp--;
             if(!playerHit)
             {
-                StartCoroutine(HitEffect());
+                StartCoroutine(HitEffect(this.gameObject));
             }            
             Debug.Log("PlayerHP : " + playerHp);
             
         }
-    }    
+    }
+
+
+
+   
 
     void Update()
     {
@@ -111,15 +115,19 @@ public class PlayerController : MonoBehaviour
     {
         _audio.PlayOneShot(earthquake_audio);
     }
-    IEnumerator HitEffect()
+
+    
+    public IEnumerator HitEffect(GameObject _target)
     {
+        Debug.Log("라라랄라랄라라랄라라");
+
         playerHit = true;
-        this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        _target.GetComponent<CapsuleCollider>().enabled = false;
         hitEffect.SetActive(true);
         
         yield return new WaitForSeconds(2.5f); //Player가 맞으면 2.5초간 무적
         hitEffect.SetActive(false);
-        this.gameObject.GetComponent<CapsuleCollider>().enabled = true;
+        _target.GetComponent<CapsuleCollider>().enabled = true;
         playerHit = false;        
     }
 

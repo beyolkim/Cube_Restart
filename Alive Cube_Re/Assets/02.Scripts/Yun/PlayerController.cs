@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance = null;
 
     public float curTime = 0;
-    private float attackTime = 7;
+    private float attackTime = 5;
     public static int playerHp = 5;
     public static int redMon_Kill = 0;
     public bool attackAllow = false;

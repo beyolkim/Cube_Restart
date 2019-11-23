@@ -5,8 +5,6 @@ using UnityEngine;
 public class BulletCtrl : MonoBehaviour
 {
     public GameObject sparkParticle;
-    public float damage = 20f;
-    public float speed;
 
     void Start()
     {
@@ -15,6 +13,7 @@ public class BulletCtrl : MonoBehaviour
     private void Update()
     {
         Destroy(this.gameObject, 5f);
+
     }
 
     private void OnCollisionEnter(Collision coll)
@@ -32,18 +31,20 @@ public class BulletCtrl : MonoBehaviour
 
             Debug.Log("BulletCtrl가 레드몬스크립트를 가져왔나요 : " + redMonCtrl);
 
-            if (redMonCtrl.R_MonHP > 0)
+            if (RedMonCtrl.R_MonHP > 0)
             {
                 Debug.Log("StateTakeDamage가 실행되었습니다");
 
                 redMonCtrl.StateTakeDamage();
             }
 
-            if (redMonCtrl.R_MonHP <= 0)
+            if (RedMonCtrl.R_MonHP <= 0)
             {
                 Debug.Log("레드몬스터가 사망했습니다 : " + name);
 
                 redMonCtrl.animator.SetTrigger("Die");
+                PlayerController.redMon_Kill++;
+                Debug.Log("레드몬 죽은 마리수 : " + PlayerController.redMon_Kill);
             }
         }
     }

@@ -9,12 +9,15 @@ public class PlayerController : MonoBehaviour
 
     public float curTime = 0;
     private float attackTime = 7;
+    public static int playerHp = 5;
+    public static int redMon_Kill = 0;
     public bool attackAllow = false;
 
     private bool playerHit = false;
     public GameObject hitEffect;
 
     private AudioSource _audio;
+    public AudioSource stage2_audio;
     public AudioClip intro_audio;
     public AudioClip mapMaking_audio;
     public AudioClip mapMakingEnd_audio;
@@ -32,6 +35,10 @@ public class PlayerController : MonoBehaviour
     //죽었을 경우 조각들 파편 파괴(스테이지 클리어에만 파괴되지 않음)
     public GameObject redObjs;
     public GameObject purbpleObjs;
+    public GameObject hpUI;
+    public GameObject gameOverUI;
+    public GameObject stageClearUI;
+
     private void OnEnable()
     {
         IntroAnimation.IntroAudio += MapMaking_Audio;
@@ -49,7 +56,7 @@ public class PlayerController : MonoBehaviour
         _audio.clip = intro_audio;
         _audio.Play();
 
-        Debug.Log(AttackController.playerHp);
+        Debug.Log(playerHp);
 
         if(this.gameObject.scene.name == "Stage1")
         {
@@ -63,12 +70,12 @@ public class PlayerController : MonoBehaviour
         {            
             Debug.Log("맞았다!!!");
             _audio.PlayOneShot(hit_audio);
-            AttackController.playerHp--;
+            playerHp--;
             if(!playerHit)
             {
                 StartCoroutine(HitEffect());
             }            
-            Debug.Log("PlayerHP : " + AttackController.playerHp);
+            Debug.Log("PlayerHP : " + playerHp);
             
         }
     }    
@@ -77,13 +84,11 @@ public class PlayerController : MonoBehaviour
     {
         AttackDifficulty();
 
-        //if(!playerDie && AttackController.playerHp <= 0)
-        //{            
-        //    Debug.Log("Game Over");
-        //    _audio.PlayOneShot(gameOver_audio);
-        //    playerDie = true;
-        //    AttackController.playerHp = 6;
-        //}        
+        if(this.gameObject.scene.name == "Stage2")
+        {
+            StartCoroutine(Stage2PlayerDie());
+            StartCoroutine(Stage2Clear());
+        }     
     }
 
     public void MapMaking_Audio() //Intro 씬에서 Intro큐브를 trigger하면 audiosource가 있는 그 큐브의 위치가 바뀌어서 어쩔 수 없음
@@ -133,7 +138,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void PlayerDie()
+    public void PlayerDie() //Stage1 사망시에만 발동
     {
         Debug.Log("Game Over");
         Destroy(purbpleObjs);
@@ -147,5 +152,39 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(4f);
         warningZone.gameObject.SetActive(true);
         attackCube.gameObject.SetActive(true);
+    }
+
+    IEnumerator Stage2PlayerDie()
+    {
+        if (!playerDie && playerHp <= 0)
+        {
+            playerDie = true;
+            //모든 몬스터의 공격을 중지하도록
+            Debug.Log("Game Over");
+            _audio.PlayOneShot(gameOver_audio);
+            hpUI.gameObject.SetActive(false);
+            gameOverUI.gameObject.SetActive(true);
+            yield return new WaitForSeconds(2.5f);
+            Earthquake_Audio(); //벽 수축 Audio
+            yield return new WaitForSeconds(2.5f);
+            GameOver_Shrinking.instance.GameOver(); //벽 수축 애니메이션
+            yield return new WaitForSeconds(8.5f);
+            SceneManager.LoadScene(3);
+        }
+    }
+    IEnumerator Stage2Clear()
+    {
+        if(!playerDie && redMon_Kill >=7)
+        {
+            Debug.Log("Stage2 Clear!");
+            stage2_audio.Stop();
+            //모든 몬스터의 공격을 중지하도록
+            stageClearUI.gameObject.SetActive(true); //Stage1 Clear UI 표시
+            hpUI.gameObject.SetActive(false);
+            yield return new WaitForSeconds(3f);
+            FadeCtrl.instance.FadeOut();
+            yield return new WaitForSeconds(4);
+            SceneManager.LoadScene(0); //Stage2 클리어 -> Intro 씬 전환
+        }
     }
 }

@@ -29,6 +29,8 @@ TagManager:
   - WEAKPOINT
   - THORN
   - THORNTARGET
+  - WALL
+  - FrontWall
   layers:
   - Default
   - TransparentFX

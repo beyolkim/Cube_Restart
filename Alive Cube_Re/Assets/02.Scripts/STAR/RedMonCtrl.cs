@@ -30,7 +30,7 @@ public class RedMonCtrl : MonoBehaviour
     }
     public State state;
 
-    public int R_MonHP;
+    public static int R_MonHP = 3;
     private bool isDie = false;
     private bool strafingFlag = true;
 
@@ -43,10 +43,12 @@ public class RedMonCtrl : MonoBehaviour
     private readonly int h_FastAttack = Animator.StringToHash("Fast Attack");
     private readonly int h_Die = Animator.StringToHash("Die");
     public Animator animator;
+    public static bool wallHit = false;
+    public static bool monReady = false;
 
 
     private void Awake()
-    {
+    { 
         animator = GetComponent<Animator>();
         redLaser = transform.GetChild(0).transform.GetChild(0).gameObject;
         targetTr = GameObject.FindWithTag("Player").transform;
@@ -112,6 +114,7 @@ public class RedMonCtrl : MonoBehaviour
             animator.SetFloat("AnimSpeed", Random.Range(1.0f, 1.5f));
             animator.SetFloat("AnimOffset", Random.Range(0.0f, 1.0f));
             transform.DORotate(attackAngle, 0.0f);
+        monReady = true;
     }
 
     public void StateStrafeLeft() //Strafe - 레이닿으면 왼쪽으로 피하고 즉시 공격모드
@@ -191,37 +194,55 @@ public class RedMonCtrl : MonoBehaviour
     //Strafe 이동 코루틴
     IEnumerator MoveLeft()
     {
-        float yy = Random.Range(-0.02f, 0.02f);
-        float zz = Random.Range(-0.02f, 0.02f);
+        float yy = Random.Range(-0.01f, 0.01f);
+        float zz = Random.Range(-0.001f, 0.01f);
 
         strafingFlag = false;
         for (int i = 0; i < 120; i++)
         {
-            transform.Translate(transform.right * -0.06f);
+            transform.Translate(transform.right * -0.07f);
             transform.Translate(transform.up * yy);
             transform.Translate(transform.forward * zz);
 
             yield return null;
-            if (isDie)
+            if (isDie || wallHit)
+            {
+                Debug.Log("if문 탈출");
+                wallHit = false;
                 break;
+            }    
         }
+        for (int i = 0; i < 50; i++)
+        {
+            transform.Translate(transform.right * 0.04f);
+        }
+        wallHit = false;
         strafingFlag = true;
     }
     IEnumerator MoveRight()
     {
-        float yy = Random.Range(-0.02f, 0.02f);
-        float zz = Random.Range(-0.02f, 0.02f);
+        float yy = Random.Range(-0.01f, 0.01f);
+        float zz = Random.Range(-0.001f, 0.01f);
         strafingFlag = false;
 
         for (int i = 0; i < 120; i++)
         {
-            transform.Translate(transform.right * 0.06f);
+            transform.Translate(transform.right * 0.07f);
             transform.Translate(transform.up * yy);
             transform.Translate(transform.forward * zz);
             yield return null;
-            if (isDie)
+            if (isDie || wallHit)
+            {
+                Debug.Log("if문 탈출");
+                wallHit = false;
                 break;
+            }
         }
+        for(int i = 0; i < 50; i++)
+        {
+            transform.Translate(transform.right * -0.04f);
+        }
+        wallHit = false;
         strafingFlag = true;
     }
 }

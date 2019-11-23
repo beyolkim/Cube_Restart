@@ -93,12 +93,12 @@ public class HandCtrl : MonoBehaviour
                 StartCoroutine(GunSpawn());
                 weaponUI.gameObject.SetActive(false);
             }
-            else if(gunOn && trigger.GetStateDown(rightHand)) //총이 생성되었으면 trigger을 누를때마다 격발
+            else if(RedMonCtrl.monReady && gunOn && trigger.GetStateDown(rightHand)) //총이 생성되었으면 trigger을 누를때마다 격발
             {                
                 anim.SetBool(gunShot, true);
 
             }
-            else if (gunOn && trigger.GetStateUp(rightHand))
+            else if (RedMonCtrl.monReady && gunOn && trigger.GetStateUp(rightHand))
             {
                 anim.SetBool(gunShot, false);                
             }                                    
@@ -152,7 +152,6 @@ public class HandCtrl : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         gunPart.gameObject.SetActive(true);
-
         gunOn = true; //총이 생성완료되었음을 true로 알림
     }
 

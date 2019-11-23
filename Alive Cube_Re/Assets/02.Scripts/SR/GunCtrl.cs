@@ -48,7 +48,7 @@ public class GunCtrl : MonoBehaviour
             _audio.Play();
             Invoke("CreateLine", 2.0f);
         }
-        if (gunReady) //Gun의 Line이 생성되었다면 Ray를 발사
+        else if (gunReady) //Gun의 Line이 생성되었다면 Ray를 발사
         {
             //Debug.DrawRay(ray.origin, ray.direction * 30.0f, Color.green);
             ray = new Ray(firePos.position, transform.forward);
@@ -125,14 +125,4 @@ public class GunCtrl : MonoBehaviour
         line.endWidth = 0.005f;
         line.material = lineMat;
     }
-    //void GunRay()
-    //{
-    //    //if (Physics.Raycast(ray, out hit, range))
-    //    //{
-    //    //    if (hit.collider.CompareTag("CUBE"))
-    //    //    {
-    //    //        Debug.Log("큐브다!!");
-    //    //    }
-    //    //}
-    //}
 }

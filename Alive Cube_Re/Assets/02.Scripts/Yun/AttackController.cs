@@ -9,7 +9,7 @@ public class AttackController : MonoBehaviour
     public static ReverceHandler CubeReverce;
 
     public static int scoreCount;
-    public static int playerHp = 10;
+    //public static int playerHp = 1;
     public static int cubeHp = 10;
     public static int stage1_Count = 0;
     public GameObject hpUI;
@@ -56,6 +56,11 @@ public class AttackController : MonoBehaviour
         StartCoroutine(AttackTurn());
     }
 
+    private void Update()
+    {
+        
+    }
+
 
     IEnumerator AttackTurn()
     {
@@ -94,7 +99,7 @@ public class AttackController : MonoBehaviour
             TurnCheck[turnRandomNum02].GetComponent<SnakeCubeController>().check_AllAttack = !TurnCheck[turnRandomNum02].GetComponent<SnakeCubeController>().check_AllAttack;
             yield return new WaitForSeconds(1.0f);
 
-            if(AttackController.playerHp <= 0)
+            if(PlayerController.playerHp <= 0)
             {
                 CubeReverce(); //나와있는 큐브들 모두 들어가도록
                 PlayerController.instance.PlayerDie();

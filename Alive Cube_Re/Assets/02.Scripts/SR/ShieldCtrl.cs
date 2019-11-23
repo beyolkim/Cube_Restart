@@ -13,6 +13,7 @@ public class ShieldCtrl : MonoBehaviour
     private Animator anim;
     public bool shieldOn = false;
     private bool shieldAudio = false;
+    public GameObject _weaponUI;
 
     private AudioSource _audio;
     public AudioClip open;
@@ -30,6 +31,7 @@ public class ShieldCtrl : MonoBehaviour
     {
         if(!shieldAudio && shieldOn && trigger.GetStateDown(lefthand))
         {
+            _weaponUI.gameObject.SetActive(false);
             shieldAudio = true;
             anim.SetBool(shieldOpen, true);
             _audio.PlayOneShot(open);

@@ -14,6 +14,7 @@ public class L_SwordCtrl : MonoBehaviour
     public bool left_swordOn = false;
     private bool swordAudio = false;
     public GameObject handle;
+    public GameObject _weaponUI;
 
     private AudioSource _audio;
     public AudioClip open;
@@ -30,6 +31,7 @@ public class L_SwordCtrl : MonoBehaviour
     {
         if (!swordAudio && left_swordOn && trigger.GetStateDown(lefthand))
         {
+            _weaponUI.gameObject.SetActive(false);
             swordAudio = true;
             anim.SetBool(swordOpen, true);
             _audio.PlayOneShot(open);

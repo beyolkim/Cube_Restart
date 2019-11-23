@@ -19,7 +19,7 @@ public class HandAttack : MonoBehaviour
 
     IEnumerator HandAttackRepeat()
     {
-        while(AttackController.playerHp >0)
+        while(PlayerController.playerHp >0)
         {
             transform.DOLocalRotate(new Vector3(240, 0, 180), 3.0f).SetEase(Ease.InFlash).SetDelay(2).SetLoops(2,LoopType.Yoyo);
             yield return new WaitForSeconds(10.0f);

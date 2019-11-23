@@ -12,6 +12,12 @@ public class RedMonCtrl : MonoBehaviour
     private GameObject redLaser;
     private Transform targetTr;
 
+    //파티클 미사일
+    public ParticleSystem ps;
+    public List<ParticleCollisionEvent> collisionEvents;
+    public GameObject target;
+
+
     //오디오 
     private AudioSource audioSource;
     public AudioClip[] audioClip;
@@ -30,7 +36,7 @@ public class RedMonCtrl : MonoBehaviour
     }
     public State state;
 
-    public static int R_MonHP = 3;
+    public int R_MonHP = 4;
     private bool isDie = false;
     private bool strafingFlag = true;
 
@@ -156,21 +162,30 @@ public class RedMonCtrl : MonoBehaviour
         if (state == State.ATTACK || state == State.STRAFE)
         {
         Debug.Log("StateAttack이 실행되었습니다");
-            transform.DORotate(attackAngle, 0.0f);
+            //transform.DORotate(attackAngle, 0.0f);
             animator.ResetTrigger(h_StrafeRight);
             animator.ResetTrigger(h_StrafeRight);
             animator.SetTrigger(h_Attack);
-            redLaser.transform.DOLookAt(targetTr.position, 0.5f, AxisConstraint.None);
+
+
+            //redLaser.transform.LookAt(targetTr.position);
+            //redLaser.transform.DOLookAt(targetTr.position, 0.5f, AxisConstraint.None);
             redLaser.SetActive(true);
         }
     }
+
+
+
 
     void StateFastAttack() //FastAttack - Take Damage 이후 실행, 죽을때까지 멈추지 않음
     {
         Debug.Log("StateAttack이 실행되었습니다");
 
-        transform.DORotate(attackAngle, 0.0f);
-        redLaser.transform.DOLookAt(targetTr.position, 0.5f, AxisConstraint.None);
+        //transform.DORotate(attackAngle, 0.0f);
+
+        //redLaser.transform.LookAt(targetTr.position);
+
+        //redLaser.transform.DOLookAt(targetTr.position, 0.5f, AxisConstraint.None);
         redLaser.SetActive(true);
     }
 
@@ -186,11 +201,23 @@ public class RedMonCtrl : MonoBehaviour
     void StateDie() //Die - 죽는 애니메이션, 몸체 끄기, 죽는 파티클
     {
         Debug.Log("StateAttack이 실행되었습니다");
-
-        rigHub.SetActive(false);
-        deadParticle.SetActive(true);
+          
+        if(this.gameObject != null)
+        {
+            rigHub.SetActive(false);
+            deadParticle.SetActive(true);
+            StartCoroutine(ParticleDelay());
+        }       
     }
 
+    IEnumerator ParticleDelay()
+    {
+        yield return new WaitForSeconds(1.5f);
+        Destroy(this.gameObject);
+        PlayerController.redMon_Kill++;
+        Debug.Log("레드몬 죽은 마리수 : " + PlayerController.redMon_Kill);
+
+    }
     //Strafe 이동 코루틴
     IEnumerator MoveLeft()
     {
@@ -198,11 +225,11 @@ public class RedMonCtrl : MonoBehaviour
         float zz = Random.Range(-0.001f, 0.01f);
 
         strafingFlag = false;
-        for (int i = 0; i < 120; i++)
+        for (int i = 0; i < 100; i++)
         {
-            transform.Translate(transform.right * -0.07f);
-            transform.Translate(transform.up * yy);
-            transform.Translate(transform.forward * zz);
+            transform.Translate(transform.right * -0.04f);
+            //transform.Translate(transform.up * yy);
+            //transform.Translate(transform.forward * zz);
 
             yield return null;
             if (isDie || wallHit)
@@ -212,10 +239,10 @@ public class RedMonCtrl : MonoBehaviour
                 break;
             }    
         }
-        for (int i = 0; i < 50; i++)
-        {
-            transform.Translate(transform.right * 0.04f);
-        }
+        //for (int i = 0; i < 50; i++)
+        //{
+        //    transform.Translate(transform.right * 0.02f);
+        //}
         wallHit = false;
         strafingFlag = true;
     }
@@ -225,11 +252,11 @@ public class RedMonCtrl : MonoBehaviour
         float zz = Random.Range(-0.001f, 0.01f);
         strafingFlag = false;
 
-        for (int i = 0; i < 120; i++)
+        for (int i = 0; i < 100; i++)
         {
-            transform.Translate(transform.right * 0.07f);
-            transform.Translate(transform.up * yy);
-            transform.Translate(transform.forward * zz);
+            transform.Translate(transform.right * 0.04f);
+            //transform.Translate(transform.up * yy);
+            //transform.Translate(transform.forward * zz);
             yield return null;
             if (isDie || wallHit)
             {
@@ -238,10 +265,10 @@ public class RedMonCtrl : MonoBehaviour
                 break;
             }
         }
-        for(int i = 0; i < 50; i++)
-        {
-            transform.Translate(transform.right * -0.04f);
-        }
+        //for(int i = 0; i < 50; i++)
+        //{
+        //    transform.Translate(transform.right * -0.02f);
+        //}
         wallHit = false;
         strafingFlag = true;
     }

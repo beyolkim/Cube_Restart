@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class CubeMapWeakPoint : MonoBehaviour
 {
     //큐브 약점 오브젝트
@@ -49,6 +49,7 @@ public class CubeMapWeakPoint : MonoBehaviour
                 WeakPointMat = WeakPoints[rannum].GetComponent<MeshRenderer>().material;
                 
                 WeakPointMat.SetVector("_WallColor", Color.red * 5f);
+                
                 WeakPoints[rannum].GetComponent<WallCubeController>().setCheck = true;
             }
             yield return new WaitForSeconds(3.0f);

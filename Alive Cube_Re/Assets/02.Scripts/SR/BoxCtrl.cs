@@ -36,7 +36,7 @@ public class BoxCtrl : MonoBehaviour
             }
         }
 
-        if (this.gameObject.scene.name == "Stage2" || this.gameObject.scene.name == "Stage2_Copy")
+        if (this.gameObject.scene.name == "Stage2" || this.gameObject.scene.name == "Stage2_Copy"|| this.gameObject.scene.name == "Stage3")
         {
             if (trigger.GetStateDown(righHhand))
             {

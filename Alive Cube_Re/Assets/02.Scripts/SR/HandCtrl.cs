@@ -84,7 +84,7 @@ public class HandCtrl : MonoBehaviour
                 weaponUI.gameObject.SetActive(false);
             }
         }
-        else if(this.gameObject.scene.name == "Stage2" || this.gameObject.scene.name == "Stage2_Copy")
+        else if(this.gameObject.scene.name == "Stage2" || this.gameObject.scene.name == "Stage2_Copy" || this.gameObject.scene.name == "Stage3")
         {
             if(!gunSpawn && !gunOn && trigger.GetStateDown(rightHand)) //Scene이 Gun일 때 총 생성
             {

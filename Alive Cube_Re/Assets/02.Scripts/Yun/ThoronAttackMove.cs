@@ -20,7 +20,7 @@ public class ThoronAttackMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("THORNTARGET"))
+        if (other.CompareTag("THORNTARGET") && AttackController.playerHp >0)
         {
             Debug.Log(firstTr.position);
             attackSnake.Pause();

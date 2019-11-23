@@ -9,6 +9,7 @@ public class HandCtrl : MonoBehaviour
     public SteamVR_Input_Sources rightHand = SteamVR_Input_Sources.RightHand;
     public SteamVR_Input_Sources leftHand = SteamVR_Input_Sources.LeftHand;
     public GameObject weaponUI;
+    public GameObject _weaponUI;
     
     public SteamVR_Action_Boolean trigger = SteamVR_Actions.default_InteractUI;
     public SteamVR_Action_Vibration haptic = SteamVR_Actions.default_Haptic;
@@ -82,6 +83,7 @@ public class HandCtrl : MonoBehaviour
                 anim.SetBool(swordGrab, true);                
                 StartCoroutine(SwordSpawn());
                 weaponUI.gameObject.SetActive(false);
+                _weaponUI.gameObject.SetActive(true);
             }
         }
         else if(this.gameObject.scene.name == "Stage2" || this.gameObject.scene.name == "Stage2_Copy" || this.gameObject.scene.name == "Stage3")
@@ -93,12 +95,12 @@ public class HandCtrl : MonoBehaviour
                 StartCoroutine(GunSpawn());
                 weaponUI.gameObject.SetActive(false);
             }
-            else if(RedMonCtrl.monReady && gunOn && trigger.GetStateDown(rightHand)) //총이 생성되었으면 trigger을 누를때마다 격발
+            else if((RedMonCtrl.monReady && gunOn && trigger.GetStateDown(rightHand)) || (HandAttack.stage3 && gunOn && trigger.GetStateDown(rightHand))) //총이 생성되었으면 trigger을 누를때마다 격발
             {                
                 anim.SetBool(gunShot, true);
 
             }
-            else if (RedMonCtrl.monReady && gunOn && trigger.GetStateUp(rightHand))
+            else if ((RedMonCtrl.monReady && gunOn && trigger.GetStateUp(rightHand)) || (HandAttack.stage3 && gunOn && trigger.GetStateUp(rightHand)))
             {
                 anim.SetBool(gunShot, false);                
             }                                    

@@ -6,7 +6,7 @@ using DG.Tweening;
 public class HandAttack : MonoBehaviour
 {
     // Start is called before the first frame update
-    
+    public static bool stage3 = true;
     
     void Start()
     {

@@ -9,6 +9,7 @@ public class LeftHandCtrl : MonoBehaviour
     public SteamVR_Input_Sources lefthand = SteamVR_Input_Sources.LeftHand;
     public SteamVR_Action_Boolean trigger = SteamVR_Actions.default_InteractUI;
     public GameObject weaponUI;
+    public GameObject _weaponUI;
 
     public GameObject[] sword;
     public GameObject sword_blade;
@@ -71,10 +72,11 @@ public class LeftHandCtrl : MonoBehaviour
                 anim.SetBool(swordGrab, true);                
                 StartCoroutine(SwordSpawn());
                 weaponUI.gameObject.SetActive(false);
+                _weaponUI.gameObject.SetActive(true);
             }
         }
 
-        else if (this.gameObject.scene.name == "Stage2" || this.gameObject.scene.name == "Stage2_Copy")
+        else if (this.gameObject.scene.name == "Stage2" || this.gameObject.scene.name == "Stage2_Copy" || this.gameObject.scene.name == "Stage3")
         {
             if (!shieldOn && trigger.GetStateDown(lefthand))
             {
@@ -82,6 +84,7 @@ public class LeftHandCtrl : MonoBehaviour
                 anim.SetBool(shieldGrab, true);
                 StartCoroutine(ShieldSpawn());
                 weaponUI.gameObject.SetActive(false);
+                _weaponUI.gameObject.SetActive(true);
             }            
         }
     }

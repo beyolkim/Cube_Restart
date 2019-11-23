@@ -14,6 +14,7 @@ public class R_SwordCtrl : MonoBehaviour
     public bool right_swordOn = false;
     private bool swordAudio = false;
     public GameObject handle;
+    public GameObject _weaponUI;
 
     private AudioSource _audio;
     public AudioClip open;
@@ -30,6 +31,7 @@ public class R_SwordCtrl : MonoBehaviour
     {
         if (!swordAudio && right_swordOn && trigger.GetStateDown(righthand))
         {
+            _weaponUI.gameObject.SetActive(false);
             swordAudio = true;
             anim.SetBool(swordOpen, true);
             _audio.PlayOneShot(open);

@@ -6,6 +6,8 @@ using DG.Tweening;
 //보라색 몬스터 : 고정 위치에서 좌우로 레이저 발사 
 public class PurpleMonCtrl : MonoBehaviour
 {
+    public static PurpleMonCtrl instance = null;
+
     //시간차 공격을 위한 시작시간 지연
     public float delayAnimation;
     //공격모드일 때 각도
@@ -37,10 +39,12 @@ public class PurpleMonCtrl : MonoBehaviour
     }
     private void Start()
     {
+        instance = this;
+
         Invoke("StateAttack", delayAnimation);
     }
 
-    private void StateAttack()
+    public void StateAttack()
     {
         //앞쪽으로 AttackMode만큼 기울어지며 좌우 레이저 빔 
         transform.DORotate(attackAngle, 1.0f);
@@ -48,9 +52,16 @@ public class PurpleMonCtrl : MonoBehaviour
         purpleLaser.SetActive(true);
     }
 
-    private void StateDie()
+    public void StateDie()
     {
+        animator.SetTrigger("Die");
         rigHub.SetActive(false);
         deadParticle.SetActive(true);
+    }
+
+    IEnumerator ParticleDelay()
+    {
+        yield return new WaitForSeconds(1.5f);
+        Destroy(this.gameObject);
     }
 }

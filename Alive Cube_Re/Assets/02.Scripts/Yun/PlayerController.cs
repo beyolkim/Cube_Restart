@@ -167,7 +167,7 @@ public class PlayerController : MonoBehaviour
         if (!playerDie && playerHp <= 0)
         {
             playerDie = true;
-            //모든 몬스터의 공격을 중지하도록
+            PurpleMonCtrl.instance.StateDie();
             Debug.Log("Game Over");
             _audio.PlayOneShot(gameOver_audio);
             hpUI.gameObject.SetActive(false);

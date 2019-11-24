@@ -7,6 +7,7 @@ using DG.Tweening;
 public class RedMonCtrl : MonoBehaviour
 {
     public Vector3 attackAngle;
+    public float rotDuration;
 
     //레이저 
     private GameObject redLaser;
@@ -75,7 +76,7 @@ public class RedMonCtrl : MonoBehaviour
         ps = redLaser.GetComponent<ParticleSystem>();
         collisionEvents = new List<ParticleCollisionEvent>();
 
-        Invoke("StateIdle", 5.3f);
+        Invoke("StateSpawn", 1.5f);
     }
 
    
@@ -116,6 +117,13 @@ public class RedMonCtrl : MonoBehaviour
         }
     }
 
+    void StateSpawn()
+    {
+        animator.SetTrigger(h_Idle);
+        animator.SetFloat("AnimSpeed", Random.Range(1.0f, 1.5f));
+        animator.SetFloat("AnimOffset", Random.Range(0.0f, 1.0f));
+        transform.DORotate(attackAngle, rotDuration);
+    }
     void StateIdle() //Idle : 레이 닿으면 피하고 피격시 공격모드
     {
             redLaser.SetActive(false);  //Idle재실행 때 레이저 끄기
@@ -123,7 +131,7 @@ public class RedMonCtrl : MonoBehaviour
             animator.SetTrigger(h_Idle);
             animator.SetFloat("AnimSpeed", Random.Range(1.0f, 1.5f));
             animator.SetFloat("AnimOffset", Random.Range(0.0f, 1.0f));
-            transform.DORotate(attackAngle, 0.0f);
+            transform.DORotate(attackAngle, 2.0f);
         monReady = true;
     }
 

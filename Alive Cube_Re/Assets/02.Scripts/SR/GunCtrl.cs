@@ -31,8 +31,6 @@ public class GunCtrl : MonoBehaviour
     public float range = 30f;
     private LineRenderer line;
 
-    //public bool strafing = false;
-
     void Start()
     {
         instance = this;
@@ -50,14 +48,12 @@ public class GunCtrl : MonoBehaviour
         }
         else if (gunReady && RedMonCtrl.monReady) //Gun의 Line이 생성되었다면 Ray를 발사
         {
-            //Debug.DrawRay(ray.origin, ray.direction * 30.0f, Color.green);
             ray = new Ray(firePos.position, transform.forward);
 
             if (Physics.Raycast(ray, out hit, 30.0f) && hit.collider.CompareTag("ENEMY"))
             {
                 var hitRedMonCtrl = hit.collider.transform.parent.GetComponent<RedMonCtrl>();
                 Transform monPos = hit.collider.transform.parent;
-                
 
                 Debug.Log("RayCast에 맞은 레드몬은 : " + hit.collider.transform.parent.name);
 
@@ -78,18 +74,11 @@ public class GunCtrl : MonoBehaviour
                         hitRedMonCtrl.StateStrafeRight();
                         Debug.Log("레드몬이 오른쪽으로 피했습니다");
                     }
-
-
                 }
-                //StartCoroutine(BanRay());
             }
         }
     }
-    IEnumerator BanRay()
-    {
-        yield return new WaitForSeconds(3.0f);
-
-    }
+   
     public void Fire()
     {
         if (fireAllowed && fireParticle != null)

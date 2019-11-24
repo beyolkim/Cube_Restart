@@ -51,6 +51,11 @@ public class ShieldCtrl : MonoBehaviour
             StartCoroutine(LaserCollider());
             Debug.Log("방패에 맞았음");
         }
+        //if(other.transform.CompareTag("HANDATTACK"))
+        //{
+        //    Debug.Log("방패에 맞았음");
+        //    other.gameObject.GetComponentInParent<HandAttack>().ShieldCollsion();
+        //}
     }
     IEnumerator LaserCollider()
     {

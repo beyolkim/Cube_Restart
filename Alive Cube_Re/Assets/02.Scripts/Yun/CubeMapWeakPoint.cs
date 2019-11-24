@@ -57,7 +57,7 @@ public class CubeMapWeakPoint : MonoBehaviour
                 WeakPoints[rannum].GetComponent<WallCubeController>().setCheck = true;
             }
             yield return new WaitForSeconds(3.0f);
-            for (int i=0; i< weakPointCount; i++)
+            for (int i = 0; i < weakPointCount; i++)
             {
                 WeakPointMat = WeakPoints[tempNum[i]].GetComponent<MeshRenderer>().materials;
                 WeakPointMat[1].SetVector("_VectorAlpha", new Vector2(0, 0));
@@ -67,5 +67,6 @@ public class CubeMapWeakPoint : MonoBehaviour
         }
 
     }
+
 
 }

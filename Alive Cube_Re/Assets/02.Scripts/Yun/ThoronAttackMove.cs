@@ -22,7 +22,6 @@ public class ThoronAttackMove : MonoBehaviour
     {
         if (other.CompareTag("THORNTARGET") /*&& PlayerController.playerHp >0*/)
         {
-            Debug.Log(firstTr.position);
             attackSnake.Pause();
             Vector3 FisrPr = new Vector3(Random.Range(-3.0f, 3.0f), -3, 10);
             StartCoroutine(AttackDelay());

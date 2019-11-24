@@ -47,6 +47,14 @@ public class BulletCtrl : MonoBehaviour
                 //Debug.Log("레드몬 죽은 마리수 : " + PlayerController.redMon_Kill);
             }
         }
+        if(coll.collider.CompareTag("WEAKPOINT") && coll.gameObject.GetComponent<WallCubeController>().setCheck == true)
+        {
+            AttackController.cubeHp --;
+            Material [] hitPointMat = coll.gameObject.GetComponent<MeshRenderer>().materials;
+            hitPointMat[1].SetVector("_VectorAlpha", new Vector2(0, 0));
+            coll.gameObject.GetComponent<WallCubeController>().setCheck = false;
+            Debug.Log("CUBEHP" + AttackController.cubeHp);
+        }
     }
 
     //if (coll.transform.CompareTag("REDMON"))

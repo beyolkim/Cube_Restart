@@ -146,13 +146,43 @@ public class LeftHandCtrl : MonoBehaviour
         ShieldCtrl.instance.shieldOn = true;
     }
 
-    // private void OnCollisionEnter(Collision coll)
-    // {
-    //     if (coll.transform.CompareTag("CUBE"))
-    //     {
-    //         Debug.Log("왼손!!");
-    //         anim.SetTrigger(cubeHit);
-    //     }
-    // }
+    public IEnumerator ShieldDisapper()
+    {
+        _audio.PlayOneShot(shieldSpawn);
+        while (shieldValue[0] <= 0.5f)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                shieldValue[i] += 0.015f;
+                _shieldValue[i] += 0.05f;
+                shieldMat[i].SetFloat("_Dissolve", shieldValue[i]);
+                shieldMat[i + 3].SetFloat("_Dissolves", _shieldValue[i]);
+            }
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            shield[i].GetComponent<BoxCollider>().enabled = false;
+        }
+        ShieldCtrl.instance.shieldOn = false;
+        anim.SetBool(shieldGrab, false);
+    }
+    public IEnumerator L_SwordDisapper()
+    {
+        _audio.PlayOneShot(swordSpawn);
+        sword_blade.gameObject.SetActive(false);
+        while (swordValue[0] <= 0.5f)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                swordValue[i] += 0.017f;
+                swordMat[i].SetFloat("_Dissolve", swordValue[i]);
+            }
+            yield return new WaitForSeconds(0.008f);
+        }
+        anim.SetBool(swordGrab, false);
+        L_SwordCtrl.instance.left_swordOn = false;
+    }
 
 }

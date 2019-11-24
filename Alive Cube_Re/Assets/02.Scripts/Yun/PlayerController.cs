@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     public float curTime = 0;
     private float attackTime = 5;
-    public static int playerHp = 10;
+    public static int playerHp = 1000;
     public static int redMon_Kill = 0;
     public bool attackAllow = false;
 
@@ -119,8 +119,6 @@ public class PlayerController : MonoBehaviour
     
     public IEnumerator HitEffect(GameObject _target)
     {
-        Debug.Log("라라랄라랄라라랄라라");
-
         playerHit = true;
         _target.GetComponent<CapsuleCollider>().enabled = false;
         hitEffect.SetActive(true);
@@ -167,11 +165,16 @@ public class PlayerController : MonoBehaviour
         if (!playerDie && playerHp <= 0)
         {
             playerDie = true;
+            HandCtrl.instance.gunOn = false; //Gun의 총알 끄기
+            GunCtrl.instance.gunReady = false; //Gun의 Ray 끄기
             PurpleMonCtrl.instance.StateDie();
             Debug.Log("Game Over");
             _audio.PlayOneShot(gameOver_audio);
             hpUI.gameObject.SetActive(false);
             gameOverUI.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1.5f);
+            StartCoroutine(HandCtrl.instance.GunDisapper()); //Gun 사라지게
+            StartCoroutine(LeftHandCtrl.instance.ShieldDisapper()); //Shield 사라지게
             yield return new WaitForSeconds(2.5f);
             Earthquake_Audio(); //벽 수축 Audio
             yield return new WaitForSeconds(2.5f);
@@ -186,7 +189,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Stage2 Clear!");
             stage2_audio.Stop();
-            //모든 몬스터의 공격을 중지하도록
+            PurpleMonCtrl.instance.StateDie(); //모든 몬스터의 공격을 중지하도록
             stageClearUI.gameObject.SetActive(true); //Stage1 Clear UI 표시
             hpUI.gameObject.SetActive(false);
             yield return new WaitForSeconds(3f);

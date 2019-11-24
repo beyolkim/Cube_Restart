@@ -17,7 +17,7 @@ public class GunCtrl : MonoBehaviour
     public GameObject bullet;
     public float fireRate = 0.25f;
     private bool fireAllowed = true;
-    private bool gunReady = false;
+    public bool gunReady = false;
     private bool flag;
     public AudioClip[] audioClip;
     private AudioSource _audio;

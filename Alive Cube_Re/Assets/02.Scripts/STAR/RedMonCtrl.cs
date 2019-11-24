@@ -7,14 +7,17 @@ using DG.Tweening;
 public class RedMonCtrl : MonoBehaviour
 {
     public Vector3 attackAngle;
-    public float rotDuration;
+    //public float rotDuration;
 
-    //레이저 
-    private GameObject redLaser;
+    private GameObject[] R_Mons = new GameObject[7];      //레드몬스터 
+
+     
     private Transform targetTr;
 
     //파티클 미사일
-    private ParticleSystem ps;
+    private GameObject homming;
+
+    private ParticleSystem hommingparticle;
     private List<ParticleCollisionEvent> collisionEvents;
     public GameObject particletargetObj;
 
@@ -42,6 +45,7 @@ public class RedMonCtrl : MonoBehaviour
     private bool strafingFlag = true;
 
     //애니메이터 파라미터의 문자열을 해시값으로 추출 
+    public Animator animator;
     private readonly int h_Idle = Animator.StringToHash("Idle");
     private readonly int h_StrafeLeft = Animator.StringToHash("Strafe Left");
     private readonly int h_StrafeRight = Animator.StringToHash("Strafe Right");
@@ -49,37 +53,35 @@ public class RedMonCtrl : MonoBehaviour
     private readonly int h_TakeDamage = Animator.StringToHash("Take Damage");
     private readonly int h_FastAttack = Animator.StringToHash("Fast Attack");
     private readonly int h_Die = Animator.StringToHash("Die");
-    public Animator animator;
     public static bool wallHit = false;
     public static bool monReady = false;
 
 
     private void Awake()
-    { 
+    {
         animator = GetComponent<Animator>();
-        redLaser = transform.GetChild(0).transform.GetChild(0).gameObject;
+        homming = transform.GetChild(0).transform.GetChild(0).gameObject;
         targetTr = GameObject.FindWithTag("Player").transform;
         ws = new WaitForSeconds(0.3f);
         audioSource = GetComponent<AudioSource>();
         deadParticle = transform.GetChild(1).gameObject;
         rigHub = transform.GetChild(0).gameObject;
+        R_Mons = GameObject.FindGameObjectsWithTag("RED");
+
     }
 
     private void OnEnable()
     {
         StartCoroutine(CheckState());
+        Invoke("StateSpawn", 0.25f);
     }
     private void Start()
     {
         //RedMonCtrl 시작과 동시에 Spwan Sound 재생
         audioSource.PlayOneShot(audioClip[0]);
-        ps = redLaser.GetComponent<ParticleSystem>();
+        hommingparticle = homming.GetComponent<ParticleSystem>();
         collisionEvents = new List<ParticleCollisionEvent>();
-
-        Invoke("StateSpawn", 1.5f);
     }
-
-   
 
     IEnumerator CheckState()
     {
@@ -119,20 +121,33 @@ public class RedMonCtrl : MonoBehaviour
 
     void StateSpawn()
     {
+        StartCoroutine(RotAnim());
         animator.SetTrigger(h_Idle);
         animator.SetFloat("AnimSpeed", Random.Range(1.0f, 1.5f));
         animator.SetFloat("AnimOffset", Random.Range(0.0f, 1.0f));
-        transform.DORotate(attackAngle, rotDuration);
+        monReady = true;
     }
+
+    IEnumerator RotAnim()
+    {
+        transform.DORotate(attackAngle, 2.0f);
+        yield return new WaitForSeconds(2.0f);
+    }
+
     void StateIdle() //Idle : 레이 닿으면 피하고 피격시 공격모드
     {
-            redLaser.SetActive(false);  //Idle재실행 때 레이저 끄기
-            animator.ResetTrigger(h_Attack);
-            animator.SetTrigger(h_Idle);
-            animator.SetFloat("AnimSpeed", Random.Range(1.0f, 1.5f));
-            animator.SetFloat("AnimOffset", Random.Range(0.0f, 1.0f));
-            transform.DORotate(attackAngle, 2.0f);
-        monReady = true;
+        hommingparticle.emissionRate = 0.0f;
+
+
+        //hommingparticle.Stop();
+
+
+        //homming.SetActive(false);  //Idle재실행 때 레이저 끄기
+        animator.ResetTrigger(h_Attack);
+        animator.SetTrigger(h_Idle);
+        animator.SetFloat("AnimSpeed", Random.Range(1.0f, 1.5f));
+        animator.SetFloat("AnimOffset", Random.Range(0.0f, 1.0f));
+        transform.DORotate(attackAngle, 0.0f);
     }
 
     public void StateStrafeLeft() //Strafe - 레이닿으면 왼쪽으로 피하고 즉시 공격모드
@@ -145,7 +160,11 @@ public class RedMonCtrl : MonoBehaviour
                 //GunCtrl.instance.strafing = true;
                 Debug.Log("StateStrafeLeft가 실행되었습니다");
                 transform.DORotate(attackAngle, 0.0f);
-                redLaser.SetActive(false);
+                hommingparticle.emissionRate = 0.0f;
+
+               //hommingparticle.Stop();
+
+                //homming.SetActive(false);
                 animator.SetTrigger(h_StrafeLeft);
                 StartCoroutine(MoveLeft());
             }
@@ -161,7 +180,12 @@ public class RedMonCtrl : MonoBehaviour
                 //GunCtrl.instance.strafing = true;
                 Debug.Log("StateStrafeRight가 실행되었습니다");
                 transform.DORotate(attackAngle, 0.0f);
-                redLaser.SetActive(false);
+
+                hommingparticle.emissionRate = 0.0f;
+
+                //hommingparticle.Stop();
+
+                //homming.SetActive(false);
                 animator.SetTrigger(h_StrafeRight);
                 StartCoroutine(MoveRight());
             }
@@ -173,21 +197,24 @@ public class RedMonCtrl : MonoBehaviour
 
         if (state == State.ATTACK || state == State.STRAFE)
         {
-        Debug.Log("StateAttack이 실행되었습니다");
+            Debug.Log("StateAttack이 실행되었습니다");
             transform.DORotate(attackAngle, 0.0f);
             animator.ResetTrigger(h_StrafeRight);
             animator.ResetTrigger(h_StrafeRight);
             animator.SetTrigger(h_Attack);
 
+            //hommingparticle.Play();
+            hommingparticle.emissionRate = 3.0f;
 
-         
-            //redLaser.transform.DOLookAt(targetTr.position, 0.5f, AxisConstraint.None);
-            redLaser.SetActive(true);
+            //if (hommingparticle.isStopped)
+            //{
+            //    hommingparticle.Play();
+            //}
+
+            //homming.transform.DOLookAt(targetTr.position, 0.5f, AxisConstraint.None);
+            //homming.SetActive(true);
         }
     }
-
-
-
 
     void StateFastAttack() //FastAttack - Take Damage 이후 실행, 죽을때까지 멈추지 않음
     {
@@ -195,10 +222,23 @@ public class RedMonCtrl : MonoBehaviour
 
         transform.DORotate(attackAngle, 0.0f);
 
-        //redLaser.transform.LookAt(targetTr.position);
 
-        //redLaser.transform.DOLookAt(targetTr.position, 0.5f, AxisConstraint.None);
-        redLaser.SetActive(true);
+
+        hommingparticle.emissionRate = 3.0f;
+
+        //hommingparticle.Play();
+
+
+        //if (hommingparticle.isStopped)
+        //{
+        //    hommingparticle.Play();
+        //}
+
+
+        //homming.transform.LookAt(targetTr.position);
+
+        //homming.transform.DOLookAt(targetTr.position, 0.5f, AxisConstraint.None);
+        //homming.SetActive(true);
     }
 
     public void StateTakeDamage()
@@ -213,13 +253,13 @@ public class RedMonCtrl : MonoBehaviour
     void StateDie() //Die - 죽는 애니메이션, 몸체 끄기, 죽는 파티클
     {
         Debug.Log("StateAttack이 실행되었습니다");
-          
-        if(this.gameObject != null)
+
+        if (this.gameObject != null)
         {
             rigHub.SetActive(false);
             deadParticle.SetActive(true);
             StartCoroutine(ParticleDelay());
-        }       
+        }
     }
 
     IEnumerator ParticleDelay()
@@ -249,7 +289,7 @@ public class RedMonCtrl : MonoBehaviour
                 Debug.Log("if문 탈출");
                 wallHit = false;
                 break;
-            }    
+            }
         }
         //for (int i = 0; i < 50; i++)
         //{
@@ -284,5 +324,7 @@ public class RedMonCtrl : MonoBehaviour
         wallHit = false;
         strafingFlag = true;
     }
+
+
 }
 

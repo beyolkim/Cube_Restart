@@ -105,6 +105,9 @@ public class AttackController : MonoBehaviour
                 PlayerController.instance.PlayerDie();
                 hpUI.gameObject.SetActive(false);
                 gameOverUI.gameObject.SetActive(true);
+                yield return new WaitForSeconds(1.5f);
+                StartCoroutine(HandCtrl.instance.R_SwordDisapper());
+                StartCoroutine(LeftHandCtrl.instance.L_SwordDisapper());
                 yield return new WaitForSeconds(2.5f);
                 PlayerController.instance.Earthquake_Audio(); //벽 수축 Audio
                 yield return new WaitForSeconds(2.5f);

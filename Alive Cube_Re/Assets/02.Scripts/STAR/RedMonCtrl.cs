@@ -6,11 +6,9 @@ using DG.Tweening;
 //보라색 몬스터 : 고정 위치에서 좌우로 레이저 발사 
 public class RedMonCtrl : MonoBehaviour
 {
+    public static RedMonCtrl instance = null;
+
     public Vector3 attackAngle;
-    //public float rotDuration;
-
-    private GameObject[] R_Mons = new GameObject[7];      //레드몬스터 
-
      
     private Transform targetTr;
 
@@ -18,7 +16,6 @@ public class RedMonCtrl : MonoBehaviour
     private GameObject homming;
 
     private ParticleSystem hommingparticle;
-    private List<ParticleCollisionEvent> collisionEvents;
     public GameObject particletargetObj;
 
 
@@ -53,12 +50,13 @@ public class RedMonCtrl : MonoBehaviour
     private readonly int h_TakeDamage = Animator.StringToHash("Take Damage");
     private readonly int h_FastAttack = Animator.StringToHash("Fast Attack");
     private readonly int h_Die = Animator.StringToHash("Die");
-    public static bool wallHit = false;
+    private int gameOver_Idle = Animator.StringToHash("GameOver_Idle");
     public static bool monReady = false;
 
 
     private void Awake()
     {
+        instance = this;
         animator = GetComponent<Animator>();
         homming = transform.GetChild(0).transform.GetChild(0).gameObject;
         targetTr = GameObject.FindWithTag("Player").transform;
@@ -66,7 +64,6 @@ public class RedMonCtrl : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         deadParticle = transform.GetChild(1).gameObject;
         rigHub = transform.GetChild(0).gameObject;
-        R_Mons = GameObject.FindGameObjectsWithTag("RED");
 
     }
 
@@ -80,7 +77,7 @@ public class RedMonCtrl : MonoBehaviour
         //RedMonCtrl 시작과 동시에 Spwan Sound 재생
         audioSource.PlayOneShot(audioClip[0]);
         hommingparticle = homming.GetComponent<ParticleSystem>();
-        collisionEvents = new List<ParticleCollisionEvent>();
+
     }
 
     IEnumerator CheckState()
@@ -112,8 +109,8 @@ public class RedMonCtrl : MonoBehaviour
                 isDie = true;
             }
 
-            Debug.Log("레드몬 상태 : " + state);
-            Debug.Log("레드몬 HP : " + R_MonHP);
+            //Debug.Log("레드몬 상태 : " + state);
+            //Debug.Log("레드몬 HP : " + R_MonHP);
 
             yield return ws;
         }
@@ -158,7 +155,7 @@ public class RedMonCtrl : MonoBehaviour
             if (strafingFlag == true)
             {
                 //GunCtrl.instance.strafing = true;
-                Debug.Log("StateStrafeLeft가 실행되었습니다");
+                //Debug.Log("StateStrafeLeft가 실행되었습니다");
                 transform.DORotate(attackAngle, 0.0f);
                 hommingparticle.emissionRate = 0.0f;
 
@@ -178,7 +175,7 @@ public class RedMonCtrl : MonoBehaviour
             if (strafingFlag == true)
             {
                 //GunCtrl.instance.strafing = true;
-                Debug.Log("StateStrafeRight가 실행되었습니다");
+                //Debug.Log("StateStrafeRight가 실행되었습니다");
                 transform.DORotate(attackAngle, 0.0f);
 
                 hommingparticle.emissionRate = 0.0f;
@@ -197,28 +194,20 @@ public class RedMonCtrl : MonoBehaviour
 
         if (state == State.ATTACK || state == State.STRAFE)
         {
-            Debug.Log("StateAttack이 실행되었습니다");
+            //Debug.Log("StateAttack이 실행되었습니다");
             transform.DORotate(attackAngle, 0.0f);
             animator.ResetTrigger(h_StrafeRight);
             animator.ResetTrigger(h_StrafeRight);
             animator.SetTrigger(h_Attack);
 
-            //hommingparticle.Play();
             hommingparticle.emissionRate = 3.0f;
 
-            //if (hommingparticle.isStopped)
-            //{
-            //    hommingparticle.Play();
-            //}
-
-            //homming.transform.DOLookAt(targetTr.position, 0.5f, AxisConstraint.None);
-            //homming.SetActive(true);
         }
     }
 
     void StateFastAttack() //FastAttack - Take Damage 이후 실행, 죽을때까지 멈추지 않음
     {
-        Debug.Log("StateAttack이 실행되었습니다");
+        //Debug.Log("StateAttack이 실행되었습니다");
 
         transform.DORotate(attackAngle, 0.0f);
 
@@ -226,24 +215,11 @@ public class RedMonCtrl : MonoBehaviour
 
         hommingparticle.emissionRate = 3.0f;
 
-        //hommingparticle.Play();
-
-
-        //if (hommingparticle.isStopped)
-        //{
-        //    hommingparticle.Play();
-        //}
-
-
-        //homming.transform.LookAt(targetTr.position);
-
-        //homming.transform.DOLookAt(targetTr.position, 0.5f, AxisConstraint.None);
-        //homming.SetActive(true);
     }
 
     public void StateTakeDamage()
     {
-        Debug.Log("StateTakeDamage가 실행되었습니다");
+        //Debug.Log("StateTakeDamage가 실행되었습니다");
 
         transform.DORotate(attackAngle, 0.0f);
         animator.SetTrigger("Take Damage");
@@ -252,7 +228,7 @@ public class RedMonCtrl : MonoBehaviour
 
     void StateDie() //Die - 죽는 애니메이션, 몸체 끄기, 죽는 파티클
     {
-        Debug.Log("StateAttack이 실행되었습니다");
+        //Debug.Log("StateAttack이 실행되었습니다");
 
         if (this.gameObject != null)
         {
@@ -280,22 +256,15 @@ public class RedMonCtrl : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             transform.Translate(transform.right * -0.04f);
-            //transform.Translate(transform.up * yy);
-            //transform.Translate(transform.forward * zz);
 
             yield return null;
-            if (isDie || wallHit)
+            if (isDie)
             {
-                Debug.Log("if문 탈출");
-                wallHit = false;
+
                 break;
             }
         }
-        //for (int i = 0; i < 50; i++)
-        //{
-        //    transform.Translate(transform.right * 0.02f);
-        //}
-        wallHit = false;
+
         strafingFlag = true;
     }
     IEnumerator MoveRight()
@@ -307,21 +276,14 @@ public class RedMonCtrl : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             transform.Translate(transform.right * 0.04f);
-            //transform.Translate(transform.up * yy);
-            //transform.Translate(transform.forward * zz);
+
             yield return null;
-            if (isDie || wallHit)
+            if (isDie)
             {
-                Debug.Log("if문 탈출");
-                wallHit = false;
                 break;
             }
         }
-        //for(int i = 0; i < 50; i++)
-        //{
-        //    transform.Translate(transform.right * -0.02f);
-        //}
-        wallHit = false;
+
         strafingFlag = true;
     }
 

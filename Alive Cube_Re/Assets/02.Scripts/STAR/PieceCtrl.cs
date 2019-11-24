@@ -7,6 +7,8 @@ using DG.Tweening;
 //그 위치에서 몬스터들이 생성되며 조각들은 사라짐
 public class PieceCtrl : MonoBehaviour
 {
+    public static PieceCtrl instance = null;
+
     private GameObject[] P_Mons = new GameObject[3];      //퍼플몬스터 
     private GameObject[] P_pieces = new GameObject[3];   //퍼플조각
     private GameObject[] R_Mons = new GameObject[7];      //레드몬스터 
@@ -17,6 +19,8 @@ public class PieceCtrl : MonoBehaviour
 
     void Start()
     {
+        instance = this;
+
         P_Mons = GameObject.FindGameObjectsWithTag("PURPLE");
         P_pieces = GameObject.FindGameObjectsWithTag("PURPLEPIECE");
         R_Mons = GameObject.FindGameObjectsWithTag("RED");
@@ -132,6 +136,15 @@ public class PieceCtrl : MonoBehaviour
         for (int i = 0; i < R_Mons.Length; i++)
         {
             R_Mons[i].SetActive(true);
+        }
+    }
+    public void GameOver_RedIdle()
+    {
+        for(int i = 0; i < R_Mons.Length; i++)
+        {
+            R_Mons[i].GetComponent<Animator>().SetTrigger("GameOver_Idle");
+            GameObject homing = R_Mons[i].transform.GetChild(0).transform.GetChild(0).gameObject;
+            homing.SetActive(false);
         }
     }
 }

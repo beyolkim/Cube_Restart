@@ -24,12 +24,14 @@ public class GunCtrl : MonoBehaviour
 
     private Ray ray;
     private RaycastHit hit;
-    public RedMonCtrl[] redMonCtrl;
 
     public Material lineMat;
     public Transform rayPos;
     public float range = 30f;
     private LineRenderer line;
+
+    public GameObject stage2UI;
+    private bool stage2UICheck = false;
 
     void Start()
     {
@@ -44,8 +46,9 @@ public class GunCtrl : MonoBehaviour
         {
             gunReady = true;
             _audio.Play();
-            Invoke("CreateLine", 2.0f);
+            //Invoke("CreateLine", 2.0f);
         }
+        //Stage2의 UI를 확인해야 Ray가 나가도록
         else if (gunReady && RedMonCtrl.monReady) //Gun의 Line이 생성되었다면 Ray를 발사
         {
             ray = new Ray(firePos.position, transform.forward);
@@ -55,24 +58,23 @@ public class GunCtrl : MonoBehaviour
                 var hitRedMonCtrl = hit.collider.transform.parent.GetComponent<RedMonCtrl>();
                 Transform monPos = hit.collider.transform.parent;
 
-                Debug.Log("RayCast에 맞은 레드몬은 : " + hit.collider.transform.parent.name);
+                //Debug.Log("RayCast에 맞은 레드몬은 : " + hit.collider.transform.parent.name);
 
                 if (hitRedMonCtrl.state == RedMonCtrl.State.IDLE)
                 {
-                    Debug.Log(hitRedMonCtrl.state);
-                    //hitRedMonCtrl.StateStrafeRight();
+                    //Debug.Log(hitRedMonCtrl.state);
 
                     //Idle상태일 때만 회피 가능, 공격 또는 회피 도중 피격은 피할 수 없음
                     if (monPos.position.x >= 0 && monPos.position.x <= 4.5)
                     {
                         hitRedMonCtrl.StateStrafeLeft();
-                        Debug.Log("레드몬이 왼쪽으로 피했습니다");
+                        //Debug.Log("레드몬이 왼쪽으로 피했습니다");
                     }
 
                     else if (monPos.position.x >= -4.5 && monPos.position.x < 0)
                     {
                         hitRedMonCtrl.StateStrafeRight();
-                        Debug.Log("레드몬이 오른쪽으로 피했습니다");
+                        //Debug.Log("레드몬이 오른쪽으로 피했습니다");
                     }
                 }
             }

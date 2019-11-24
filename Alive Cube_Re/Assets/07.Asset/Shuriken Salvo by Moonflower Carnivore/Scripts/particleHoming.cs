@@ -1,5 +1,8 @@
 //using System;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
 [ExecuteInEditMode]
 public class particleHoming : MonoBehaviour {
 	[Tooltip("Target object. If this parameter is undefined it will assume the attached object itself which creates self chasing particle effect.")]
@@ -12,8 +15,11 @@ public class particleHoming : MonoBehaviour {
 	public float homingDelay = 1f;
 	ParticleSystem m_System;
 	ParticleSystem.Particle[] m_Particles;
-	
-	void Start() {
+
+    public GameObject shieldHit_Particle;
+    public List<ParticleCollisionEvent> collisionEvents;
+
+    void Start() {
 		if (target == null) {
 			target = this.transform;
 		}
@@ -38,4 +44,26 @@ public class particleHoming : MonoBehaviour {
         }
 		m_System.SetParticles(m_Particles, numParticlesAlive);
 	}
+
+    private void OnParticleCollision(GameObject other)
+    {  
+        //int collCount = m_System.GetSafeCollisionEventSize();
+        collisionEvents = new List<ParticleCollisionEvent>();
+        int eventCount = m_System.GetCollisionEvents(other, collisionEvents);
+
+        for (int i = 0; i < eventCount; i++)
+        {
+            Vector3 collisionHitRot = collisionEvents[i].normal;
+            Vector3 collisionHitPos = collisionEvents[i].intersection;
+
+            Quaternion HitRot = Quaternion.LookRotation(Vector3.forward, collisionHitRot);
+            GameObject _shieldHit_Particle = Instantiate(shieldHit_Particle, collisionHitPos, HitRot);
+            Destroy(_shieldHit_Particle, 1.5f);
+
+            if(other.gameObject.CompareTag("SHIELD"))
+            {
+                ShieldCtrl.instance.ShieldHit_Audio();
+            }
+        }
+    }
 }

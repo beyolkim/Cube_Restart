@@ -17,6 +17,7 @@ public class ShieldCtrl : MonoBehaviour
     private GameObject laser;
 
     public GameObject _weaponUI;
+    public GameObject shieldHit_Particle;
 
 
     private AudioSource _audio;
@@ -41,6 +42,19 @@ public class ShieldCtrl : MonoBehaviour
             _audio.PlayOneShot(open);
         }
     }
+    private void OnParticleCollision(Collision coll)
+    {
+        if (coll.gameObject.CompareTag("HOMMING"))
+        {
+            Debug.Log("방패로 막기!");
+            ContactPoint contact = coll.contacts[0];
+            Vector3 _normal = -contact.normal;
+
+            GameObject _shieldHit_Particle = Instantiate(shieldHit_Particle, contact.point, Quaternion.LookRotation(_normal));
+            Destroy(_shieldHit_Particle, 1);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("LASER"))
@@ -51,13 +65,22 @@ public class ShieldCtrl : MonoBehaviour
             StartCoroutine(LaserCollider());
             Debug.Log("방패에 맞았음");
         }
-        //if(other.transform.CompareTag("HANDATTACK"))
-        //{
-        //    Debug.Log("방패에 맞았음");
-        //    other.gameObject.GetComponentInParent<HandAttack>().ShieldCollsion();
-        //}
+
+        if (other.CompareTag("HANDATTACK"))
+        {
+            Debug.Log("손을 막았다");
+            other.gameObject.GetComponentInParent<HandAttack>().ShieldCollsion();
+            
+            StartCoroutine(other.gameObject.GetComponentInParent<HandAttack>().HandVFX(other.gameObject));          
+            
+        }
+
     }
-    IEnumerator LaserCollider()
+    
+    
+
+      
+IEnumerator LaserCollider()
     {
         yield return new WaitForSeconds(1.5f);
         laser.GetComponent<SphereCollider>().enabled = true;

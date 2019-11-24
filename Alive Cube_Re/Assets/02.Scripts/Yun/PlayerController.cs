@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
     
     public IEnumerator HitEffect(GameObject _target)
     {
-        Debug.Log("라라랄라랄라라랄라라");
+
 
         playerHit = true;
         _target.GetComponent<CapsuleCollider>().enabled = false;

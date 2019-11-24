@@ -5,6 +5,8 @@ using Valve.VR;
 
 public class HandCtrl : MonoBehaviour
 {
+    public static HandCtrl instance = null;
+
     public SteamVR_Input_Sources hand = SteamVR_Input_Sources.Any;
     public SteamVR_Input_Sources rightHand = SteamVR_Input_Sources.RightHand;
     public SteamVR_Input_Sources leftHand = SteamVR_Input_Sources.LeftHand;
@@ -31,7 +33,7 @@ public class HandCtrl : MonoBehaviour
     public Transform gun_particle_pos;
     public GameObject gun_particle; 
 
-    private bool gunOn = false;
+    public bool gunOn = false;
     private bool gunSpawn = false;
     
     private Animator anim;   
@@ -46,7 +48,9 @@ public class HandCtrl : MonoBehaviour
     public AudioClip swordSpawn;
 
     void Start()
-    {        
+    {
+        instance = this; 
+
         for(int i =0; i < 10; i ++)
         {
             swordValue[i] = 0.5f;
@@ -163,4 +167,37 @@ public class HandCtrl : MonoBehaviour
         GunCtrl.instance.Fire();
     }
  
+    public IEnumerator GunDisapper()
+    {
+        _audio.PlayOneShot(gunSpawn_audio);
+        while (gunValue[0] <= 0.5f)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                gunValue[i] += 0.017f;
+                gunMat[i].SetFloat("_Dissolve", gunValue[i]);
+            }
+
+            yield return new WaitForSeconds(0.01f);
+        }
+        gunPart.gameObject.SetActive(false);
+        anim.SetBool(gunGrab, false);
+    }
+
+    public IEnumerator R_SwordDisapper()
+    {
+        _audio.PlayOneShot(swordSpawn);
+        sword_blade.gameObject.SetActive(false);
+        while (swordValue[0] <= 0.5f)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                swordValue[i] += 0.017f;
+                swordMat[i].SetFloat("_Dissolve", swordValue[i]);
+            }
+            yield return new WaitForSeconds(0.008f);
+        }
+        anim.SetBool(swordGrab, false);
+        R_SwordCtrl.instance.right_swordOn = false;
+    }
 }

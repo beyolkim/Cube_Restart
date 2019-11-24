@@ -14,8 +14,6 @@ public class ShieldCtrl : MonoBehaviour
     public bool shieldOn = false;
     private bool shieldAudio = false;
 
-    private GameObject laser;
-
     public GameObject _weaponUI;
     public GameObject shieldHit_Particle;
 
@@ -42,6 +40,7 @@ public class ShieldCtrl : MonoBehaviour
             _audio.PlayOneShot(open);
         }
     }
+
     private void OnParticleCollision(Collision coll)
     {
         if (coll.gameObject.CompareTag("HOMMING"))
@@ -56,13 +55,11 @@ public class ShieldCtrl : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
+
     {
         if (other.transform.CompareTag("LASER"))
         {
-            laser = other.gameObject;
             _audio.PlayOneShot(shieldHit[Random.Range(0, shieldHit.Length)]);
-            laser.GetComponent<SphereCollider>().enabled = false;
-            StartCoroutine(LaserCollider());
             Debug.Log("방패에 맞았음");
         }
 
@@ -76,15 +73,5 @@ public class ShieldCtrl : MonoBehaviour
         }
 
     }
-    
-    
 
-      
-IEnumerator LaserCollider()
-    {
-        yield return new WaitForSeconds(1.5f);
-        laser.GetComponent<SphereCollider>().enabled = true;
-        Debug.Log("콜라이더 켜기");
-        
-    }
 }

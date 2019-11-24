@@ -7,6 +7,7 @@ using DG.Tweening;
 public class PurpleMonCtrl : MonoBehaviour
 {
     public static PurpleMonCtrl instance = null;
+    private GameObject[] P_Mons = new GameObject[3];
 
     //시간차 공격을 위한 시작시간 지연
     public float delayAnimation;
@@ -32,7 +33,8 @@ public class PurpleMonCtrl : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        
+        P_Mons = GameObject.FindGameObjectsWithTag("PURPLE");
+
         purpleLaser = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
         deadParticle = transform.GetChild(1).gameObject;
         rigHub = transform.GetChild(0).gameObject;
@@ -54,9 +56,15 @@ public class PurpleMonCtrl : MonoBehaviour
 
     public void StateDie()
     {
-        animator.SetTrigger("Die");
-        rigHub.SetActive(false);
-        deadParticle.SetActive(true);
+        for (int i = 0; i < P_Mons.Length; i++)
+        {
+            P_Mons[i].gameObject.GetComponent<Animator>().SetTrigger("Die");
+            P_Mons[i].gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            P_Mons[i].gameObject.transform.GetChild(1).gameObject.SetActive(true);
+            //deadParticle.SetActive(true);
+        }
+
+
     }
 
     IEnumerator ParticleDelay()

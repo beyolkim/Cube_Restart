@@ -41,19 +41,6 @@ public class ShieldCtrl : MonoBehaviour
         }
     }
 
-    private void OnParticleCollision(Collision coll)
-    {
-        if (coll.gameObject.CompareTag("HOMMING"))
-        {
-            Debug.Log("방패로 막기!");
-            ContactPoint contact = coll.contacts[0];
-            Vector3 _normal = -contact.normal;
-
-            GameObject _shieldHit_Particle = Instantiate(shieldHit_Particle, contact.point, Quaternion.LookRotation(_normal));
-            Destroy(_shieldHit_Particle, 1);
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
 
     {
@@ -72,6 +59,10 @@ public class ShieldCtrl : MonoBehaviour
             
         }
 
+    }
+    public void ShieldHit_Audio()
+    {
+        _audio.PlayOneShot(shieldHit[Random.Range(0, shieldHit.Length)]);
     }
 
 }

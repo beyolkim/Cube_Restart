@@ -17950,7 +17950,7 @@ ParticleSystem:
     m_Dampen:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -19158,3 +19158,5 @@ MonoBehaviour:
   speed: 10
   maxSpeed: 10
   homingDelay: 1
+  shieldHit_Particle: {fileID: 1520076681059474, guid: 26bd7806449745b4cb77b197e0c82b76,
+    type: 3}

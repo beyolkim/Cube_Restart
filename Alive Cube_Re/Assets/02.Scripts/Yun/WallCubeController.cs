@@ -8,8 +8,16 @@ public class WallCubeController : MonoBehaviour
     public bool setCheck;
     void Start()
     {
-        transform.localPosition = transform.localPosition + Vector3.up * Random.Range(-0.1f, 0.1f);
-        transform.DOLocalMoveY(Random.Range(-0.5f, 0.5f), 3.0f).SetLoops(-1,LoopType.Yoyo).SetEase(Ease.Linear);
+        if(this.CompareTag("THORNTARGET"))
+        {
+            transform.DOLocalMoveX(Random.Range(-0.5f, 0.5f), 3.0f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
+        }
+        else
+        {
+
+            transform.localPosition = transform.localPosition + Vector3.up * Random.Range(-0.1f, 0.1f);
+            transform.DOLocalMoveY(Random.Range(-0.5f, 0.5f), 3.0f).SetLoops(-1,LoopType.Yoyo).SetEase(Ease.Linear);
+        }
 
     }
 

@@ -10,7 +10,7 @@ public class AttackController : MonoBehaviour
 
     public static int scoreCount;
     //public static int playerHp = 1;
-    public static int cubeHp = 10;
+    public static int cubeHp = 20;
     public static int stage1_Count = 0;
     public GameObject hpUI;
     public GameObject gameOverUI;

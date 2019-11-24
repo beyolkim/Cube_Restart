@@ -44,9 +44,9 @@ public class ThoronAttackMove : MonoBehaviour
     {
         int rannum = Random.Range(0, 2);
         Vector3 pos = targetTr[rannum].position;
-        thronpoint[0] = firstTr.position + Vector3.right * Random.Range(-2.5f, 2.5f) + Vector3.forward * Random.Range(0.0f, 2.0f) * -1;
-        thronpoint[1] = firstTr.position + Vector3.right * Random.Range(-2.5f, 2.5f) + Vector3.forward * Random.Range(2.0f, 5.0f) * -1;
-        thronpoint[2] = firstTr.position + Vector3.right * Random.Range(-2.5f, 2.5f) + Vector3.forward * Random.Range(5.0f, 7.0f) * -1;
+        thronpoint[0] = firstTr.position + Vector3.right * Random.Range(-2f, 2f) + Vector3.forward * Random.Range(0.0f, 2.0f) * -1;
+        thronpoint[1] = firstTr.position + Vector3.right * Random.Range(-2f, 2f) + Vector3.forward * Random.Range(2.0f, 5.0f) * -1;
+        thronpoint[2] = firstTr.position + Vector3.right * Random.Range(-2f, 2f) + Vector3.forward * Random.Range(5.0f, 7.0f) * -1;
         thronpoint[3] = pos;
         
 

@@ -52,6 +52,7 @@ public class BulletCtrl : MonoBehaviour
             AttackController.cubeHp --;
             Material [] hitPointMat = coll.gameObject.GetComponent<MeshRenderer>().materials;
             hitPointMat[1].SetVector("_VectorAlpha", new Vector2(0, 0));
+            coll.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>().Play();
             coll.gameObject.GetComponent<WallCubeController>().setCheck = false;
             Debug.Log("CUBEHP" + AttackController.cubeHp);
         }

@@ -18,10 +18,18 @@ public class HandAttack : MonoBehaviour
 
     private void Update()
     {
-        //if(Input.GetMouseButtonDown(0))
-        //{
-        //    StartCoroutine(HandVFX());
-        //}
+        if(AttackController.cubeHp < 15 && AttackController.cubeHp > 10)
+        {
+            handEffect.SetFloat("FirtstColor", 0f);
+            handEffect.SetFloat("SecondColor", 3f);
+            handEffect.SetFloat("ThirdColor", 0f);
+        }else if(AttackController.cubeHp < 10)
+        {
+            handEffect.SetFloat("FirtstColor", 0f);
+            handEffect.SetFloat("SecondColor", 0f);
+            handEffect.SetFloat("ThirdColor", 3f);
+        }
+        
     }
 
     IEnumerator HandAttackRepeat()

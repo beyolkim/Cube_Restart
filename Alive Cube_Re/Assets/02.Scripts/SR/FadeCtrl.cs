@@ -43,7 +43,9 @@ public class FadeCtrl : MonoBehaviour
 
     void chageIntro()
     {
+        //LoadingSceneManager.LoadScene("Intro Scene");
+
         SceneManager.LoadScene(0);
     }
-        
+
 }

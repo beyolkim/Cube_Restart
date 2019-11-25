@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log(playerHp);
 
-        if(this.gameObject.scene.name == "Stage1")
+        if (this.gameObject.scene.name == "Stage1")
         {
             StartCoroutine(MapSpawn());
         }
@@ -70,31 +70,34 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("CUBE") || other.CompareTag("LASER") || other.CompareTag("THORN") || other.CompareTag("HANDATTACK"))
-        {            
+        if (other.CompareTag("CUBE") || other.CompareTag("LASER") 
+            || other.CompareTag("THORN") || other.CompareTag("HANDATTACK"))
+        {
             Debug.Log("맞았다!!!");
             _audio.PlayOneShot(hit_audio);
             playerHp--;
-            if(!playerHit)
+            hpSlider.value = playerHp;
+            if (!playerHit)
             {
                 StartCoroutine(HitEffect(this.gameObject));
-            }            
+            }
             Debug.Log("PlayerHP : " + playerHp);
-            
+            Debug.Log("SliderPlayerHP : " + hpSlider.value);
+
+
         }
-    }  
+    }
 
     void Update()
     {
         AttackDifficulty();
 
-        if(this.gameObject.scene.name == "Stage2")
+        if (this.gameObject.scene.name == "Stage2")
         {
             StartCoroutine(Stage2PlayerDie());
             StartCoroutine(Stage2Clear());
         }
 
-        hpSlider.value = playerHp;
     }
 
     public void MapMaking_Audio() //Intro 씬에서 Intro큐브를 trigger하면 audiosource가 있는 그 큐브의 위치가 바뀌어서 어쩔 수 없음
@@ -118,17 +121,17 @@ public class PlayerController : MonoBehaviour
         _audio.PlayOneShot(earthquake_audio);
     }
 
-    
+
     public IEnumerator HitEffect(GameObject _target)
     {
         playerHit = true;
         _target.GetComponent<CapsuleCollider>().enabled = false;
         hitEffect.SetActive(true);
-        
+
         yield return new WaitForSeconds(2.5f); //Player가 맞으면 2.5초간 무적
         hitEffect.SetActive(false);
         _target.GetComponent<CapsuleCollider>().enabled = true;
-        playerHit = false;        
+        playerHit = false;
     }
 
     void AttackDifficulty()
@@ -191,7 +194,7 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator Stage2Clear()
     {
-        if(!playerDie && redMon_Kill >=7)
+        if (!playerDie && redMon_Kill >= 7)
         {
             Debug.Log("Stage2 Clear!");
             stage2_audio.Stop();

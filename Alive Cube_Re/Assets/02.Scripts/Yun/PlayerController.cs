@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(3f);
             FadeCtrl.instance.FadeOut();
             yield return new WaitForSeconds(4);
-            SceneManager.LoadScene(0); //Stage2 클리어 -> Intro 씬 전환
+            SceneManager.LoadScene(3); //Stage2 클리어 -> Stage3 씬 전환
 
         }
     }

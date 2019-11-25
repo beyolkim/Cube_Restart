@@ -35,6 +35,7 @@ public class WallCubeController : MonoBehaviour
     //}
     public void WallHit_Audio()
     {
-        _audio.PlayOneShot(wallHit_audio[Random.Range(0, wallHit_audio.Length)]);
+        Debug.Log("피터지는소리" + wallHit_audio.Length);
+        _audio.PlayOneShot(wallHit_audio[Random.Range(0, 1)]);
     }
 }

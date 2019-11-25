@@ -25,9 +25,7 @@ public class SwordCutter : MonoBehaviour {
     private AudioSource _audio;
     public AudioClip[] swordHit;
 
-    private int check_fallStone;
-
-
+    private int check_fallStone;       
     //빈오브젝트 생성
     public GameObject redGameObject;
     public GameObject purpleGameObject;
@@ -49,6 +47,18 @@ public class SwordCutter : MonoBehaviour {
     private void OnCollisionEnter(Collision coll)
     {
         GameObject victim = coll.collider.gameObject;
+
+        if(coll.gameObject.CompareTag("UI") && power >= 0.8f)
+        {
+            _audio.PlayOneShot(swordHit[Random.Range(0, swordHit.Length)]);
+            GameObject _hit = Instantiate(hit, hitPos.position, hitPos.rotation);
+            haptic.Execute(0f, 0.15f, 80, 2f, hand);
+            Destroy(_hit, 1.5f);
+
+            GameObject[] pieces = BLINDED_AM_ME.MeshCut.Cut(victim, transform.position, transform.right, capMaterial);
+            coll.gameObject.SetActive(false);
+            StartCoroutine(AttackController.instance.AttackTurn());
+        }
         
         if (coll.gameObject.transform.CompareTag("CUBE") && power >= 0.5f)
         {
@@ -68,7 +78,7 @@ public class SwordCutter : MonoBehaviour {
             victim.GetComponentInParent<AttackCube>().check_attack = true;
             AttackController.scoreCount++;
 
-            if (check_fallStone > 5)
+            if (check_fallStone > 4)
             {
                 if (AttackController.stage1_Count <7)
                 {

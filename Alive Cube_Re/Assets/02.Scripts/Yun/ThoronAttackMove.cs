@@ -18,9 +18,18 @@ public class ThoronAttackMove : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("옆으로이동");
+            this.transform.position = this.transform.position + Vector3.left * -5;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("THORNTARGET") /*&& PlayerController.playerHp >0*/)
+        if (other.CompareTag("THORNTARGET") && PlayerController.playerHp > 0 && AttackController.cubeHp >0 )
         {
             attackSnake.Pause();
             Vector3 FisrPr = new Vector3(Random.Range(-3.0f, 3.0f), -3, 10);
@@ -50,7 +59,7 @@ public class ThoronAttackMove : MonoBehaviour
         thronpoint[3] = pos;
         
 
-        attackSnake = this.transform.DOPath(thronpoint, 3.0f, PathType.CatmullRom, PathMode.Full3D, 10, Color.red);
+        attackSnake = this.transform.DOPath(thronpoint, 4.0f, PathType.CatmullRom, PathMode.Full3D, 10, Color.red);
     }
 
 

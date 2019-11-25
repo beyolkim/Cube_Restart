@@ -24,8 +24,14 @@ public class BulletCtrl : MonoBehaviour
         GameObject _sparkParticle = Instantiate(sparkParticle, contact.point, Quaternion.LookRotation(_normal));
         Destroy(this.gameObject);
         Destroy(_sparkParticle, 1.5f);
+        
+        if(coll.transform.CompareTag("UI"))
+        {
+            coll.gameObject.SetActive(false);
+            GunCtrl.instance.stage2UICheck = true;
+        }
 
-        if (coll.transform.CompareTag("ENEMY"))
+        if (GunCtrl.instance.stage2UICheck && coll.transform.CompareTag("ENEMY"))
         {
             RedMonCtrl redMonCtrl = coll.transform.GetComponentInParent<RedMonCtrl>();
 
@@ -54,6 +60,12 @@ public class BulletCtrl : MonoBehaviour
             coll.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>().Play();
             coll.gameObject.GetComponent<WallCubeController>().setCheck = false;
             Debug.Log("CUBEHP" + AttackController.cubeHp);
+        }
+
+        if(coll.collider.CompareTag("THORN"))
+        {
+            coll.gameObject.SetActive(false);
+
         }
     }
 

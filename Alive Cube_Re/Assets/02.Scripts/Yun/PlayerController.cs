@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     public GameObject hpUI;
     public GameObject gameOverUI;
     public GameObject stageClearUI;
+    public GameObject stage1UI;
 
     private void OnEnable()
     {
@@ -162,6 +163,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(4f);
         warningZone.gameObject.SetActive(true);
         attackCube.gameObject.SetActive(true);
+        stage1UI.gameObject.SetActive(true);
     }
 
     IEnumerator Stage2PlayerDie()
@@ -172,7 +174,7 @@ public class PlayerController : MonoBehaviour
             HandCtrl.instance.gunOn = false; //Gun의 총알 끄기
             GunCtrl.instance.gunReady = false; //Gun의 Ray 끄기
             PurpleMonCtrl.instance.StateDie(); //퍼플 몬스터의 공격 중지
-            //RedMonCtrl.instance.GameOver();
+            //RedMonCtrl.instance.animator.SetTrigger("Die");
             PieceCtrl.instance.GameOver_RedIdle();
             Debug.Log("Game Over");
             _audio.PlayOneShot(gameOver_audio);

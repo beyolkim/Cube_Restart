@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float curTime = 0;
     private float attackTime = 5;
     public static int playerHp = 20;
+
     public Slider hpSlider;
     public static int redMon_Kill = 0;
     public bool attackAllow = false;
@@ -81,11 +82,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("PlayerHP : " + playerHp);
             
         }
-    }
-
-
-
-   
+    }  
 
     void Update()
     {

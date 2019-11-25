@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public float curTime = 0;
     private float attackTime = 5;
     public static int playerHp = 20;
+
+    public Slider hpSlider;
     public static int redMon_Kill = 0;
     public bool attackAllow = false;
 
@@ -93,7 +96,9 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Stage2PlayerDie());
             StartCoroutine(Stage2Clear());
-        }     
+        }
+
+        hpSlider.value = playerHp;
     }
 
     public void MapMaking_Audio() //Intro 씬에서 Intro큐브를 trigger하면 audiosource가 있는 그 큐브의 위치가 바뀌어서 어쩔 수 없음

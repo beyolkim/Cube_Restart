@@ -18,14 +18,14 @@ public class HandAttack : MonoBehaviour
 
     private void Update()
     {
-        if(AttackController.cubeHp < 15 && AttackController.cubeHp > 10)
+        if(AttackController.cubeHp <= 15 && AttackController.cubeHp > 10)
         {
-            handEffect.SetFloat("FirtstColor", 0f);
+            handEffect.SetFloat("FirstColor", 0f);
             handEffect.SetFloat("SecondColor", 3f);
             handEffect.SetFloat("ThirdColor", 0f);
         }else if(AttackController.cubeHp < 10)
         {
-            handEffect.SetFloat("FirtstColor", 0f);
+            handEffect.SetFloat("FirstColor", 0f);
             handEffect.SetFloat("SecondColor", 0f);
             handEffect.SetFloat("ThirdColor", 3f);
         }
@@ -34,12 +34,42 @@ public class HandAttack : MonoBehaviour
 
     IEnumerator HandAttackRepeat()
     {
-        while (PlayerController.playerHp > -10)
+        while (PlayerController.playerHp > 0 && AttackController.cubeHp >0)
         {
-            transform.DOLocalRotate(new Vector3(240, 0, 180), 3.0f).SetEase(Ease.InFlash).SetDelay(2).SetLoops(2, LoopType.Yoyo);
-            yield return new WaitForSeconds(2.5f);
-            Boss_Audio.instance.BossAudio();
-            yield return new WaitForSeconds(7.5f);
+
+            //transform.DOLocalRotate(new Vector3(240, 0, 180), 3.0f).SetEase(Ease.InFlash).SetLoops(2, LoopType.Yoyo);
+            //yield return new WaitForSeconds(2.5f);
+            //Boss_Audio.instance.BossAudio();
+            //yield return new WaitForSeconds(7.5f);
+
+
+            if (AttackController.cubeHp <= 20 && AttackController.cubeHp > 15 )
+            {
+                transform.DOLocalRotate(new Vector3(240, 0, 180), 3.0f).SetEase(Ease.InFlash).SetLoops(2, LoopType.Yoyo);
+                yield return new WaitForSeconds(2.5f);
+                Boss_Audio.instance.BossAudio();
+                yield return new WaitForSeconds(7.5f);
+            }
+
+
+            if (AttackController.cubeHp <= 15 && AttackController.cubeHp > 10)
+            {
+                transform.DOLocalRotate(new Vector3(240, 0, 180), 2.0f).SetEase(Ease.InFlash).SetLoops(4, LoopType.Yoyo);
+                yield return new WaitForSeconds(2.5f);
+                Boss_Audio.instance.BossAudio();
+                yield return new WaitForSeconds(5.5f);
+
+            }
+
+            if (AttackController.cubeHp <= 10)
+            {
+                transform.DOLocalRotate(new Vector3(240, 0, 180), 1.5f).SetEase(Ease.InFlash).SetLoops(4, LoopType.Yoyo);
+                yield return new WaitForSeconds(2.5f);
+                Boss_Audio.instance.BossAudio();
+                yield return new WaitForSeconds(5.5f);
+
+            }
+
         }
 
     }

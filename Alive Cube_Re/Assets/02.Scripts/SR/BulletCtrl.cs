@@ -55,6 +55,12 @@ public class BulletCtrl : MonoBehaviour
             coll.gameObject.GetComponent<WallCubeController>().setCheck = false;
             Debug.Log("CUBEHP" + AttackController.cubeHp);
         }
+
+        if(coll.collider.CompareTag("THORN"))
+        {
+            coll.gameObject.SetActive(false);
+
+        }
     }
 
     //if (coll.transform.CompareTag("REDMON"))

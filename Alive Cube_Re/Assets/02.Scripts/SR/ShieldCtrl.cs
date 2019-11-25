@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
+using UnityEngine.Experimental.VFX;
 
 public class ShieldCtrl : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class ShieldCtrl : MonoBehaviour
     public AudioClip open;
     public AudioClip[] shieldHit;
 
+   
+    //실드 파티클
+    public GameObject shieldparticle;
     void Start()
     {
         instance = this;
@@ -54,7 +58,22 @@ public class ShieldCtrl : MonoBehaviour
         {
             Debug.Log("손을 막았다");
             other.gameObject.GetComponentInParent<HandAttack>().ShieldCollsion();
-            
+            shieldparticle.transform.position = this.gameObject.transform.position + Vector3.forward*0.5f;
+            if (AttackController.cubeHp < 15 && AttackController.cubeHp > 10)
+            {
+                shieldparticle.GetComponent<VisualEffect>().SetFloat("FirstColor", 0f);
+                shieldparticle.GetComponent<VisualEffect>().SetFloat("SecondColor", 3f);
+                shieldparticle.GetComponent<VisualEffect>().SetFloat("ThirdColor", 0f);
+            }
+            else if (AttackController.cubeHp < 10)
+            {
+                shieldparticle.GetComponent<VisualEffect>().SetFloat("FirstColor", 0f);
+                shieldparticle.GetComponent<VisualEffect>().SetFloat("SecondColor", 0f);
+                shieldparticle.GetComponent<VisualEffect>().SetFloat("ThirdColor", 3f);
+            }
+
+            shieldparticle.GetComponent<VisualEffect>().SetInt("ParticleCount", 250);
+            shieldparticle.GetComponent<VisualEffect>().SendEvent("OnPlay");
             StartCoroutine(other.gameObject.GetComponentInParent<HandAttack>().HandVFX(other.gameObject));          
             
         }

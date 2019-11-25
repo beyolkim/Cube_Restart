@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FadeCtrl : MonoBehaviour
 {
@@ -39,4 +40,10 @@ public class FadeCtrl : MonoBehaviour
         Debug.Log("페이드 아웃!");
         anim.SetBool(fadeOut, true);
     }
+
+    void chageIntro()
+    {
+        SceneManager.LoadScene(0);
+    }
+        
 }

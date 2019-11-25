@@ -31,8 +31,11 @@ public class GunCtrl : MonoBehaviour
     private LineRenderer line;
 
     public bool stage2UICheck = false;
+    public bool stage3UICheck = false;
     public bool HP_Canvas = false;
 
+    public GameObject stage3start;
+  
     void Start()
     {
         instance = this;
@@ -42,6 +45,13 @@ public class GunCtrl : MonoBehaviour
 
     void Update()
     {
+        if(stage3UICheck == true)
+        {
+            stage3start.SetActive(true);
+            stage3UICheck = false;
+        }
+
+
         if (!gunReady && trigger.GetStateDown(hand)) //Gun을 생성하면서 Line을 생성
         {
             gunReady = true;

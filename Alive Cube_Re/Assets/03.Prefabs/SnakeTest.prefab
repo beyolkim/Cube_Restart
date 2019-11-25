@@ -45,7 +45,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BodyParts: []
   cubeDir: 0
-  targetTr: {fileID: 0}
+  targetTr:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   minDistance: 3
   speed: 10
   rotationspeed: 50
@@ -55,4 +58,5 @@ MonoBehaviour:
   bodyprefab: {fileID: 3508438814161552869, guid: c2ebb9bd9ff3a6f4f90d4ea739670b05,
     type: 3}
   check_attack: 1
+  check_Dotween: 0
   targetCheck: 0

@@ -8,7 +8,7 @@ public class Boss_Audio : MonoBehaviour
 
     private AudioSource _audio;
     public AudioClip[] bossAudio;
-
+    public AudioClip bossDeath;
     void Start()
     {
         instance = this;
@@ -19,6 +19,11 @@ public class Boss_Audio : MonoBehaviour
     //{
         
     //}
+    public void BossDeath()
+    {
+        _audio.PlayOneShot(bossDeath);
+
+    }
     public void BossAudio()
     {
         _audio.PlayOneShot(bossAudio[Random.Range(0, bossAudio.Length)]);

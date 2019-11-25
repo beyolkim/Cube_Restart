@@ -43,6 +43,9 @@ public class PlayerController : MonoBehaviour
     public GameObject stageClearUI;
     public GameObject stage1UI;
 
+
+    // 3stage 죽었을 경우 사라질 공격
+    public GameObject stage3Attack;
     private void OnEnable()
     {
         IntroAnimation.IntroAudio += MapMaking_Audio;
@@ -98,6 +101,10 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Stage2PlayerDie());
             StartCoroutine(Stage2Clear());
+        }
+        else if (this.gameObject.scene.name == "Stage3")
+        {
+            StartCoroutine(Stage3PlayerDie());
         }
 
     }
@@ -184,6 +191,7 @@ public class PlayerController : MonoBehaviour
             hpUI.gameObject.SetActive(false);
             gameOverUI.gameObject.SetActive(true);
             yield return new WaitForSeconds(1.5f);
+            stage3Attack.SetActive(false);
             StartCoroutine(HandCtrl.instance.GunDisapper()); //Gun 사라지게
             StartCoroutine(LeftHandCtrl.instance.ShieldDisapper()); //Shield 사라지게
             yield return new WaitForSeconds(2.5f);
@@ -194,6 +202,35 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene(4);
         }
     }
+
+    IEnumerator Stage3PlayerDie()
+    {
+        if (!playerDie && playerHp <= 0)
+        {
+            playerDie = true;
+            HandCtrl.instance.gunOn = false; //Gun의 총알 끄기
+            GunCtrl.instance.gunReady = false; //Gun의 Ray 끄기
+
+            GunCtrl.instance.HP_Canvas = false; //hp창 끄기
+        
+            Debug.Log("Game Over");
+            _audio.PlayOneShot(gameOver_audio);
+            hpUI.gameObject.SetActive(false);
+            gameOverUI.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1.5f);
+            StartCoroutine(HandCtrl.instance.GunDisapper()); //Gun 사라지게
+            StartCoroutine(LeftHandCtrl.instance.ShieldDisapper()); //Shield 사라지게
+            yield return new WaitForSeconds(2.5f);
+            Earthquake_Audio(); //벽 수축 Audio
+            yield return new WaitForSeconds(2.5f);
+            GameOver_Shrinking.instance.GameOver(); //벽 수축 애니메이션
+            yield return new WaitForSeconds(8.5f);
+            SceneManager.LoadScene(4);
+        }
+    }
+
+
+
     IEnumerator Stage2Clear()
     {
         if (!playerDie && redMon_Kill >= 7)

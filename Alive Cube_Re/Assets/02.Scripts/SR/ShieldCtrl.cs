@@ -56,24 +56,24 @@ public class ShieldCtrl : MonoBehaviour
 
         if (other.CompareTag("HANDATTACK"))
         {
-            Debug.Log("손을 막았다");
+            //Debug.Log("손을 막았다");
             _audio.PlayOneShot(shieldHit[Random.Range(0, shieldHit.Length)]);
             other.gameObject.GetComponentInParent<HandAttack>().ShieldCollsion();
             shieldparticle.transform.position = this.gameObject.transform.position + Vector3.forward*0.5f;
-            if (AttackController.cubeHp < 15 && AttackController.cubeHp > 10)
+            if (AttackController.cubeHp <= 15 && AttackController.cubeHp > 10)  //파티클 파란색으로 바꾸기
             {
                 shieldparticle.GetComponent<VisualEffect>().SetFloat("FirstColor", 0f);
                 shieldparticle.GetComponent<VisualEffect>().SetFloat("SecondColor", 3f);
                 shieldparticle.GetComponent<VisualEffect>().SetFloat("ThirdColor", 0f);
             }
-            else if (AttackController.cubeHp < 10)
+            else if (AttackController.cubeHp <= 10)  //파티클 빨강색으로 바꾸기
             {
                 shieldparticle.GetComponent<VisualEffect>().SetFloat("FirstColor", 0f);
                 shieldparticle.GetComponent<VisualEffect>().SetFloat("SecondColor", 0f);
                 shieldparticle.GetComponent<VisualEffect>().SetFloat("ThirdColor", 3f);
             }
 
-            shieldparticle.GetComponent<VisualEffect>().SetInt("ParticleCount", 250);
+            shieldparticle.GetComponent<VisualEffect>().SetInt("ParticleCount", 150); // 파티클 발생
             shieldparticle.GetComponent<VisualEffect>().SendEvent("OnPlay");
             StartCoroutine(other.gameObject.GetComponentInParent<HandAttack>().HandVFX(other.gameObject));          
             

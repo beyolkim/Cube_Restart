@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 public class WallCubeController : MonoBehaviour
 {
-    public static WallCubeController instance = null;
+    //public static WallCubeController instance = null;
     //큐브 약점포인트 드러날 경우 판정
     public bool setCheck;
 
@@ -13,7 +13,7 @@ public class WallCubeController : MonoBehaviour
 
     void Start()
     {
-        instance = this;
+        //instance = this;
         _audio = GetComponent<AudioSource>();
 
         if(this.CompareTag("THORNTARGET"))

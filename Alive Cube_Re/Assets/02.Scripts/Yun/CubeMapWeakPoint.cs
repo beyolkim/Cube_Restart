@@ -42,7 +42,7 @@ public class CubeMapWeakPoint : MonoBehaviour
 
     IEnumerator ChageMat()
     {
-        while(AttackController.cubeHp >0)
+        while(AttackController.cubeHp >0 && PlayerController.playerHp >0)
         {
             for (int i=0; i< weakPointCount; i++)
             {

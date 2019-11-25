@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletCtrl : MonoBehaviour
 {
     public GameObject sparkParticle;
-
+    
     void Start()
     {
         GetComponent<Rigidbody>().AddForce(transform.forward * 3000f);
@@ -31,6 +31,13 @@ public class BulletCtrl : MonoBehaviour
             GunCtrl.instance.stage2UICheck = true;
             GunCtrl.instance.HP_Canvas = true;
         }
+        if(coll.transform.CompareTag("UI")&& this.gameObject.scene.name == "Stage3")
+        {
+            coll.gameObject.SetActive(false);
+            GunCtrl.instance.stage3UICheck = true;
+        }
+
+
 
         if (GunCtrl.instance.stage2UICheck && coll.transform.CompareTag("ENEMY"))
         {
@@ -59,7 +66,7 @@ public class BulletCtrl : MonoBehaviour
             Material [] hitPointMat = coll.gameObject.GetComponent<MeshRenderer>().materials;
             hitPointMat[1].SetVector("_VectorAlpha", new Vector2(0, 0));
             coll.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>().Play();
-            WallCubeController.instance.WallHit_Audio();
+            coll.gameObject.GetComponent<WallCubeController>().WallHit_Audio();
             coll.gameObject.GetComponent<WallCubeController>().setCheck = false;
             Debug.Log("CUBEHP" + AttackController.cubeHp);
         }

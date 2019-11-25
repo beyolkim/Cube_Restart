@@ -11,6 +11,7 @@ public class EndingSound : MonoBehaviour
     {
         _audio = GetComponent<AudioSource>();
 
+
     }
 
     // Update is called once per frame

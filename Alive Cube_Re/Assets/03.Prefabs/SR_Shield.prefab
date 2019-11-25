@@ -200,7 +200,6 @@ GameObject:
   - component: {fileID: 3358211840877698072}
   - component: {fileID: 3358211840878808086}
   - component: {fileID: 3358211840888104086}
-  - component: {fileID: 3358211839690603512}
   - component: {fileID: 3358211839690603516}
   - component: {fileID: 1242135670}
   - component: {fileID: 1061859230460183933}
@@ -293,20 +292,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!64 &3358211839690603512
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3358211840880856902}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: fbe8b7f0c4e082b4c94856bbd1a5ac6a, type: 3}
 --- !u!114 &3358211839690603516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,6 +309,8 @@ MonoBehaviour:
     actionPath: /actions/default/in/InteractUI
     needsReinit: 0
   shieldOn: 0
+  _weaponUI: {fileID: 0}
+  shieldHit_Particle: {fileID: 0}
   open: {fileID: 8300000, guid: 63c24d9803b9ee24d95ea27820966bca, type: 3}
   shieldHit:
   - {fileID: 8300000, guid: c60d148f76eab7a438ab3f1d09f77272, type: 3}

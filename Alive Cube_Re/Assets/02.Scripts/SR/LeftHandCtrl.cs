@@ -140,7 +140,7 @@ public class LeftHandCtrl : MonoBehaviour
 
         for(int i = 0; i < 3; i++)
         {
-            shield[i].GetComponent<BoxCollider>().enabled = true;
+            shield[i].GetComponent<MeshCollider>().enabled = true;
         }
         
         ShieldCtrl.instance.shieldOn = true;
@@ -163,7 +163,7 @@ public class LeftHandCtrl : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            shield[i].GetComponent<BoxCollider>().enabled = false;
+            shield[i].GetComponent<MeshCollider>().enabled = false;
         }
         ShieldCtrl.instance.shieldOn = false;
         anim.SetBool(shieldGrab, false);

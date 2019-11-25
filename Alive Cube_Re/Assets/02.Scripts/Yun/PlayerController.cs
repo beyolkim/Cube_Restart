@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     public float curTime = 0;
     private float attackTime = 5;
-    public static int playerHp = 100;
+    public static int playerHp = 200;
     public static int redMon_Kill = 0;
     public bool attackAllow = false;
 
@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(2.5f);
             GameOver_Shrinking.instance.GameOver(); //벽 수축 애니메이션
             yield return new WaitForSeconds(8.5f);
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(4);
         }
     }
     IEnumerator Stage2Clear()

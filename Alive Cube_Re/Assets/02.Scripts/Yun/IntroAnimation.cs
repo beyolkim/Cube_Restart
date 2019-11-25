@@ -314,7 +314,7 @@ public class IntroAnimation : MonoBehaviour
         HelpMe_Audio.instance.Audio_Volume();
 
         yield return new WaitForSeconds(2.0f);
-        tr.transform.position = tr.transform.position + Vector3.back * 3.5f + Vector3.down * 2.2f; // 큐브 사라진 후 위치 재조정(사람 뒤에서 부터 생성)
+        tr.transform.position = tr.transform.position + Vector3.back * 3.5f + Vector3.down * 2.7f; // 큐브 사라진 후 위치 재조정(사람 뒤에서 부터 생성)
 
         IntroAudio();
                     

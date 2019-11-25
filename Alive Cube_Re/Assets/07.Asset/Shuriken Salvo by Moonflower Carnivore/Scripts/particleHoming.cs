@@ -6,7 +6,7 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class particleHoming : MonoBehaviour {
 	[Tooltip("Target object. If this parameter is undefined it will assume the attached object itself which creates self chasing particle effect.")]
-	public Transform target;
+	public Transform[] target;
 	[Tooltip("How fast the particle is guided to the closest target.")]
 	public float speed = 10f;
 	[Tooltip("Cap the maximum speed to prevent particle from being flung too far from the missed target.")]
@@ -20,9 +20,9 @@ public class particleHoming : MonoBehaviour {
     public List<ParticleCollisionEvent> collisionEvents;
 
     void Start() {
-		if (target == null) {
-			target = this.transform;
-		}
+		//if (target == null) {
+		//	target = this.transform;
+		//}
 		m_System = GetComponent<ParticleSystem>();
 		//m_Particles = new ParticleSystem.Particle[m_System.maxParticles];// Before Unity 5.5
 		m_Particles = new ParticleSystem.Particle[m_System.main.maxParticles];// Since Unity 5.5
@@ -31,9 +31,9 @@ public class particleHoming : MonoBehaviour {
 	void LateUpdate() {
 		int numParticlesAlive = m_System.GetParticles(m_Particles);
 		//float ted = Vector3.Distance(target.position, this.transform.position);// sqrMagnitude is faster than Distance/Magnitude because it skips square root.
-		float ted = (target.position - this.transform.position).sqrMagnitude + 0.001f;
+		float ted = (target[Random.Range(0, target.Length)].position - this.transform.position).sqrMagnitude + 0.001f;
 		for (int i = 0; i < numParticlesAlive; i++) {
-			Vector3 diff = target.position - m_Particles[i].position;
+			Vector3 diff = target[Random.Range(0, target.Length)].position - m_Particles[i].position;
 			float diffsqrm = diff.sqrMagnitude;
 			float face = Vector3.Dot(m_Particles[i].velocity.normalized, diff.normalized);
 			float f = Mathf.Abs((ted - diffsqrm)/ted) * ted * (face + 1.001f);

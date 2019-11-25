@@ -16,8 +16,6 @@ public class RedMonCtrl : MonoBehaviour
     private GameObject homming;
 
     private ParticleSystem hommingparticle;
-    public GameObject particletargetObj;
-
 
     //오디오 
     private AudioSource audioSource;
@@ -200,7 +198,7 @@ public class RedMonCtrl : MonoBehaviour
             animator.ResetTrigger(h_StrafeRight);
             animator.SetTrigger(h_Attack);
 
-            hommingparticle.emissionRate = 3.0f;
+            hommingparticle.emissionRate = 2.0f;
 
         }
     }

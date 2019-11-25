@@ -65,22 +65,22 @@ public class AttackController : MonoBehaviour
     IEnumerator AttackTurn()
     {
 
-        //PlayerController.instance.CountDown_Audio();
-        //countDownObj[0].SetActive(true);
-        //yield return new WaitForSeconds(1.5f);
-        //countDownObj[0].SetActive(false);
+        PlayerController.instance.CountDown_Audio();
+        countDownObj[0].SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        countDownObj[0].SetActive(false);
 
-        //for (int i = 1; i < countDownObj.Count - 1; i++)
-        //{
-        //    countDownObj[i].SetActive(true);
-        //    yield return new WaitForSeconds(1f);
-        //    countDownObj[i].SetActive(false);
+        for (int i = 1; i < countDownObj.Count - 1; i++)
+        {
+            countDownObj[i].SetActive(true);
+            yield return new WaitForSeconds(1f);
+            countDownObj[i].SetActive(false);
 
-        //}
+        }
 
-        //countDownObj[10].SetActive(true);
-        //yield return new WaitForSeconds(2f);
-        //countDownObj[10].SetActive(false);
+        countDownObj[10].SetActive(true);
+        yield return new WaitForSeconds(2f);
+        countDownObj[10].SetActive(false);
         hpUI.gameObject.SetActive(true);
 
         while (stage1_Count < 10) //Stage1에서 조각이 10개 생겨나기 전까지 공격 반복
@@ -113,7 +113,7 @@ public class AttackController : MonoBehaviour
                 yield return new WaitForSeconds(2.5f);
                 GameOver_Shrinking.instance.GameOver(); //벽 수축 애니메이션
                 yield return new WaitForSeconds(8.5f);
-                SceneManager.LoadScene(3);                
+                SceneManager.LoadScene(4);                
             }
         }
         Debug.Log("Stage1 Clear!");
@@ -124,7 +124,7 @@ public class AttackController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         FadeCtrl.instance.FadeOut();
         yield return new WaitForSeconds(4);
-        SceneManager.LoadScene(2); //Stage1 클리어 -> Stage2 씬 전환
+        SceneManager.LoadScene(3); //Stage1 클리어 -> Stage2 씬 전환
     }
 
 }

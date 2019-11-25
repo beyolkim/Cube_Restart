@@ -29,6 +29,7 @@ public class BulletCtrl : MonoBehaviour
         {
             coll.gameObject.SetActive(false);
             GunCtrl.instance.stage2UICheck = true;
+            GunCtrl.instance.HP_Canvas = true;
         }
 
         if (GunCtrl.instance.stage2UICheck && coll.transform.CompareTag("ENEMY"))

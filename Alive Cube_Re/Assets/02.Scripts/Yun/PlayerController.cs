@@ -174,6 +174,7 @@ public class PlayerController : MonoBehaviour
             HandCtrl.instance.gunOn = false; //Gun의 총알 끄기
             GunCtrl.instance.gunReady = false; //Gun의 Ray 끄기
             PurpleMonCtrl.instance.StateDie(); //퍼플 몬스터의 공격 중지
+            GunCtrl.instance.HP_Canvas = false; //hp창 끄기
             //RedMonCtrl.instance.animator.SetTrigger("Die");
             PieceCtrl.instance.GameOver_RedIdle();
             Debug.Log("Game Over");
@@ -198,12 +199,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Stage2 Clear!");
             stage2_audio.Stop();
             PurpleMonCtrl.instance.StateDie(); //퍼플 몬스터의 공격을 중지하도록
+            GunCtrl.instance.HP_Canvas = false; //hp창 끄기
             stageClearUI.gameObject.SetActive(true); //Stage1 Clear UI 표시
             hpUI.gameObject.SetActive(false);
             yield return new WaitForSeconds(3f);
             FadeCtrl.instance.FadeOut();
             yield return new WaitForSeconds(4);
             SceneManager.LoadScene(0); //Stage2 클리어 -> Intro 씬 전환
+
         }
     }
 }

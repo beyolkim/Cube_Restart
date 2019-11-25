@@ -31,6 +31,7 @@ public class GunCtrl : MonoBehaviour
     private LineRenderer line;
 
     public bool stage2UICheck = false;
+    public bool HP_Canvas = false;
 
     void Start()
     {

@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     public float curTime = 0;
     private float attackTime = 5;
-    public static int playerHp = 5;
+    public static int playerHp = 20;
     public static int redMon_Kill = 0;
     public bool attackAllow = false;
 
@@ -170,8 +170,7 @@ public class PlayerController : MonoBehaviour
             HandCtrl.instance.gunOn = false; //Gun의 총알 끄기
             GunCtrl.instance.gunReady = false; //Gun의 Ray 끄기
             PurpleMonCtrl.instance.StateDie(); //퍼플 몬스터의 공격 중지
-            //RedMonCtrl.instance.animator.SetTrigger("Die");
-            PieceCtrl.instance.GameOver_RedIdle();
+            PieceCtrl.instance.GameOver_RedIdle(); //레드몬 공격 중지
             Debug.Log("Game Over");
             _audio.PlayOneShot(gameOver_audio);
             hpUI.gameObject.SetActive(false);

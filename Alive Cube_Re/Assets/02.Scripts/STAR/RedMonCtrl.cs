@@ -224,7 +224,7 @@ public class RedMonCtrl : MonoBehaviour
         R_MonHP--;
     }
 
-    void StateDie() //Die - 죽는 애니메이션, 몸체 끄기, 죽는 파티클
+    public void StateDie() //Die - 죽는 애니메이션, 몸체 끄기, 죽는 파티클
     {
         //Debug.Log("StateAttack이 실행되었습니다");
 

@@ -53,16 +53,15 @@ public class AttackController : MonoBehaviour
         }
 
 
-        StartCoroutine(AttackTurn());
+        //StartCoroutine(AttackTurn());
     }
 
-    private void Update()
-    {
+    //private void Update()
+    //{
         
-    }
+    //}
 
-
-    IEnumerator AttackTurn()
+    public IEnumerator AttackTurn()
     {
 
         PlayerController.instance.CountDown_Audio();
@@ -124,7 +123,7 @@ public class AttackController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         FadeCtrl.instance.FadeOut();
         yield return new WaitForSeconds(4);
-        SceneManager.LoadScene(3); //Stage1 클리어 -> Stage2 씬 전환
+        SceneManager.LoadScene(2); //Stage1 클리어 -> Stage2 씬 전환
     }
 
 }

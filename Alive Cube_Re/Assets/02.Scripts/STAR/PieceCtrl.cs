@@ -16,6 +16,8 @@ public class PieceCtrl : MonoBehaviour
 
     public GameObject Del_PurPlePieces;
     public GameObject Del_RedPieces;
+    public GameObject[] nowR_Mons;
+    private List<int> aliveR_Mons;
 
     void Start()
     {
@@ -140,11 +142,15 @@ public class PieceCtrl : MonoBehaviour
     }
     public void GameOver_RedIdle()
     {
-        for(int i = 0; i < R_Mons.Length; i++)
+        nowR_Mons = GameObject.FindGameObjectsWithTag("RED");
+        aliveR_Mons = new List<int>();
+        int _aliveR_Mons = GameObject.FindGameObjectsWithTag("RED").Length;
+
+        for (int i = 0; i < _aliveR_Mons; i++)
         {
-            R_Mons[i].GetComponent<Animator>().SetTrigger("GameOver_Idle");
-            GameObject homing = R_Mons[i].transform.GetChild(0).transform.GetChild(0).gameObject;
-            homing.SetActive(false);
+                nowR_Mons[i].GetComponent<Animator>().SetTrigger("GameOver_Idle");
+                GameObject homing = nowR_Mons[i].transform.GetChild(0).transform.GetChild(0).gameObject;
+                homing.SetActive(false);
         }
     }
 }

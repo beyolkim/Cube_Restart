@@ -4,10 +4,18 @@ using UnityEngine;
 using DG.Tweening;
 public class WallCubeController : MonoBehaviour
 {
+    public static WallCubeController instance = null;
     //큐브 약점포인트 드러날 경우 판정
     public bool setCheck;
+
+    private AudioSource _audio;
+    public AudioClip[] wallHit_audio;
+
     void Start()
     {
+        instance = this;
+        _audio = GetComponent<AudioSource>();
+
         if(this.CompareTag("THORNTARGET"))
         {
             transform.DOLocalMoveX(Random.Range(-0.5f, 0.5f), 3.0f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
@@ -21,9 +29,12 @@ public class WallCubeController : MonoBehaviour
 
     }
 
-    void LateUpdate()
-    {
+    //void LateUpdate()
+    //{
         
+    //}
+    public void WallHit_Audio()
+    {
+        _audio.PlayOneShot(wallHit_audio[Random.Range(0, wallHit_audio.Length)]);
     }
-
 }

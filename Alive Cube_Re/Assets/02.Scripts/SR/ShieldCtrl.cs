@@ -57,6 +57,7 @@ public class ShieldCtrl : MonoBehaviour
         if (other.CompareTag("HANDATTACK"))
         {
             Debug.Log("손을 막았다");
+            _audio.PlayOneShot(shieldHit[Random.Range(0, shieldHit.Length)]);
             other.gameObject.GetComponentInParent<HandAttack>().ShieldCollsion();
             shieldparticle.transform.position = this.gameObject.transform.position + Vector3.forward*0.5f;
             if (AttackController.cubeHp < 15 && AttackController.cubeHp > 10)

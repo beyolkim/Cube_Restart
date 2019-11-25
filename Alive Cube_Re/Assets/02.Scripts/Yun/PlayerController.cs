@@ -191,7 +191,7 @@ public class PlayerController : MonoBehaviour
             hpUI.gameObject.SetActive(false);
             gameOverUI.gameObject.SetActive(true);
             yield return new WaitForSeconds(1.5f);
-            stage3Attack.SetActive(false);
+
             StartCoroutine(HandCtrl.instance.GunDisapper()); //Gun 사라지게
             StartCoroutine(LeftHandCtrl.instance.ShieldDisapper()); //Shield 사라지게
             yield return new WaitForSeconds(2.5f);
@@ -218,6 +218,7 @@ public class PlayerController : MonoBehaviour
             hpUI.gameObject.SetActive(false);
             gameOverUI.gameObject.SetActive(true);
             yield return new WaitForSeconds(1.5f);
+            stage3Attack.SetActive(false);
             StartCoroutine(HandCtrl.instance.GunDisapper()); //Gun 사라지게
             StartCoroutine(LeftHandCtrl.instance.ShieldDisapper()); //Shield 사라지게
             yield return new WaitForSeconds(2.5f);

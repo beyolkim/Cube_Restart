@@ -33,6 +33,7 @@ TagManager:
   - FrontWall
   - HANDATTACK
   - HOMMING
+  - UI
   layers:
   - Default
   - TransparentFX

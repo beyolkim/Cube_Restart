@@ -30,8 +30,7 @@ public class GunCtrl : MonoBehaviour
     public float range = 30f;
     private LineRenderer line;
 
-    public GameObject stage2UI;
-    private bool stage2UICheck = false;
+    public bool stage2UICheck = false;
 
     void Start()
     {
@@ -49,7 +48,7 @@ public class GunCtrl : MonoBehaviour
             Invoke("CreateLine", 2.0f);
         }
         //Stage2의 UI를 확인해야 Ray가 나가도록
-        else if (gunReady && RedMonCtrl.monReady) //Gun의 Line이 생성되었다면 Ray를 발사
+        else if (stage2UICheck && gunReady && RedMonCtrl.monReady) //Gun의 Line이 생성되었다면 Ray를 발사
         {
             ray = new Ray(firePos.position, transform.forward);
 

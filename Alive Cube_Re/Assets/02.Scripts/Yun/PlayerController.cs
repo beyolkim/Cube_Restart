@@ -82,11 +82,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("PlayerHP : " + playerHp);
             
         }
-    }
-
-
-
-   
+    }  
 
     void Update()
     {

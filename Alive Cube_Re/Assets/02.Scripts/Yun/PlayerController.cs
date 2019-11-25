@@ -66,6 +66,10 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(MapSpawn());
         }
+        else if(this.gameObject.scene.name == "Stage2")
+        {
+            hpSlider.value = playerHp;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -82,8 +86,6 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(HitEffect(this.gameObject));
             }
             Debug.Log("PlayerHP : " + playerHp);
-            Debug.Log("SliderPlayerHP : " + hpSlider.value);
-
 
         }
     }

@@ -11,6 +11,7 @@ public class HommingParticleCheck : MonoBehaviour
     {
         if (coll.CompareTag("HOMMING"))
         {
+            Debug.Log("2단계 HP" + PlayerController.playerHp);
             PlayerController.playerHp--;
             hpSlider.value = PlayerController.playerHp;
             StartCoroutine(Gameplayer.GetComponent<PlayerController>().HitEffect(this.gameObject));

@@ -356,6 +356,7 @@ public class IntroAnimation : MonoBehaviour
         sceneMove = true;
 
     }
+
     IEnumerator LoadScene(string sceneName)
     {
         

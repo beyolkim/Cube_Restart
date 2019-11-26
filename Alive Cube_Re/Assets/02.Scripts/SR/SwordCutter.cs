@@ -25,7 +25,10 @@ public class SwordCutter : MonoBehaviour {
     private AudioSource _audio;
     public AudioClip[] swordHit;
 
-    private int check_fallStone;       
+    private int check_fallStone;
+
+    public static int stage1_Count = 0;
+
     //빈오브젝트 생성
     public GameObject redGameObject;
     public GameObject purpleGameObject;
@@ -76,33 +79,33 @@ public class SwordCutter : MonoBehaviour {
 
             //큐브 되돌아가기
             victim.GetComponentInParent<AttackCube>().check_attack = true;
-            AttackController.scoreCount++;
+            //AttackController.scoreCount++;
 
             if (check_fallStone > 2)
-            {
-                if (AttackController.stage1_Count <7)
+            { 
+                if (stage1_Count <7)
                 {
                     GameObject fragment = Instantiate(Resources.Load("RedPiece") as GameObject);
-                    fragment.transform.parent = redGameObject.transform;
+                    //fragment.transform.parent = redGameObject.transform;
                     fragment.transform.position = victim.transform.position;
                     fragment.GetComponent<Rigidbody>().useGravity = true;
                     fragment.GetComponent<BoxCollider>().enabled = true;
                     check_fallStone = 0;
-                    AttackController.stage1_Count += 1;
+                    stage1_Count += 1;
                     StartCoroutine(UnCheckGravity(fragment));
                 }
                 else
                 {
                     GameObject fragment = Instantiate(Resources.Load("PurplePiece") as GameObject);
-                    fragment.transform.parent = purpleGameObject.transform;
+                    //fragment.transform.parent = purpleGameObject.transform;
                     fragment.transform.position = victim.transform.position;
                     fragment.GetComponent<Rigidbody>().useGravity = true;
                     fragment.GetComponent<BoxCollider>().enabled = true;
                     check_fallStone = 0;
-                    AttackController.stage1_Count += 1;
+                    stage1_Count += 1;
                     StartCoroutine(UnCheckGravity(fragment));
                 }
-                Debug.Log("stage1_Count : " + AttackController.stage1_Count);
+               
             }
 
             //if(coll.gameObject == victim.GetComponentInParent<AttackCube>().BodyParts[2])

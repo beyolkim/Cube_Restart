@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     public float curTime = 0;
     private float attackTime = 5;
-    public static int playerHp = 20;
+    public static int playerHp = 2;
 
     public Slider hpSlider;
     public static int redMon_Kill = 0;
@@ -70,6 +70,10 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(MapSpawn());
         }
         else if(this.gameObject.scene.name == "Stage2")
+        {
+            hpSlider.value = playerHp;
+        }
+        else if(this.gameObject.scene.name == "Stage3")
         {
             hpSlider.value = playerHp;
         }

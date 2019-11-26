@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip gameOver_audio;
     public AudioClip earthquake_audio;
     public AudioClip[] ending_audio;
+    public AudioClip[] stageClear_audio;
 
     public GameObject warningZone;
     public GameObject attackCube;
@@ -243,6 +244,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Stage2 Clear!");
             stage2_audio.Stop();
+            _audio.PlayOneShot(stageClear_audio[0]);
             PurpleMonCtrl.instance.StateDie(); //퍼플 몬스터의 공격을 중지하도록
             stageClearUI.gameObject.SetActive(true); //Stage1 Clear UI 표시
             hpUI.gameObject.SetActive(false); //hp창 끄기
@@ -255,6 +257,7 @@ public class PlayerController : MonoBehaviour
     }
     public IEnumerator Stage3Clear()
     {
+        _audio.PlayOneShot(stageClear_audio[1]);
         stageClearUI.gameObject.SetActive(true); //Stage Clear UI 표시
         hpUI.gameObject.SetActive(false);
         yield return new WaitForSeconds(3f);

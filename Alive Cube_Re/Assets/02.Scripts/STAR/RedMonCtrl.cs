@@ -35,7 +35,7 @@ public class RedMonCtrl : MonoBehaviour
     }
     public State state;
 
-    public int R_MonHP = 3;
+    public int R_MonHP = 2;
     private bool isDie = false;
     private bool strafingFlag = true;
 

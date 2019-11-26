@@ -99,8 +99,8 @@ public class PieceCtrl : MonoBehaviour
             R_pieces[i].gameObject.transform.GetChild(0).transform.GetChild(5).gameObject.SetActive(true);
         }
 
-        Destroy(Del_PurPlePieces, 2.0f);
-        Destroy(Del_RedPieces, 2.0f);
+        Destroy(R_pieces[0].transform.parent.gameObject, 2.0f);
+        Destroy(P_pieces[0].transform.parent.gameObject, 2.0f);
     }
 
     void SpawnParticle()

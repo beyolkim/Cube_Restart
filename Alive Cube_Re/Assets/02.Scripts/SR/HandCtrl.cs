@@ -53,14 +53,14 @@ public class HandCtrl : MonoBehaviour
 
         for(int i =0; i < 10; i ++)
         {
-            swordValue[i] = 0.5f;
+            swordValue[i] = 0.7f;
             swordMat[i] = sword[i].GetComponent<MeshRenderer>().material;
         }       
 
 
         for (int i = 0; i < 4; i++)
         {
-            gunValue[i] = 0.5f; //gun의 5개 파트의 gunValue값을 각각 초기화
+            gunValue[i] = 0.7f; //gun의 5개 파트의 gunValue값을 각각 초기화
             gunMat[i] = guns[i].GetComponent<MeshRenderer>().material; //gun의 5개 파트의 gunMat값을 각각 초기화
         }
         //gunMat[0] = gun[0].GetComponent<MeshRenderer>().material;
@@ -170,7 +170,7 @@ public class HandCtrl : MonoBehaviour
     public IEnumerator GunDisapper()
     {
         _audio.PlayOneShot(gunSpawn_audio);
-        while (gunValue[0] <= 0.5f)
+        while (gunValue[0] <= 0.7f)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -188,7 +188,7 @@ public class HandCtrl : MonoBehaviour
     {
         _audio.PlayOneShot(swordSpawn);
         sword_blade.gameObject.SetActive(false);
-        while (swordValue[0] <= 0.5f)
+        while (swordValue[0] <= 0.7f)
         {
             for (int i = 0; i < 10; i++)
             {

@@ -55,7 +55,7 @@ public class GunCtrl : MonoBehaviour
         {
             gunReady = true;
             _audio.Play();
-            //Invoke("CreateLine", 2.0f);
+            Invoke("CreateLine", 2.0f);
         }
         //Stage2의 UI를 확인해야 Ray가 나가도록
         else if (stage2UICheck && gunReady && RedMonCtrl.monReady) //Gun의 Line이 생성되었다면 Ray를 발사

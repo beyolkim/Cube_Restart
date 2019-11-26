@@ -35,7 +35,7 @@ public class RedMonCtrl : MonoBehaviour
     }
     public State state;
 
-    public int R_MonHP = 4;
+    public int R_MonHP = 3;
     private bool isDie = false;
     private bool strafingFlag = true;
 
@@ -211,7 +211,7 @@ public class RedMonCtrl : MonoBehaviour
 
 
 
-        hommingparticle.emissionRate = 3.0f;
+        hommingparticle.emissionRate = 2.0f;
 
     }
 

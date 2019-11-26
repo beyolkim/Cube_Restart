@@ -47,13 +47,13 @@ public class LeftHandCtrl : MonoBehaviour
 
         for (int i = 0; i < 10; i++)
         {
-            swordValue[i] = 0.5f;
+            swordValue[i] = 0.7f;
             swordMat[i] = sword[i].GetComponent<MeshRenderer>().material;
         }
 
         for (int i = 0; i<3; i++)
         {
-            shieldValue[i] = 0.5f;
+            shieldValue[i] = 0.7f;
             _shieldValue[i] = 3f;
             shieldMat[i] = shield[i].GetComponent<MeshRenderer>().materials[0];
             shieldMat[i+3] = shield[i].GetComponent<MeshRenderer>().materials[1];
@@ -126,7 +126,7 @@ public class LeftHandCtrl : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f);
         _audio.PlayOneShot(shieldSpawn);
-        while (shieldValue[0] >= -0.9f)
+        while (shieldValue[0] >= -1f)
         {
             for(int i =0; i < 3; i++)
             {
@@ -149,7 +149,7 @@ public class LeftHandCtrl : MonoBehaviour
     public IEnumerator ShieldDisapper()
     {
         _audio.PlayOneShot(shieldSpawn);
-        while (shieldValue[0] <= 0.5f)
+        while (shieldValue[0] <= 0.7f)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -172,7 +172,7 @@ public class LeftHandCtrl : MonoBehaviour
     {
         _audio.PlayOneShot(swordSpawn);
         sword_blade.gameObject.SetActive(false);
-        while (swordValue[0] <= 0.5f)
+        while (swordValue[0] <= 0.7f)
         {
             for (int i = 0; i < 10; i++)
             {

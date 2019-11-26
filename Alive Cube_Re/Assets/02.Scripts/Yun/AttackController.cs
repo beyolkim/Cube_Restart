@@ -119,7 +119,8 @@ public class AttackController : MonoBehaviour
         CubeReverce(); //나와있는 큐브들 모두 들어가도록
         stageClearUI.gameObject.SetActive(true); //Stage1 Clear UI 표시
         hpUI.gameObject.SetActive(false);
-        
+        yield return new WaitForSeconds(1.5f);
+        PlayerController.instance._audio.PlayOneShot(PlayerController.instance.stageClear_audio[0]);
         yield return new WaitForSeconds(3f);
         FadeCtrl.instance.FadeOut();
         yield return new WaitForSeconds(4);

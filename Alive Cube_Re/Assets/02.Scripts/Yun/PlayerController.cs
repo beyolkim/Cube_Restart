@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
     public static int coint = 0;
     public bool playerDie = false;
+    private bool stageClear_Check = false;
 
     //죽었을 경우 조각들 파편 파괴(스테이지 클리어에만 파괴되지 않음)
     public GameObject redObjs;
@@ -240,8 +241,9 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Stage2Clear()
     {
-        if (!playerDie && redMon_Kill >= 7)
+        if (!stageClear_Check && redMon_Kill >= 7)
         {
+            stageClear_Check = true;
             Debug.Log("Stage2 Clear!");
             stage2_audio.Stop();
             _audio.PlayOneShot(stageClear_audio[0]);

@@ -60,8 +60,8 @@ public class IntroAnimation : MonoBehaviour
         //StartCoroutine(MakeMapRightWall(tr));
         nextObj = Resources.Load("MakeIntroCube") as GameObject;
         cubeLine = Resources.Load("CubeGridLines_Glow") as Material;
-        StartCoroutine(LoadScene("Stage1"));
 
+        StartCoroutine(LoadScene("Stage1"));
     }
 
 

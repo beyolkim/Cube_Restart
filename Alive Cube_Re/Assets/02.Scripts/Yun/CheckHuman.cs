@@ -8,12 +8,13 @@ public class CheckHuman : MonoBehaviour
     private Animator human;
     private bool checkAni = false;
     public GameObject fadeAni;
+    
 
     private void OnTriggerEnter(Collider other)
     {
         if(!checkAni && other.CompareTag("HUMAN"))
         {
-            Debug.Log("와우! 멈춰라!");
+            //Debug.Log("와우! 멈춰라!");
             human = other.GetComponent<Animator>();
             human.SetTrigger("Move");
             StartCoroutine(ChangeIntro());
@@ -35,5 +36,5 @@ public class CheckHuman : MonoBehaviour
         FadeCtrl.instance.FadeOut();
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene(0);
-    }
+    }    
 }

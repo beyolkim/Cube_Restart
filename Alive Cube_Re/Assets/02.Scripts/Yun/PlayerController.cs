@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance = null;
 
     public float curTime = 0;
-    private float attackTime = 5;
-    public static int playerHp = 25;
+    private float attackTime = 3.7f;
+    public static int playerHp = 2;
 
     public Slider hpSlider;
     public static int redMon_Kill = 0;
@@ -193,6 +193,7 @@ public class PlayerController : MonoBehaviour
         {
             playerDie = true;
             HandCtrl.instance.gunOn = false; //Gun의 총알 끄기
+            GunCtrl.instance.stage2UICheck = false;
             GunCtrl.instance.gunReady = false; //Gun의 Ray 끄기
             PurpleMonCtrl.instance.StateDie(); //퍼플 몬스터의 공격 중지
             //RedMonCtrl.instance.animator.SetTrigger("Die");
@@ -202,12 +203,15 @@ public class PlayerController : MonoBehaviour
             hpUI.gameObject.SetActive(false); //hp창 끄기
             gameOverUI.gameObject.SetActive(true);
             yield return new WaitForSeconds(1.5f);
+            GunCtrl.instance.gameObject.GetComponent<LineRenderer>().enabled = false;
             StartCoroutine(HandCtrl.instance.GunDisapper()); //Gun 사라지게
             StartCoroutine(LeftHandCtrl.instance.ShieldDisapper()); //Shield 사라지게
             yield return new WaitForSeconds(2.5f);
             Earthquake_Audio(); //벽 수축 Audio
             yield return new WaitForSeconds(2.5f);
             GameOver_Shrinking.instance.GameOver(); //벽 수축 애니메이션
+            HandCtrl.instance.GameOver_RHaptic(); //게임오버 햅틱
+            LeftHandCtrl.instance.GameOver_LHaptic();
             yield return new WaitForSeconds(8.5f);
             SceneManager.LoadScene(4);
         }
@@ -226,12 +230,15 @@ public class PlayerController : MonoBehaviour
             gameOverUI.gameObject.SetActive(true);
             yield return new WaitForSeconds(1.5f);
             stage3Attack.SetActive(false);
+            GunCtrl.instance.gameObject.GetComponent<LineRenderer>().enabled = false;
             StartCoroutine(HandCtrl.instance.GunDisapper()); //Gun 사라지게
             StartCoroutine(LeftHandCtrl.instance.ShieldDisapper()); //Shield 사라지게
             yield return new WaitForSeconds(2.5f);
             Earthquake_Audio(); //벽 수축 Audio
             yield return new WaitForSeconds(2.5f);
             GameOver_Shrinking.instance.GameOver(); //벽 수축 애니메이션
+            HandCtrl.instance.GameOver_RHaptic(); //게임오버 햅틱
+            LeftHandCtrl.instance.GameOver_LHaptic();
             yield return new WaitForSeconds(8.5f);
             SceneManager.LoadScene(4);
         }

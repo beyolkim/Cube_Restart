@@ -198,7 +198,7 @@ public class RedMonCtrl : MonoBehaviour
             animator.ResetTrigger(h_StrafeRight);
             animator.SetTrigger(h_Attack);
 
-            hommingparticle.emissionRate = 2.0f;
+            hommingparticle.emissionRate = 3.0f;
 
         }
     }
@@ -211,7 +211,7 @@ public class RedMonCtrl : MonoBehaviour
 
 
 
-        hommingparticle.emissionRate = 2.0f;
+        hommingparticle.emissionRate = 3.0f;
 
     }
 

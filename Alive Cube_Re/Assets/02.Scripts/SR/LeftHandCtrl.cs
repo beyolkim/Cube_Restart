@@ -8,6 +8,8 @@ public class LeftHandCtrl : MonoBehaviour
     public static LeftHandCtrl instance = null;
     public SteamVR_Input_Sources lefthand = SteamVR_Input_Sources.LeftHand;
     public SteamVR_Action_Boolean trigger = SteamVR_Actions.default_InteractUI;
+    public SteamVR_Action_Vibration haptic = SteamVR_Actions.default_Haptic;
+
     public GameObject weaponUI;
     public GameObject _weaponUI;
 
@@ -183,6 +185,11 @@ public class LeftHandCtrl : MonoBehaviour
         }
         anim.SetBool(swordGrab, false);
         L_SwordCtrl.instance.left_swordOn = false;
+    }
+
+    public void GameOver_LHaptic()
+    {
+        haptic.Execute(0f, 4f, 70, 3f, lefthand);
     }
 
 }

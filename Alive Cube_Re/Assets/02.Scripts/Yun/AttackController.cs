@@ -104,12 +104,14 @@ public class AttackController : MonoBehaviour
                 hpUI.gameObject.SetActive(false);
                 gameOverUI.gameObject.SetActive(true);
                 yield return new WaitForSeconds(1.5f);
-                StartCoroutine(HandCtrl.instance.R_SwordDisapper());
+                StartCoroutine(HandCtrl.instance.R_SwordDisapper()); //칼 사라지게
                 StartCoroutine(LeftHandCtrl.instance.L_SwordDisapper());
                 yield return new WaitForSeconds(2.5f);
                 PlayerController.instance.Earthquake_Audio(); //벽 수축 Audio
                 yield return new WaitForSeconds(2.5f);
                 GameOver_Shrinking.instance.GameOver(); //벽 수축 애니메이션
+                HandCtrl.instance.GameOver_RHaptic(); //게임오버 햅틱
+                LeftHandCtrl.instance.GameOver_LHaptic();
                 yield return new WaitForSeconds(8.5f);
                 SceneManager.LoadScene(4);                
             }

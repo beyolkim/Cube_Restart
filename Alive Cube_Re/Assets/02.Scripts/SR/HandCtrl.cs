@@ -200,4 +200,9 @@ public class HandCtrl : MonoBehaviour
         anim.SetBool(swordGrab, false);
         R_SwordCtrl.instance.right_swordOn = false;
     }
+
+    public void GameOver_RHaptic()
+    {
+        haptic.Execute(0f, 4f, 70, 3f, rightHand);
+    }
 }

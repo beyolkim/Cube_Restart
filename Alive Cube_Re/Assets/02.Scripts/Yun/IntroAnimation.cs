@@ -36,6 +36,8 @@ public class IntroAnimation : MonoBehaviour
     private AudioSource _audio;
     public AudioClip cube_default_audio;
     public AudioClip mapStart_audio;
+    private bool sceneMove = false;
+    
 
     void Start()
     {
@@ -58,6 +60,7 @@ public class IntroAnimation : MonoBehaviour
         //StartCoroutine(MakeMapRightWall(tr));
         nextObj = Resources.Load("MakeIntroCube") as GameObject;
         cubeLine = Resources.Load("CubeGridLines_Glow") as Material;
+        StartCoroutine(LoadScene("Stage1"));
 
     }
 
@@ -73,7 +76,7 @@ public class IntroAnimation : MonoBehaviour
 
     //}
 
-    
+
 
     IEnumerator MakeMapTop()
     {
@@ -121,7 +124,10 @@ public class IntroAnimation : MonoBehaviour
         }
     }
 
-
+    public void SetCanOpen()
+    {
+        sceneMove = true;
+    }
 
 
     IEnumerator MakeMapLeftRight()
@@ -335,10 +341,9 @@ public class IntroAnimation : MonoBehaviour
         cubeLine.DOFloat(1.0f, "_LineThickness", 1.5f);
 
         AliveCube_UI.instance.AliveCube_UI_Open();
-
         yield return new WaitForSeconds(4);
 
-        this.gameObject.SetActive(false);
+        //this.gameObject.SetActive(false);
 
         //maincubeMap.SetActive(true);
 
@@ -348,9 +353,27 @@ public class IntroAnimation : MonoBehaviour
         Destroy(emptyGameObject);
         //FadeCtrl.instance.FadeOut();
         //yield return new WaitForSeconds(2);
+        sceneMove = true;
 
-        SceneManager.LoadScene(1);         
     }
+    IEnumerator LoadScene(string sceneName)
+    {
+        
+        AsyncOperation asyncOper = SceneManager.LoadSceneAsync(sceneName);
+        asyncOper.allowSceneActivation = false;
+
+        while (!asyncOper.isDone)
+        {
+            yield return null;
+            if(sceneMove == true)
+            {
+                asyncOper.allowSceneActivation = true;
+
+            }
+        }
+
+    }
+    
 }
 
 

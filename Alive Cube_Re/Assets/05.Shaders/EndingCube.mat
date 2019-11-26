@@ -19,7 +19,11 @@ Material:
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _SampleTexture2D_693DAEEB_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 30ba15bd011106843af560ea5fcf6743, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_2933C285: 3
     - Vector1_9038A904: 0.89

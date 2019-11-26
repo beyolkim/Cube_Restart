@@ -81,7 +81,7 @@ public class SwordCutter : MonoBehaviour {
             victim.GetComponentInParent<AttackCube>().check_attack = true;
             //AttackController.scoreCount++;
 
-            if (check_fallStone > 1)
+            if (check_fallStone > 3)
             { 
                 if (stage1_Count <7)
                 {

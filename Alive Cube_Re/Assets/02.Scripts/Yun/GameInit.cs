@@ -11,7 +11,7 @@ public class GameInit : MonoBehaviour
         SwordCutter.stage1_Count = 0;
         //AttackController.stage1_Count = 0;
         PlayerController.redMon_Kill = 0;
-        PlayerController.playerHp = 20;
+        PlayerController.playerHp = 25;
     }
 
 }

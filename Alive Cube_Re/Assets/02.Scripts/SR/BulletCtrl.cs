@@ -25,13 +25,12 @@ public class BulletCtrl : MonoBehaviour
         Destroy(this.gameObject);
         Destroy(_sparkParticle, 1.5f);
         
-        if(coll.transform.CompareTag("UI"))
+        if(coll.transform.CompareTag("UI") && this.gameObject.scene.name == "Stage2")
         {
             coll.gameObject.SetActive(false);
             GunCtrl.instance.stage2UICheck = true;
-            GunCtrl.instance.HP_Canvas = true;
         }
-        if(coll.transform.CompareTag("UI")&& this.gameObject.scene.name == "Stage3")
+        if(coll.transform.CompareTag("UI") && this.gameObject.scene.name == "Stage3")
         {
             coll.gameObject.SetActive(false);
             GunCtrl.instance.stage3UICheck = true;

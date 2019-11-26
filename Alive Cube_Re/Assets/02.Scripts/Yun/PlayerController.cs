@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     public float curTime = 0;
     private float attackTime = 5;
-    public static int playerHp = 2;
+    public static int playerHp = 20;
 
     public Slider hpSlider;
     public static int redMon_Kill = 0;
@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private bool playerHit = false;
     public GameObject hitEffect;
 
-    private AudioSource _audio;
+    public AudioSource _audio;
     public AudioSource stage2_audio;
     public AudioClip intro_audio;
     public AudioClip mapMaking_audio;
@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip hit_audio;
     public AudioClip gameOver_audio;
     public AudioClip earthquake_audio;
+    public AudioClip[] ending_audio;
 
     public GameObject warningZone;
     public GameObject attackCube;
@@ -76,6 +77,11 @@ public class PlayerController : MonoBehaviour
         else if(this.gameObject.scene.name == "Stage3")
         {
             hpSlider.value = playerHp;
+        }
+        else if(this.gameObject.scene.name == "End&Reset")
+        {
+            StartCoroutine(EndingAudio());
+
         }
     }
 
@@ -187,15 +193,13 @@ public class PlayerController : MonoBehaviour
             HandCtrl.instance.gunOn = false; //Gun의 총알 끄기
             GunCtrl.instance.gunReady = false; //Gun의 Ray 끄기
             PurpleMonCtrl.instance.StateDie(); //퍼플 몬스터의 공격 중지
-            GunCtrl.instance.HP_Canvas = false; //hp창 끄기
             //RedMonCtrl.instance.animator.SetTrigger("Die");
             PieceCtrl.instance.GameOver_RedIdle();
             Debug.Log("Game Over");
             _audio.PlayOneShot(gameOver_audio);
-            hpUI.gameObject.SetActive(false);
+            hpUI.gameObject.SetActive(false); //hp창 끄기
             gameOverUI.gameObject.SetActive(true);
             yield return new WaitForSeconds(1.5f);
-
             StartCoroutine(HandCtrl.instance.GunDisapper()); //Gun 사라지게
             StartCoroutine(LeftHandCtrl.instance.ShieldDisapper()); //Shield 사라지게
             yield return new WaitForSeconds(2.5f);
@@ -214,12 +218,9 @@ public class PlayerController : MonoBehaviour
             playerDie = true;
             HandCtrl.instance.gunOn = false; //Gun의 총알 끄기
             GunCtrl.instance.gunReady = false; //Gun의 Ray 끄기
-
-            GunCtrl.instance.HP_Canvas = false; //hp창 끄기
-        
             Debug.Log("Game Over");
             _audio.PlayOneShot(gameOver_audio);
-            hpUI.gameObject.SetActive(false);
+            hpUI.gameObject.SetActive(false); //hp창 끄기
             gameOverUI.gameObject.SetActive(true);
             yield return new WaitForSeconds(1.5f);
             stage3Attack.SetActive(false);
@@ -243,14 +244,31 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Stage2 Clear!");
             stage2_audio.Stop();
             PurpleMonCtrl.instance.StateDie(); //퍼플 몬스터의 공격을 중지하도록
-            GunCtrl.instance.HP_Canvas = false; //hp창 끄기
             stageClearUI.gameObject.SetActive(true); //Stage1 Clear UI 표시
-            hpUI.gameObject.SetActive(false);
+            hpUI.gameObject.SetActive(false); //hp창 끄기
             yield return new WaitForSeconds(3f);
             FadeCtrl.instance.FadeOut();
             yield return new WaitForSeconds(4);
             SceneManager.LoadScene(3); //Stage2 클리어 -> Stage3 씬 전환
 
+        }
+    }
+    public IEnumerator Stage3Clear()
+    {
+        stageClearUI.gameObject.SetActive(true); //Stage Clear UI 표시
+        hpUI.gameObject.SetActive(false);
+        yield return new WaitForSeconds(3f);
+        FadeCtrl.instance.FadeOut();
+        yield return new WaitForSeconds(4);
+        SceneManager.LoadScene(0); //Stage3 클리어 -> Intro 씬 전환
+    }
+
+    IEnumerator EndingAudio()
+    {
+        while (true)
+        {
+            _audio.PlayOneShot(ending_audio[Random.Range(0, ending_audio.Length)]);
+            yield return new WaitForSeconds(3);
         }
     }
 }

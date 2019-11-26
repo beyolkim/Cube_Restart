@@ -18,12 +18,14 @@ public class FadeCtrl : MonoBehaviour
         anim = GetComponent<Animator>();
         fadeIn = Animator.StringToHash("fadeIn");
         fadeOut = Animator.StringToHash("fadeOut");
+        Debug.Log("Stage1 페이드 인");
+        anim.SetBool(fadeIn, false);
 
-        if(this.gameObject.scene.name == "Stage1" || this.gameObject.scene.name == "Stage2")
-        {
-            Debug.Log("Stage1 페이드 인");
-            anim.SetBool(fadeIn, false);
-        }
+        //if (this.gameObject.scene.name == "Stage1" || this.gameObject.scene.name == "Stage2")
+        //{
+        //    Debug.Log("Stage1 페이드 인");
+        //    anim.SetBool(fadeIn, false);
+        //}
     }
 
     

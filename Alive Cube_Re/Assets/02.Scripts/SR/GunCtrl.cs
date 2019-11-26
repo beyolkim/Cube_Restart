@@ -32,7 +32,6 @@ public class GunCtrl : MonoBehaviour
 
     public bool stage2UICheck = false;
     public bool stage3UICheck = false;
-    public bool HP_Canvas = false;
 
     public GameObject stage3start;
   

@@ -13,6 +13,8 @@ public class HandAttack : MonoBehaviour
     float gravity = 1;
     float deathColor = 0;
     int particleRate = 1000;
+    public AudioSource stage3_audio;
+
     void Start()
     {
         //handAttack = transform.DOLocalRotate(new Vector3(240, 0, 180), 3.0f).SetEase(Ease.InFlash).SetLoops(2,LoopType.Yoyo);
@@ -111,8 +113,11 @@ public class HandAttack : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
 
         }
+        Debug.Log("Stage3 Clear!");
+        stage3_audio.Stop();
+        
+        StartCoroutine(PlayerController.instance.Stage3Clear());
 
-       // Debug.Log("끝");
 
     }
     public void ShieldCollsion()

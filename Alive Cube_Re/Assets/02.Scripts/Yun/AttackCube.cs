@@ -198,8 +198,8 @@ public class AttackCube : MonoBehaviour
             waitpoint[0] = BodyParts[0].transform.position + Vector3.forward * -2.0f;
             waitpoint[1] = BodyParts[0].transform.localPosition + new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(2.0f, 8.0f), Random.Range(3.0f, 7.0f));
             waitpoint[2] = BodyParts[0].transform.localPosition + new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(2.0f, 8.0f), Random.Range(3.0f, 7.0f));
-            waitpoint[3] = pos;
-            //waitpoint[3] = targetTr[Random.Range(0, targetTr.Length)].position;
+            //waitpoint[3] = pos;
+            waitpoint[3] = targetTr[Random.Range(0, targetTr.Length)].position;
 
             Tween attackSnake = BodyParts[0].DOPath(waitpoint, 3.0f, PathType.CatmullRom, PathMode.Full3D, 10, Color.red).SetLookAt(waitpoint[3]);
 
